@@ -215,7 +215,20 @@
 	    value: function setIcon() {
 	      var encoded = this.encoder.encode(this.state.selectedIcon);
 
-	      this.iconCharacteristic.writeValue(encoded);
+	      var component = this;
+	      this.iconCharacteristic.writeValue(encoded).then(function (value) {
+	        console.log("writing new icon value");
+	        return component.iconCharacteristic.readValue();
+	      }).then(function (value) {
+	        var iconVal = component.decoder.decode(value);
+	        console.log("new icon value read: " + iconVal);
+	      }).catch(function (error) {
+	        console.error('Icon write failed!', error);
+	        component.setState({
+	          status: "Icon write failed"
+	        });
+	      });
+
 	      this.setState({
 	        iconChanged: true,
 	        status: "current icon value: " + this.state.selectedIcon,
