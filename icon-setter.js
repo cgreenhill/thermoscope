@@ -221,12 +221,30 @@
 	        component.setState({
 	          status: "writing new icon value: " + component.selectedIcon
 	        });
-	        return component.iconCharacteristic.readValue();
+	        component.setState({
+	          status: "getting icon service"
+	        });
+	        return window.server.getPrimaryService(nameServiceAddr);
+	      }).then(function (service) {
+	        component.setState({
+	          status: "getting characteristic"
+	        });
+	        return service.getCharacteristic(nameCharacteristicAddr);
+	      }).then(function (characteristic) {
+	        component.iconCharacteristic = characteristic;
+	        console.log("reading characteristic");
+	        component.setState({
+	          status: "reading characteristic"
+	        });
+	        return characteristic.readValue();
 	      }).then(function (value) {
 	        var iconVal = component.decoder.decode(value);
-	        console.log("new icon value read: " + iconVal);
+	        console.log("new icon: " + iconVal);
 	        component.setState({
-	          status: "new icon set: " + iconVal
+	          connected: true,
+	          status: "new icon value: " + iconVal,
+	          currentIcon: iconVal,
+	          selectedIcon: iconVal
 	        });
 	      }).catch(function (error) {
 	        console.error('Icon write failed!', error);
