@@ -218,10 +218,16 @@
 	      var component = this;
 	      this.iconCharacteristic.writeValue(encoded).then(function (value) {
 	        console.log("writing new icon value");
+	        component.setState({
+	          status: "writing new icon value: " + component.selectedIcon
+	        });
 	        return component.iconCharacteristic.readValue();
 	      }).then(function (value) {
 	        var iconVal = component.decoder.decode(value);
 	        console.log("new icon value read: " + iconVal);
+	        component.setState({
+	          status: "new icon set: " + iconVal
+	        });
 	      }).catch(function (error) {
 	        console.error('Icon write failed!', error);
 	        component.setState({
