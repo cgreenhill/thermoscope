@@ -217,9 +217,9 @@
 
 	      var component = this;
 	      this.iconCharacteristic.writeValue(encoded).then(function (value) {
-	        console.log("writing new icon value");
+	        console.log("writing new icon value: " + component.state.selectedIcon);
 	        component.setState({
-	          status: "writing new icon value: " + component.selectedIcon
+	          status: "writing new icon value: " + component.state.selectedIcon
 	        });
 	        component.setState({
 	          status: "getting icon service"
@@ -243,8 +243,14 @@
 	        component.setState({
 	          connected: true,
 	          status: "new icon value: " + iconVal,
-	          currentIcon: iconVal,
-	          selectedIcon: iconVal
+	          currentIcon: iconVal
+	        });
+
+	        return component.iconCharacteristic.writeValue(encoded);
+	      }).then(function (value) {
+	        console.log("writing 2 new icon value: " + component.state.selectedIcon);
+	        component.setState({
+	          status: "writing 2 new icon value: " + component.state.selectedIcon
 	        });
 	      }).catch(function (error) {
 	        console.error('Icon write failed!', error);
