@@ -215,6 +215,8 @@
 	    value: function setIcon() {
 	      var encoded = this.encoder.encode(this.state.selectedIcon);
 
+	      this.setState({ status: "writing new icon: " + this.state.selectedIcon });
+
 	      var component = this;
 	      this.iconCharacteristic.writeValue(encoded).catch(function (error) {
 	        console.error('Icon write 2 failed!', error);
@@ -222,52 +224,10 @@
 	          status: "Icon write 2 failed"
 	        });
 	      }).then(function (value) {
-	        console.log("writing new icon value: " + component.state.selectedIcon);
+	        console.log("new icon value written: " + component.state.selectedIcon);
 	        component.setState({
-	          status: "writing new icon value: " + component.state.selectedIcon
+	          status: "new icon value written: " + component.state.selectedIcon
 	        });
-	        component.setState({
-	          status: "getting icon service"
-	        });
-	        return window.server.getPrimaryService(nameServiceAddr);
-	      }).then(function (service) {
-	        component.setState({
-	          status: "getting characteristic"
-	        });
-	        return service.getCharacteristic(nameCharacteristicAddr);
-	      }).then(function (characteristic) {
-	        component.iconCharacteristic = characteristic;
-	        console.log("reading characteristic");
-	        component.setState({
-	          status: "reading characteristic"
-	        });
-	        return characteristic.readValue();
-	      }).then(function (value) {
-	        var iconVal = component.decoder.decode(value);
-	        console.log("new icon: " + iconVal);
-	        component.setState({
-	          connected: true,
-	          status: "new icon value: " + iconVal,
-	          currentIcon: iconVal
-	        });
-
-	        return component.iconCharacteristic.writeValue(encoded);
-	      }).catch(function (error) {
-	        console.error('Icon write 2 failed!', error);
-	        component.setState({
-	          status: "Icon write 2 failed"
-	        });
-	      }).then(function (value) {
-	        console.log("writing 2 new icon value: " + component.state.selectedIcon);
-	        component.setState({
-	          status: "writing 2 new icon value: " + component.state.selectedIcon
-	        });
-	      });
-
-	      this.setState({
-	        iconChanged: true,
-	        status: "current icon value: " + this.state.selectedIcon,
-	        currentIcon: this.state.selectedIcon
 	      });
 	    }
 	  }, {
