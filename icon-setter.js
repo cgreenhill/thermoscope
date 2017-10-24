@@ -216,7 +216,12 @@
 	      var encoded = this.encoder.encode(this.state.selectedIcon);
 
 	      var component = this;
-	      this.iconCharacteristic.writeValue(encoded).then(function (value) {
+	      this.iconCharacteristic.writeValue(encoded).catch(function (error) {
+	        console.error('Icon write 2 failed!', error);
+	        component.setState({
+	          status: "Icon write 2 failed"
+	        });
+	      }).then(function (value) {
 	        console.log("writing new icon value: " + component.state.selectedIcon);
 	        component.setState({
 	          status: "writing new icon value: " + component.state.selectedIcon
@@ -247,15 +252,15 @@
 	        });
 
 	        return component.iconCharacteristic.writeValue(encoded);
+	      }).catch(function (error) {
+	        console.error('Icon write 2 failed!', error);
+	        component.setState({
+	          status: "Icon write 2 failed"
+	        });
 	      }).then(function (value) {
 	        console.log("writing 2 new icon value: " + component.state.selectedIcon);
 	        component.setState({
 	          status: "writing 2 new icon value: " + component.state.selectedIcon
-	        });
-	      }).catch(function (error) {
-	        console.error('Icon write failed!', error);
-	        component.setState({
-	          status: "Icon write failed"
 	        });
 	      });
 
