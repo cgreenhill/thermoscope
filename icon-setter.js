@@ -213,7 +213,7 @@
 	  }, {
 	    key: 'setIcon',
 	    value: function setIcon() {
-	      var encoded = this.encoder.encode(this.state.selectedIcon);
+	      var encoded = Uint8Array.of(this.state.selectedIcon); //this.encoder.encode(this.state.selectedIcon);
 
 	      var component = this;
 	      this.iconCharacteristic.writeValue(encoded).catch(function (error) {
