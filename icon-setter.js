@@ -188,7 +188,7 @@
 	        console.log("current icon value: " + iconVal);
 
 	        console.log("writing value: ⚽");
-	        return component.iconCharacteristic.writeValue(component.encoder.encode("💡"));
+	        return component.iconCharacteristic.writeValue(component.encoder.encode("⚽"));
 	      }).catch(function (error) {
 	        console.error('Connection failed!', error);
 	        component.setState({
