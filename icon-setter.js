@@ -216,9 +216,10 @@
 	      var encoded = this.encoder.encode(this.state.selectedIcon);
 
 	      this.setState({ status: "writing new icon: " + this.state.selectedIcon });
+	      console.log({ status: "writing new icon: " + this.state.selectedIcon });
 
 	      var component = this;
-	      this.iconCharacteristic.writeValueWithoutResponse(encoded).catch(function (error) {
+	      this.iconCharacteristic.writeValue(encoded).catch(function (error) {
 	        console.error('Icon write 2 failed!', error);
 	        component.setState({
 	          status: "Icon write 2 failed"
