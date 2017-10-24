@@ -218,15 +218,15 @@
 	      this.setState({ status: "writing new icon: " + this.state.selectedIcon });
 
 	      var component = this;
-	      this.iconCharacteristic.writeValue(encoded).catch(function (error) {
+	      this.iconCharacteristic.writeValueWithoutResponse(encoded).catch(function (error) {
 	        console.error('Icon write 2 failed!', error);
 	        component.setState({
 	          status: "Icon write 2 failed"
 	        });
 	      }).then(function (value) {
-	        console.log("new icon value written: " + component.state.selectedIcon);
+	        console.log("new icon value written: " + component.state.selectedIcon + " | " + encoded);
 	        component.setState({
-	          status: "new icon value written: " + component.state.selectedIcon
+	          status: "new icon value written: " + component.state.selectedIcon + " | " + encoded
 	        });
 	      });
 	    }
