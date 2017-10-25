@@ -220,7 +220,7 @@
 	      console.log();
 
 	      var component = this;
-	      this.iconCharacteristic.writeValueWithoutResponse(encoded).catch(function (error) {
+	      this.iconCharacteristic.writeValue(encoded).catch(function (error) {
 	        console.error('Icon write 2 failed!', error);
 	        component.setState({
 	          status: "Icon write 2 failed"
