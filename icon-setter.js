@@ -146,8 +146,7 @@
 	    value: function connect() {
 	      console.log("connect");
 	      var request = navigator.bluetooth.requestDevice({
-	        filters: [{ namePrefix: "Thermoscope" }],
-	        optionalServices: [nameServiceAddr]
+	        filters: [{ namePrefix: "Thermoscope" }]
 	      });
 
 	      var component = this;
@@ -172,12 +171,14 @@
 	        });
 	        return service.getCharacteristic(nameCharacteristicAddr);
 	      }).then(function (characteristic) {
-	        component.iconCharacteristic = characteristic;
+	        window.iconChar = component.iconCharacteristic = characteristic;
+	        console.log();
 	        component.setState({
 	          status: "reading characteristic"
 	        });
 	        return characteristic.readValue();
 	      }).then(function (value) {
+
 	        var iconVal = component.decoder.decode(value);
 	        component.setState({
 	          connected: true,
@@ -185,10 +186,6 @@
 	          currentIcon: iconVal,
 	          selectedIcon: iconVal
 	        });
-	        console.log("current icon value: " + iconVal);
-
-	        console.log("writing value: ⚽");
-	        return component.iconCharacteristic.writeValue(component.encoder.encode("⚽"));
 	      }).catch(function (error) {
 	        console.error('Connection failed!', error);
 	        component.setState({
@@ -220,10 +217,10 @@
 	      var encoded = this.encoder.encode(this.state.selectedIcon);
 
 	      this.setState({ status: "writing new icon: " + this.state.selectedIcon });
-	      console.log({ status: "writing new icon: " + this.state.selectedIcon });
+	      console.log();
 
 	      var component = this;
-	      this.iconCharacteristic.writeValue(encoded).catch(function (error) {
+	      this.iconCharacteristic.writeValueWithoutResponse(encoded).catch(function (error) {
 	        console.error('Icon write 2 failed!', error);
 	        component.setState({
 	          status: "Icon write 2 failed"
