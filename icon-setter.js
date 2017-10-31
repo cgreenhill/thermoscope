@@ -194,7 +194,7 @@
 	      // Check if the version characteristic exists
 	      .then(function (characteristics) {
 	        var uuids = [];
-	        characteristics.forEach(function (char) {
+	        characteristics.foreach(function (char) {
 	          uuids.push(char.uuid);
 	        });
 	        component.setState({
