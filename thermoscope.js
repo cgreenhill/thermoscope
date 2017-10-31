@@ -171,7 +171,7 @@
 	    }
 	  }, {
 	    key: 'renderThermoscope',
-	    value: function renderThermoscope(material, probeIndex, label, showMeter, meterMinClamp, meterMaxClamp) {
+	    value: function renderThermoscope(material, probeIndex, label, hidden, showMeter, meterMinClamp, meterMaxClamp) {
 	      var meterMin = meterMinClamp ? meterMinClamp : 0;
 	      var meterMax = meterMaxClamp ? meterMaxClamp : 1;
 	      var showControls = (0, _utils.getURLParam)('controls');
@@ -192,7 +192,8 @@
 	          meterSegments: meterSegments,
 	          minClamp: meterMin,
 	          maxClamp: meterMax,
-	          showMaterialControls: showControls })
+	          showMaterialControls: showControls,
+	          hidden: hidden })
 	      );
 	      return thermoscope;
 	    }
@@ -237,7 +238,7 @@
 	                    return _this2.setThermoscopeRendering("A=solid&B=solid", 2);
 	                  }, key: '1' }),
 	                _react2.default.createElement(_List.ListItem, { primaryText: 'Thermoscope (liquid) Oil and Soap', onClick: function onClick() {
-	                    return _this2.setThermoscopeRendering("A=liquid&B=liquid", 2);
+	                    return _this2.setThermoscopeRendering("A=liquid&B=liquid&hideB", 2);
 	                  }, key: '2' }),
 	                _react2.default.createElement(_List.ListItem, { primaryText: 'Thermoscope (gas) Air', onClick: function onClick() {
 	                    return _this2.setThermoscopeRendering("A=gas&B=gas", 2);
@@ -263,20 +264,20 @@
 	          mode === ThermoscopeMode.OneThermoscope && _react2.default.createElement(
 	            'div',
 	            { className: 'app-container' },
-	            this.renderThermoscope((0, _utils.getURLParam)('A'), 0, 'A')
+	            this.renderThermoscope((0, _utils.getURLParam)('A'), 0, 'A', (0, _utils.getURLParam)('hideA'))
 	          ),
 	          mode === ThermoscopeMode.TwoThermoscope && _react2.default.createElement(
 	            'div',
 	            { className: 'app-container' },
-	            this.renderThermoscope((0, _utils.getURLParam)('A'), 0, 'A'),
-	            this.renderThermoscope((0, _utils.getURLParam)('B'), 1, 'B')
+	            this.renderThermoscope((0, _utils.getURLParam)('A'), 0, 'A', (0, _utils.getURLParam)('hideA')),
+	            this.renderThermoscope((0, _utils.getURLParam)('B'), 1, 'B', (0, _utils.getURLParam)('hideB'))
 	          ),
 	          mode === ThermoscopeMode.ThreeThermoscope && _react2.default.createElement(
 	            'div',
 	            { className: 'app-container' },
-	            this.renderThermoscope((0, _utils.getURLParam)('A'), 0, 'A', true),
-	            this.renderThermoscope((0, _utils.getURLParam)('B'), 1, 'B', true),
-	            this.renderThermoscope((0, _utils.getURLParam)('C'), 1, 'C', true)
+	            this.renderThermoscope((0, _utils.getURLParam)('A'), 0, 'A', (0, _utils.getURLParam)('hideA'), true),
+	            this.renderThermoscope((0, _utils.getURLParam)('B'), 1, 'B', (0, _utils.getURLParam)('hideB'), true),
+	            this.renderThermoscope((0, _utils.getURLParam)('C'), 1, 'C', (0, _utils.getURLParam)('hideC'), true)
 	          ),
 	          _react2.default.createElement(_sensor2.default, { sensor: sensor, showAddressBox: false })
 	        )
@@ -46502,7 +46503,7 @@
 	      materialType: _this.props.material ? _this.props.material : 'solid',
 	      materialIdx: _this.props.probeIndex ? _this.props.probeIndex : 0,
 	      paused: false,
-	      hidden: false
+	      hidden: _this.props.hidden
 	    };
 	    _this.handleTempSliderChange = _this.handleTempSliderChange.bind(_this);
 	    _this.handleMaterialTypeChange = _this.handleMaterialTypeChange.bind(_this);
