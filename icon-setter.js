@@ -194,9 +194,10 @@
 	      // Check if the version characteristic exists
 	      .then(function (characteristics) {
 	        var uuids = [];
-	        characteristics.foreach(function (char) {
+	        for (var i = 0; i < characteristics.length; i++) {
+	          var char = characteristics[i];
 	          uuids.push(char.uuid);
-	        });
+	        }
 	        component.setState({
 	          status: "getting sensor version characteristic"
 	        });

@@ -76,15 +76,15 @@
 
 	var _reactTapEventPlugin2 = _interopRequireDefault(_reactTapEventPlugin);
 
-	var _sensor = __webpack_require__(755);
+	var _sensor = __webpack_require__(764);
 
 	var _sensor2 = _interopRequireDefault(_sensor);
 
-	var _sensorLabquest2Interface = __webpack_require__(773);
+	var _sensorLabquest2Interface = __webpack_require__(778);
 
 	var _sensorLabquest2Interface2 = _interopRequireDefault(_sensorLabquest2Interface);
 
-	var _bleSensor = __webpack_require__(777);
+	var _bleSensor = __webpack_require__(782);
 
 	var _bleSensor2 = _interopRequireDefault(_bleSensor);
 
@@ -96,7 +96,7 @@
 
 	var _List = __webpack_require__(668);
 
-	var _thermoscope = __webpack_require__(778);
+	var _thermoscope = __webpack_require__(783);
 
 	var _thermoscope2 = _interopRequireDefault(_thermoscope);
 
@@ -36575,7 +36575,711 @@
 	};
 
 /***/ }),
-/* 726 */
+/* 726 */,
+/* 727 */,
+/* 728 */,
+/* 729 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	exports.__esModule = true;
+
+	var _defineProperty = __webpack_require__(533);
+
+	var _defineProperty2 = _interopRequireDefault(_defineProperty);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = function (obj, key, value) {
+	  if (key in obj) {
+	    (0, _defineProperty2.default)(obj, key, {
+	      value: value,
+	      enumerable: true,
+	      configurable: true,
+	      writable: true
+	    });
+	  } else {
+	    obj[key] = value;
+	  }
+
+	  return obj;
+	};
+
+/***/ }),
+/* 730 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = undefined;
+
+	var _RaisedButton = __webpack_require__(731);
+
+	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _RaisedButton2.default;
+
+/***/ }),
+/* 731 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends2 = __webpack_require__(670);
+
+	var _extends3 = _interopRequireDefault(_extends2);
+
+	var _objectWithoutProperties2 = __webpack_require__(675);
+
+	var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
+
+	var _getPrototypeOf = __webpack_require__(505);
+
+	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+	var _classCallCheck2 = __webpack_require__(531);
+
+	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+	var _createClass2 = __webpack_require__(532);
+
+	var _createClass3 = _interopRequireDefault(_createClass2);
+
+	var _possibleConstructorReturn2 = __webpack_require__(536);
+
+	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+	var _inherits2 = __webpack_require__(582);
+
+	var _inherits3 = _interopRequireDefault(_inherits2);
+
+	var _simpleAssign = __webpack_require__(676);
+
+	var _simpleAssign2 = _interopRequireDefault(_simpleAssign);
+
+	var _react = __webpack_require__(326);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _transitions = __webpack_require__(681);
+
+	var _transitions2 = _interopRequireDefault(_transitions);
+
+	var _colorManipulator = __webpack_require__(603);
+
+	var _childUtils = __webpack_require__(683);
+
+	var _EnhancedButton = __webpack_require__(682);
+
+	var _EnhancedButton2 = _interopRequireDefault(_EnhancedButton);
+
+	var _Paper = __webpack_require__(732);
+
+	var _Paper2 = _interopRequireDefault(_Paper);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function validateLabel(props, propName, componentName) {
+	  if (process.env.NODE_ENV !== 'production') {
+	    if (!props.children && props.label !== 0 && !props.label && !props.icon) {
+	      return new Error('Required prop label or children or icon was not specified in ' + componentName + '.');
+	    }
+	  }
+	}
+
+	function getStyles(props, context, state) {
+	  var _context$muiTheme = context.muiTheme,
+	      baseTheme = _context$muiTheme.baseTheme,
+	      button = _context$muiTheme.button,
+	      raisedButton = _context$muiTheme.raisedButton;
+	  var disabled = props.disabled,
+	      disabledBackgroundColor = props.disabledBackgroundColor,
+	      disabledLabelColor = props.disabledLabelColor,
+	      fullWidth = props.fullWidth,
+	      icon = props.icon,
+	      label = props.label,
+	      labelPosition = props.labelPosition,
+	      primary = props.primary,
+	      secondary = props.secondary,
+	      style = props.style;
+
+
+	  var amount = primary || secondary ? 0.4 : 0.08;
+
+	  var backgroundColor = raisedButton.color;
+	  var labelColor = raisedButton.textColor;
+
+	  if (disabled) {
+	    backgroundColor = disabledBackgroundColor || raisedButton.disabledColor;
+	    labelColor = disabledLabelColor || raisedButton.disabledTextColor;
+	  } else if (primary) {
+	    backgroundColor = raisedButton.primaryColor;
+	    labelColor = raisedButton.primaryTextColor;
+	  } else if (secondary) {
+	    backgroundColor = raisedButton.secondaryColor;
+	    labelColor = raisedButton.secondaryTextColor;
+	  } else {
+	    if (props.backgroundColor) {
+	      backgroundColor = props.backgroundColor;
+	    }
+	    if (props.labelColor) {
+	      labelColor = props.labelColor;
+	    }
+	  }
+
+	  var buttonHeight = style && style.height || button.height;
+	  var borderRadius = 2;
+
+	  return {
+	    root: {
+	      display: 'inline-block',
+	      transition: _transitions2.default.easeOut(),
+	      minWidth: fullWidth ? '100%' : button.minWidth
+	    },
+	    button: {
+	      height: buttonHeight,
+	      lineHeight: buttonHeight + 'px',
+	      width: '100%',
+	      padding: 0,
+	      borderRadius: borderRadius,
+	      transition: _transitions2.default.easeOut(),
+	      backgroundColor: backgroundColor,
+	      // That's the default value for a button but not a link
+	      textAlign: 'center'
+	    },
+	    label: {
+	      position: 'relative',
+	      opacity: 1,
+	      fontSize: raisedButton.fontSize,
+	      letterSpacing: 0,
+	      textTransform: raisedButton.textTransform || button.textTransform || 'uppercase',
+	      fontWeight: raisedButton.fontWeight,
+	      margin: 0,
+	      userSelect: 'none',
+	      paddingLeft: icon && labelPosition !== 'before' ? 8 : baseTheme.spacing.desktopGutterLess,
+	      paddingRight: icon && labelPosition === 'before' ? 8 : baseTheme.spacing.desktopGutterLess,
+	      color: labelColor
+	    },
+	    icon: {
+	      verticalAlign: 'middle',
+	      marginLeft: label && labelPosition !== 'before' ? 12 : 0,
+	      marginRight: label && labelPosition === 'before' ? 12 : 0
+	    },
+	    overlay: {
+	      height: buttonHeight,
+	      borderRadius: borderRadius,
+	      backgroundColor: (state.keyboardFocused || state.hovered) && !disabled && (0, _colorManipulator.fade)(labelColor, amount),
+	      transition: _transitions2.default.easeOut(),
+	      top: 0
+	    },
+	    ripple: {
+	      color: labelColor,
+	      opacity: !(primary || secondary) ? 0.1 : 0.16
+	    }
+	  };
+	}
+
+	var RaisedButton = function (_Component) {
+	  (0, _inherits3.default)(RaisedButton, _Component);
+
+	  function RaisedButton() {
+	    var _ref;
+
+	    var _temp, _this, _ret;
+
+	    (0, _classCallCheck3.default)(this, RaisedButton);
+
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+
+	    return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = RaisedButton.__proto__ || (0, _getPrototypeOf2.default)(RaisedButton)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+	      hovered: false,
+	      keyboardFocused: false,
+	      touched: false,
+	      initialZDepth: 0,
+	      zDepth: 0
+	    }, _this.handleMouseDown = function (event) {
+	      // only listen to left clicks
+	      if (event.button === 0) {
+	        _this.setState({
+	          zDepth: _this.state.initialZDepth + 1
+	        });
+	      }
+	      if (_this.props.onMouseDown) {
+	        _this.props.onMouseDown(event);
+	      }
+	    }, _this.handleMouseUp = function (event) {
+	      _this.setState({
+	        zDepth: _this.state.initialZDepth
+	      });
+	      if (_this.props.onMouseUp) {
+	        _this.props.onMouseUp(event);
+	      }
+	    }, _this.handleMouseLeave = function (event) {
+	      if (!_this.state.keyboardFocused) {
+	        _this.setState({
+	          zDepth: _this.state.initialZDepth,
+	          hovered: false
+	        });
+	      }
+	      if (_this.props.onMouseLeave) {
+	        _this.props.onMouseLeave(event);
+	      }
+	    }, _this.handleMouseEnter = function (event) {
+	      if (!_this.state.keyboardFocused && !_this.state.touched) {
+	        _this.setState({
+	          hovered: true
+	        });
+	      }
+	      if (_this.props.onMouseEnter) {
+	        _this.props.onMouseEnter(event);
+	      }
+	    }, _this.handleTouchStart = function (event) {
+	      _this.setState({
+	        touched: true,
+	        zDepth: _this.state.initialZDepth + 1
+	      });
+
+	      if (_this.props.onTouchStart) {
+	        _this.props.onTouchStart(event);
+	      }
+	    }, _this.handleTouchEnd = function (event) {
+	      _this.setState({
+	        touched: true,
+	        zDepth: _this.state.initialZDepth
+	      });
+
+	      if (_this.props.onTouchEnd) {
+	        _this.props.onTouchEnd(event);
+	      }
+	    }, _this.handleKeyboardFocus = function (event, keyboardFocused) {
+	      var zDepth = keyboardFocused && !_this.props.disabled ? _this.state.initialZDepth + 1 : _this.state.initialZDepth;
+
+	      _this.setState({
+	        zDepth: zDepth,
+	        keyboardFocused: keyboardFocused
+	      });
+	    }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
+	  }
+
+	  (0, _createClass3.default)(RaisedButton, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      var zDepth = this.props.disabled ? 0 : 1;
+	      this.setState({
+	        zDepth: zDepth,
+	        initialZDepth: zDepth
+	      });
+	    }
+	  }, {
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(nextProps) {
+	      var zDepth = nextProps.disabled ? 0 : 1;
+	      var nextState = {
+	        zDepth: zDepth,
+	        initialZDepth: zDepth
+	      };
+
+	      if (nextProps.disabled) {
+	        nextState.hovered = false;
+	      }
+
+	      this.setState(nextState);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props,
+	          backgroundColor = _props.backgroundColor,
+	          buttonStyle = _props.buttonStyle,
+	          children = _props.children,
+	          className = _props.className,
+	          disabled = _props.disabled,
+	          disabledBackgroundColor = _props.disabledBackgroundColor,
+	          disabledLabelColor = _props.disabledLabelColor,
+	          fullWidth = _props.fullWidth,
+	          icon = _props.icon,
+	          label = _props.label,
+	          labelColor = _props.labelColor,
+	          labelPosition = _props.labelPosition,
+	          labelStyle = _props.labelStyle,
+	          overlayStyle = _props.overlayStyle,
+	          primary = _props.primary,
+	          rippleStyle = _props.rippleStyle,
+	          secondary = _props.secondary,
+	          style = _props.style,
+	          other = (0, _objectWithoutProperties3.default)(_props, ['backgroundColor', 'buttonStyle', 'children', 'className', 'disabled', 'disabledBackgroundColor', 'disabledLabelColor', 'fullWidth', 'icon', 'label', 'labelColor', 'labelPosition', 'labelStyle', 'overlayStyle', 'primary', 'rippleStyle', 'secondary', 'style']);
+	      var prepareStyles = this.context.muiTheme.prepareStyles;
+
+	      var styles = getStyles(this.props, this.context, this.state);
+	      var mergedRippleStyles = (0, _simpleAssign2.default)({}, styles.ripple, rippleStyle);
+
+	      var buttonEventHandlers = disabled ? {} : {
+	        onMouseDown: this.handleMouseDown,
+	        onMouseUp: this.handleMouseUp,
+	        onMouseLeave: this.handleMouseLeave,
+	        onMouseEnter: this.handleMouseEnter,
+	        onTouchStart: this.handleTouchStart,
+	        onTouchEnd: this.handleTouchEnd,
+	        onKeyboardFocus: this.handleKeyboardFocus
+	      };
+
+	      var labelElement = label && _react2.default.createElement(
+	        'span',
+	        { style: prepareStyles((0, _simpleAssign2.default)(styles.label, labelStyle)) },
+	        label
+	      );
+
+	      var iconCloned = icon && (0, _react.cloneElement)(icon, {
+	        color: icon.props.color || styles.label.color,
+	        style: (0, _simpleAssign2.default)(styles.icon, icon.props.style)
+	      });
+
+	      // Place label before or after children.
+	      var childrenFragment = labelPosition === 'before' ? {
+	        labelElement: labelElement,
+	        iconCloned: iconCloned,
+	        children: children
+	      } : {
+	        children: children,
+	        iconCloned: iconCloned,
+	        labelElement: labelElement
+	      };
+
+	      var enhancedButtonChildren = (0, _childUtils.createChildFragment)(childrenFragment);
+
+	      return _react2.default.createElement(
+	        _Paper2.default,
+	        {
+	          className: className,
+	          style: (0, _simpleAssign2.default)(styles.root, style),
+	          zDepth: this.state.zDepth
+	        },
+	        _react2.default.createElement(
+	          _EnhancedButton2.default,
+	          (0, _extends3.default)({}, other, buttonEventHandlers, {
+	            ref: 'container',
+	            disabled: disabled,
+	            style: (0, _simpleAssign2.default)(styles.button, buttonStyle),
+	            focusRippleColor: mergedRippleStyles.color,
+	            touchRippleColor: mergedRippleStyles.color,
+	            focusRippleOpacity: mergedRippleStyles.opacity,
+	            touchRippleOpacity: mergedRippleStyles.opacity
+	          }),
+	          _react2.default.createElement(
+	            'div',
+	            {
+	              ref: 'overlay',
+	              style: prepareStyles((0, _simpleAssign2.default)(styles.overlay, overlayStyle))
+	            },
+	            enhancedButtonChildren
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	  return RaisedButton;
+	}(_react.Component);
+
+	RaisedButton.muiName = 'RaisedButton';
+	RaisedButton.defaultProps = {
+	  disabled: false,
+	  labelPosition: 'after',
+	  fullWidth: false,
+	  primary: false,
+	  secondary: false
+	};
+	RaisedButton.contextTypes = {
+	  muiTheme: _react.PropTypes.object.isRequired
+	};
+	process.env.NODE_ENV !== "production" ? RaisedButton.propTypes = {
+	  /**
+	   * Override the default background color for the button,
+	   * but not the default disabled background color
+	   * (use `disabledBackgroundColor` for this).
+	   */
+	  backgroundColor: _react.PropTypes.string,
+	  /**
+	   * Override the inline-styles of the button element.
+	   */
+	  buttonStyle: _react.PropTypes.object,
+	  /**
+	   * The content of the button.
+	   * If a label is provided via the `label` prop, the text within the label
+	   * will be displayed in addition to the content provided here.
+	   */
+	  children: _react.PropTypes.node,
+	  /**
+	   * The CSS class name of the root element.
+	   */
+	  className: _react.PropTypes.string,
+	  /**
+	   * If true, the button will be disabled.
+	   */
+	  disabled: _react.PropTypes.bool,
+	  /**
+	   * Override the default background color for the button
+	   * when it is disabled.
+	   */
+	  disabledBackgroundColor: _react.PropTypes.string,
+	  /**
+	   * The color of the button's label when the button is disabled.
+	   */
+	  disabledLabelColor: _react.PropTypes.string,
+	  /**
+	   * If true, the button will take up the full width of its container.
+	   */
+	  fullWidth: _react.PropTypes.bool,
+	  /**
+	   * The URL to link to when the button is clicked.
+	   */
+	  href: _react.PropTypes.string,
+	  /**
+	   * An icon to be displayed within the button.
+	   */
+	  icon: _react.PropTypes.node,
+	  /**
+	   * The label to be displayed within the button.
+	   * If content is provided via the `children` prop, that content will be
+	   * displayed in addition to the label provided here.
+	   */
+	  label: validateLabel,
+	  /**
+	   * The color of the button's label.
+	   */
+	  labelColor: _react.PropTypes.string,
+	  /**
+	   * The position of the button's label relative to the button's `children`.
+	   */
+	  labelPosition: _react.PropTypes.oneOf(['before', 'after']),
+	  /**
+	   * Override the inline-styles of the button's label element.
+	   */
+	  labelStyle: _react.PropTypes.object,
+	  /** @ignore */
+	  onMouseDown: _react.PropTypes.func,
+	  /** @ignore */
+	  onMouseEnter: _react.PropTypes.func,
+	  /** @ignore */
+	  onMouseLeave: _react.PropTypes.func,
+	  /** @ignore */
+	  onMouseUp: _react.PropTypes.func,
+	  /** @ignore */
+	  onTouchEnd: _react.PropTypes.func,
+	  /** @ignore */
+	  onTouchStart: _react.PropTypes.func,
+	  /**
+	   * Override the inline style of the button overlay.
+	   */
+	  overlayStyle: _react.PropTypes.object,
+	  /**
+	   * If true, the button will use the theme's primary color.
+	   */
+	  primary: _react.PropTypes.bool,
+	  /**
+	   * Override the inline style of the ripple element.
+	   */
+	  rippleStyle: _react.PropTypes.object,
+	  /**
+	   * If true, the button will use the theme's secondary color.
+	   * If both `secondary` and `primary` are true, the button will use
+	   * the theme's primary color.
+	   */
+	  secondary: _react.PropTypes.bool,
+	  /**
+	   * Override the inline-styles of the root element.
+	   */
+	  style: _react.PropTypes.object
+	} : void 0;
+	exports.default = RaisedButton;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(328)))
+
+/***/ }),
+/* 732 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = undefined;
+
+	var _Paper = __webpack_require__(733);
+
+	var _Paper2 = _interopRequireDefault(_Paper);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _Paper2.default;
+
+/***/ }),
+/* 733 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends2 = __webpack_require__(670);
+
+	var _extends3 = _interopRequireDefault(_extends2);
+
+	var _objectWithoutProperties2 = __webpack_require__(675);
+
+	var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
+
+	var _getPrototypeOf = __webpack_require__(505);
+
+	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+	var _classCallCheck2 = __webpack_require__(531);
+
+	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+	var _createClass2 = __webpack_require__(532);
+
+	var _createClass3 = _interopRequireDefault(_createClass2);
+
+	var _possibleConstructorReturn2 = __webpack_require__(536);
+
+	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+	var _inherits2 = __webpack_require__(582);
+
+	var _inherits3 = _interopRequireDefault(_inherits2);
+
+	var _simpleAssign = __webpack_require__(676);
+
+	var _simpleAssign2 = _interopRequireDefault(_simpleAssign);
+
+	var _react = __webpack_require__(326);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _propTypes = __webpack_require__(706);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _transitions = __webpack_require__(681);
+
+	var _transitions2 = _interopRequireDefault(_transitions);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function getStyles(props, context) {
+	  var rounded = props.rounded,
+	      circle = props.circle,
+	      transitionEnabled = props.transitionEnabled,
+	      zDepth = props.zDepth;
+	  var _context$muiTheme = context.muiTheme,
+	      baseTheme = _context$muiTheme.baseTheme,
+	      paper = _context$muiTheme.paper;
+
+
+	  return {
+	    root: {
+	      color: paper.color,
+	      backgroundColor: paper.backgroundColor,
+	      transition: transitionEnabled && _transitions2.default.easeOut(),
+	      boxSizing: 'border-box',
+	      fontFamily: baseTheme.fontFamily,
+	      WebkitTapHighlightColor: 'rgba(0,0,0,0)', // Remove mobile color flashing (deprecated)
+	      boxShadow: paper.zDepthShadows[zDepth - 1], // No shadow for 0 depth papers
+	      borderRadius: circle ? '50%' : rounded ? '2px' : '0px'
+	    }
+	  };
+	}
+
+	var Paper = function (_Component) {
+	  (0, _inherits3.default)(Paper, _Component);
+
+	  function Paper() {
+	    (0, _classCallCheck3.default)(this, Paper);
+	    return (0, _possibleConstructorReturn3.default)(this, (Paper.__proto__ || (0, _getPrototypeOf2.default)(Paper)).apply(this, arguments));
+	  }
+
+	  (0, _createClass3.default)(Paper, [{
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props,
+	          children = _props.children,
+	          circle = _props.circle,
+	          rounded = _props.rounded,
+	          style = _props.style,
+	          transitionEnabled = _props.transitionEnabled,
+	          zDepth = _props.zDepth,
+	          other = (0, _objectWithoutProperties3.default)(_props, ['children', 'circle', 'rounded', 'style', 'transitionEnabled', 'zDepth']);
+	      var prepareStyles = this.context.muiTheme.prepareStyles;
+
+	      var styles = getStyles(this.props, this.context);
+
+	      return _react2.default.createElement(
+	        'div',
+	        (0, _extends3.default)({}, other, { style: prepareStyles((0, _simpleAssign2.default)(styles.root, style)) }),
+	        children
+	      );
+	    }
+	  }]);
+	  return Paper;
+	}(_react.Component);
+
+	Paper.defaultProps = {
+	  circle: false,
+	  rounded: true,
+	  transitionEnabled: true,
+	  zDepth: 1
+	};
+	Paper.contextTypes = {
+	  muiTheme: _react.PropTypes.object.isRequired
+	};
+	process.env.NODE_ENV !== "production" ? Paper.propTypes = {
+	  /**
+	   * Children passed into the paper element.
+	   */
+	  children: _react.PropTypes.node,
+	  /**
+	   * Set to true to generate a circlular paper container.
+	   */
+	  circle: _react.PropTypes.bool,
+	  /**
+	   * By default, the paper container will have a border radius.
+	   * Set this to false to generate a container with sharp corners.
+	   */
+	  rounded: _react.PropTypes.bool,
+	  /**
+	   * Override the inline-styles of the root element.
+	   */
+	  style: _react.PropTypes.object,
+	  /**
+	   * Set to false to disable CSS transitions for the paper element.
+	   */
+	  transitionEnabled: _react.PropTypes.bool,
+	  /**
+	   * This number represents the zDepth of the paper shadow.
+	   */
+	  zDepth: _propTypes2.default.zDepth
+	} : void 0;
+	exports.default = Paper;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(328)))
+
+/***/ }),
+/* 734 */,
+/* 735 */,
+/* 736 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	(function webpackUniversalModuleDefinition(root, factory) {
@@ -38362,9 +39066,9 @@
 	;
 
 /***/ }),
-/* 727 */,
-/* 728 */,
-/* 729 */
+/* 737 */,
+/* 738 */,
+/* 739 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -38374,7 +39078,7 @@
 	});
 	exports.default = undefined;
 
-	var _Slider = __webpack_require__(730);
+	var _Slider = __webpack_require__(740);
 
 	var _Slider2 = _interopRequireDefault(_Slider);
 
@@ -38383,7 +39087,7 @@
 	exports.default = _Slider2.default;
 
 /***/ }),
-/* 730 */
+/* 740 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -38420,7 +39124,7 @@
 
 	var _inherits3 = _interopRequireDefault(_inherits2);
 
-	var _defineProperty2 = __webpack_require__(731);
+	var _defineProperty2 = __webpack_require__(729);
 
 	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 
@@ -38448,7 +39152,7 @@
 
 	var _FocusRipple2 = _interopRequireDefault(_FocusRipple);
 
-	var _deprecatedPropType = __webpack_require__(732);
+	var _deprecatedPropType = __webpack_require__(741);
 
 	var _deprecatedPropType2 = _interopRequireDefault(_deprecatedPropType);
 
@@ -39237,36 +39941,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(328)))
 
 /***/ }),
-/* 731 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	exports.__esModule = true;
-
-	var _defineProperty = __webpack_require__(533);
-
-	var _defineProperty2 = _interopRequireDefault(_defineProperty);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	exports.default = function (obj, key, value) {
-	  if (key in obj) {
-	    (0, _defineProperty2.default)(obj, key, {
-	      value: value,
-	      enumerable: true,
-	      configurable: true,
-	      writable: true
-	    });
-	  } else {
-	    obj[key] = value;
-	  }
-
-	  return obj;
-	};
-
-/***/ }),
-/* 732 */
+/* 741 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -39310,8 +39985,8 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(328)))
 
 /***/ }),
-/* 733 */,
-/* 734 */
+/* 742 */,
+/* 743 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39321,7 +39996,7 @@
 	});
 	exports.default = undefined;
 
-	var _CircularProgress = __webpack_require__(735);
+	var _CircularProgress = __webpack_require__(744);
 
 	var _CircularProgress2 = _interopRequireDefault(_CircularProgress);
 
@@ -39330,7 +40005,7 @@
 	exports.default = _CircularProgress2.default;
 
 /***/ }),
-/* 735 */
+/* 744 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -39603,20 +40278,20 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(328)))
 
 /***/ }),
-/* 736 */,
-/* 737 */,
-/* 738 */,
-/* 739 */,
-/* 740 */,
-/* 741 */,
-/* 742 */,
-/* 743 */,
-/* 744 */,
 /* 745 */,
 /* 746 */,
 /* 747 */,
 /* 748 */,
-/* 749 */
+/* 749 */,
+/* 750 */,
+/* 751 */,
+/* 752 */,
+/* 753 */,
+/* 754 */,
+/* 755 */,
+/* 756 */,
+/* 757 */,
+/* 758 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var apply = Function.prototype.apply;
@@ -39669,13 +40344,13 @@
 	};
 
 	// setimmediate attaches itself to the global object
-	__webpack_require__(750);
+	__webpack_require__(759);
 	exports.setImmediate = setImmediate;
 	exports.clearImmediate = clearImmediate;
 
 
 /***/ }),
-/* 750 */
+/* 759 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -39868,11 +40543,11 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(328)))
 
 /***/ }),
-/* 751 */,
-/* 752 */,
-/* 753 */,
-/* 754 */,
-/* 755 */
+/* 760 */,
+/* 761 */,
+/* 762 */,
+/* 763 */,
+/* 764 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39887,21 +40562,21 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _TextField = __webpack_require__(756);
+	var _TextField = __webpack_require__(765);
 
 	var _TextField2 = _interopRequireDefault(_TextField);
 
-	var _LinearProgress = __webpack_require__(765);
+	var _LinearProgress = __webpack_require__(774);
 
 	var _LinearProgress2 = _interopRequireDefault(_LinearProgress);
 
-	var _RaisedButton = __webpack_require__(767);
+	var _RaisedButton = __webpack_require__(730);
 
 	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
 
 	var _utils = __webpack_require__(725);
 
-	__webpack_require__(771);
+	__webpack_require__(776);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -40080,7 +40755,7 @@
 	};
 
 /***/ }),
-/* 756 */
+/* 765 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40090,7 +40765,7 @@
 	});
 	exports.default = undefined;
 
-	var _TextField = __webpack_require__(757);
+	var _TextField = __webpack_require__(766);
 
 	var _TextField2 = _interopRequireDefault(_TextField);
 
@@ -40099,7 +40774,7 @@
 	exports.default = _TextField2.default;
 
 /***/ }),
-/* 757 */
+/* 766 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -40156,19 +40831,19 @@
 
 	var _transitions2 = _interopRequireDefault(_transitions);
 
-	var _EnhancedTextarea = __webpack_require__(758);
+	var _EnhancedTextarea = __webpack_require__(767);
 
 	var _EnhancedTextarea2 = _interopRequireDefault(_EnhancedTextarea);
 
-	var _TextFieldHint = __webpack_require__(762);
+	var _TextFieldHint = __webpack_require__(771);
 
 	var _TextFieldHint2 = _interopRequireDefault(_TextFieldHint);
 
-	var _TextFieldLabel = __webpack_require__(763);
+	var _TextFieldLabel = __webpack_require__(772);
 
 	var _TextFieldLabel2 = _interopRequireDefault(_TextFieldLabel);
 
-	var _TextFieldUnderline = __webpack_require__(764);
+	var _TextFieldUnderline = __webpack_require__(773);
 
 	var _TextFieldUnderline2 = _interopRequireDefault(_TextFieldUnderline);
 
@@ -40680,7 +41355,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(328)))
 
 /***/ }),
-/* 758 */
+/* 767 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -40725,7 +41400,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactEventListener = __webpack_require__(759);
+	var _reactEventListener = __webpack_require__(768);
 
 	var _reactEventListener2 = _interopRequireDefault(_reactEventListener);
 
@@ -40926,7 +41601,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(328)))
 
 /***/ }),
-/* 759 */
+/* 768 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -40989,7 +41664,7 @@
 
 	var _warning2 = _interopRequireDefault(_warning);
 
-	var _supports = __webpack_require__(760);
+	var _supports = __webpack_require__(769);
 
 	var supports = _interopRequireWildcard(_supports);
 
@@ -41156,7 +41831,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(328)))
 
 /***/ }),
-/* 760 */
+/* 769 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41166,7 +41841,7 @@
 	});
 	exports.passiveOption = exports.detachEvent = exports.attachEvent = exports.removeEventListener = exports.addEventListener = exports.canUseDOM = undefined;
 
-	var _defineProperty = __webpack_require__(761);
+	var _defineProperty = __webpack_require__(770);
 
 	var _defineProperty2 = _interopRequireDefault(_defineProperty);
 
@@ -41209,7 +41884,7 @@
 	}();
 
 /***/ }),
-/* 761 */
+/* 770 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -41233,7 +41908,7 @@
 	}
 
 /***/ }),
-/* 762 */
+/* 771 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -41315,7 +41990,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(328)))
 
 /***/ }),
-/* 763 */
+/* 772 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -41434,7 +42109,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(328)))
 
 /***/ }),
-/* 764 */
+/* 773 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -41572,7 +42247,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(328)))
 
 /***/ }),
-/* 765 */
+/* 774 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41582,7 +42257,7 @@
 	});
 	exports.default = undefined;
 
-	var _LinearProgress = __webpack_require__(766);
+	var _LinearProgress = __webpack_require__(775);
 
 	var _LinearProgress2 = _interopRequireDefault(_LinearProgress);
 
@@ -41591,7 +42266,7 @@
 	exports.default = _LinearProgress2.default;
 
 /***/ }),
-/* 766 */
+/* 775 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -41822,683 +42497,13 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(328)))
 
 /***/ }),
-/* 767 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = undefined;
-
-	var _RaisedButton = __webpack_require__(768);
-
-	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	exports.default = _RaisedButton2.default;
-
-/***/ }),
-/* 768 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _extends2 = __webpack_require__(670);
-
-	var _extends3 = _interopRequireDefault(_extends2);
-
-	var _objectWithoutProperties2 = __webpack_require__(675);
-
-	var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
-
-	var _getPrototypeOf = __webpack_require__(505);
-
-	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
-
-	var _classCallCheck2 = __webpack_require__(531);
-
-	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-	var _createClass2 = __webpack_require__(532);
-
-	var _createClass3 = _interopRequireDefault(_createClass2);
-
-	var _possibleConstructorReturn2 = __webpack_require__(536);
-
-	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
-
-	var _inherits2 = __webpack_require__(582);
-
-	var _inherits3 = _interopRequireDefault(_inherits2);
-
-	var _simpleAssign = __webpack_require__(676);
-
-	var _simpleAssign2 = _interopRequireDefault(_simpleAssign);
-
-	var _react = __webpack_require__(326);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _transitions = __webpack_require__(681);
-
-	var _transitions2 = _interopRequireDefault(_transitions);
-
-	var _colorManipulator = __webpack_require__(603);
-
-	var _childUtils = __webpack_require__(683);
-
-	var _EnhancedButton = __webpack_require__(682);
-
-	var _EnhancedButton2 = _interopRequireDefault(_EnhancedButton);
-
-	var _Paper = __webpack_require__(769);
-
-	var _Paper2 = _interopRequireDefault(_Paper);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function validateLabel(props, propName, componentName) {
-	  if (process.env.NODE_ENV !== 'production') {
-	    if (!props.children && props.label !== 0 && !props.label && !props.icon) {
-	      return new Error('Required prop label or children or icon was not specified in ' + componentName + '.');
-	    }
-	  }
-	}
-
-	function getStyles(props, context, state) {
-	  var _context$muiTheme = context.muiTheme,
-	      baseTheme = _context$muiTheme.baseTheme,
-	      button = _context$muiTheme.button,
-	      raisedButton = _context$muiTheme.raisedButton;
-	  var disabled = props.disabled,
-	      disabledBackgroundColor = props.disabledBackgroundColor,
-	      disabledLabelColor = props.disabledLabelColor,
-	      fullWidth = props.fullWidth,
-	      icon = props.icon,
-	      label = props.label,
-	      labelPosition = props.labelPosition,
-	      primary = props.primary,
-	      secondary = props.secondary,
-	      style = props.style;
-
-
-	  var amount = primary || secondary ? 0.4 : 0.08;
-
-	  var backgroundColor = raisedButton.color;
-	  var labelColor = raisedButton.textColor;
-
-	  if (disabled) {
-	    backgroundColor = disabledBackgroundColor || raisedButton.disabledColor;
-	    labelColor = disabledLabelColor || raisedButton.disabledTextColor;
-	  } else if (primary) {
-	    backgroundColor = raisedButton.primaryColor;
-	    labelColor = raisedButton.primaryTextColor;
-	  } else if (secondary) {
-	    backgroundColor = raisedButton.secondaryColor;
-	    labelColor = raisedButton.secondaryTextColor;
-	  } else {
-	    if (props.backgroundColor) {
-	      backgroundColor = props.backgroundColor;
-	    }
-	    if (props.labelColor) {
-	      labelColor = props.labelColor;
-	    }
-	  }
-
-	  var buttonHeight = style && style.height || button.height;
-	  var borderRadius = 2;
-
-	  return {
-	    root: {
-	      display: 'inline-block',
-	      transition: _transitions2.default.easeOut(),
-	      minWidth: fullWidth ? '100%' : button.minWidth
-	    },
-	    button: {
-	      height: buttonHeight,
-	      lineHeight: buttonHeight + 'px',
-	      width: '100%',
-	      padding: 0,
-	      borderRadius: borderRadius,
-	      transition: _transitions2.default.easeOut(),
-	      backgroundColor: backgroundColor,
-	      // That's the default value for a button but not a link
-	      textAlign: 'center'
-	    },
-	    label: {
-	      position: 'relative',
-	      opacity: 1,
-	      fontSize: raisedButton.fontSize,
-	      letterSpacing: 0,
-	      textTransform: raisedButton.textTransform || button.textTransform || 'uppercase',
-	      fontWeight: raisedButton.fontWeight,
-	      margin: 0,
-	      userSelect: 'none',
-	      paddingLeft: icon && labelPosition !== 'before' ? 8 : baseTheme.spacing.desktopGutterLess,
-	      paddingRight: icon && labelPosition === 'before' ? 8 : baseTheme.spacing.desktopGutterLess,
-	      color: labelColor
-	    },
-	    icon: {
-	      verticalAlign: 'middle',
-	      marginLeft: label && labelPosition !== 'before' ? 12 : 0,
-	      marginRight: label && labelPosition === 'before' ? 12 : 0
-	    },
-	    overlay: {
-	      height: buttonHeight,
-	      borderRadius: borderRadius,
-	      backgroundColor: (state.keyboardFocused || state.hovered) && !disabled && (0, _colorManipulator.fade)(labelColor, amount),
-	      transition: _transitions2.default.easeOut(),
-	      top: 0
-	    },
-	    ripple: {
-	      color: labelColor,
-	      opacity: !(primary || secondary) ? 0.1 : 0.16
-	    }
-	  };
-	}
-
-	var RaisedButton = function (_Component) {
-	  (0, _inherits3.default)(RaisedButton, _Component);
-
-	  function RaisedButton() {
-	    var _ref;
-
-	    var _temp, _this, _ret;
-
-	    (0, _classCallCheck3.default)(this, RaisedButton);
-
-	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-	      args[_key] = arguments[_key];
-	    }
-
-	    return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = RaisedButton.__proto__ || (0, _getPrototypeOf2.default)(RaisedButton)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-	      hovered: false,
-	      keyboardFocused: false,
-	      touched: false,
-	      initialZDepth: 0,
-	      zDepth: 0
-	    }, _this.handleMouseDown = function (event) {
-	      // only listen to left clicks
-	      if (event.button === 0) {
-	        _this.setState({
-	          zDepth: _this.state.initialZDepth + 1
-	        });
-	      }
-	      if (_this.props.onMouseDown) {
-	        _this.props.onMouseDown(event);
-	      }
-	    }, _this.handleMouseUp = function (event) {
-	      _this.setState({
-	        zDepth: _this.state.initialZDepth
-	      });
-	      if (_this.props.onMouseUp) {
-	        _this.props.onMouseUp(event);
-	      }
-	    }, _this.handleMouseLeave = function (event) {
-	      if (!_this.state.keyboardFocused) {
-	        _this.setState({
-	          zDepth: _this.state.initialZDepth,
-	          hovered: false
-	        });
-	      }
-	      if (_this.props.onMouseLeave) {
-	        _this.props.onMouseLeave(event);
-	      }
-	    }, _this.handleMouseEnter = function (event) {
-	      if (!_this.state.keyboardFocused && !_this.state.touched) {
-	        _this.setState({
-	          hovered: true
-	        });
-	      }
-	      if (_this.props.onMouseEnter) {
-	        _this.props.onMouseEnter(event);
-	      }
-	    }, _this.handleTouchStart = function (event) {
-	      _this.setState({
-	        touched: true,
-	        zDepth: _this.state.initialZDepth + 1
-	      });
-
-	      if (_this.props.onTouchStart) {
-	        _this.props.onTouchStart(event);
-	      }
-	    }, _this.handleTouchEnd = function (event) {
-	      _this.setState({
-	        touched: true,
-	        zDepth: _this.state.initialZDepth
-	      });
-
-	      if (_this.props.onTouchEnd) {
-	        _this.props.onTouchEnd(event);
-	      }
-	    }, _this.handleKeyboardFocus = function (event, keyboardFocused) {
-	      var zDepth = keyboardFocused && !_this.props.disabled ? _this.state.initialZDepth + 1 : _this.state.initialZDepth;
-
-	      _this.setState({
-	        zDepth: zDepth,
-	        keyboardFocused: keyboardFocused
-	      });
-	    }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
-	  }
-
-	  (0, _createClass3.default)(RaisedButton, [{
-	    key: 'componentWillMount',
-	    value: function componentWillMount() {
-	      var zDepth = this.props.disabled ? 0 : 1;
-	      this.setState({
-	        zDepth: zDepth,
-	        initialZDepth: zDepth
-	      });
-	    }
-	  }, {
-	    key: 'componentWillReceiveProps',
-	    value: function componentWillReceiveProps(nextProps) {
-	      var zDepth = nextProps.disabled ? 0 : 1;
-	      var nextState = {
-	        zDepth: zDepth,
-	        initialZDepth: zDepth
-	      };
-
-	      if (nextProps.disabled) {
-	        nextState.hovered = false;
-	      }
-
-	      this.setState(nextState);
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _props = this.props,
-	          backgroundColor = _props.backgroundColor,
-	          buttonStyle = _props.buttonStyle,
-	          children = _props.children,
-	          className = _props.className,
-	          disabled = _props.disabled,
-	          disabledBackgroundColor = _props.disabledBackgroundColor,
-	          disabledLabelColor = _props.disabledLabelColor,
-	          fullWidth = _props.fullWidth,
-	          icon = _props.icon,
-	          label = _props.label,
-	          labelColor = _props.labelColor,
-	          labelPosition = _props.labelPosition,
-	          labelStyle = _props.labelStyle,
-	          overlayStyle = _props.overlayStyle,
-	          primary = _props.primary,
-	          rippleStyle = _props.rippleStyle,
-	          secondary = _props.secondary,
-	          style = _props.style,
-	          other = (0, _objectWithoutProperties3.default)(_props, ['backgroundColor', 'buttonStyle', 'children', 'className', 'disabled', 'disabledBackgroundColor', 'disabledLabelColor', 'fullWidth', 'icon', 'label', 'labelColor', 'labelPosition', 'labelStyle', 'overlayStyle', 'primary', 'rippleStyle', 'secondary', 'style']);
-	      var prepareStyles = this.context.muiTheme.prepareStyles;
-
-	      var styles = getStyles(this.props, this.context, this.state);
-	      var mergedRippleStyles = (0, _simpleAssign2.default)({}, styles.ripple, rippleStyle);
-
-	      var buttonEventHandlers = disabled ? {} : {
-	        onMouseDown: this.handleMouseDown,
-	        onMouseUp: this.handleMouseUp,
-	        onMouseLeave: this.handleMouseLeave,
-	        onMouseEnter: this.handleMouseEnter,
-	        onTouchStart: this.handleTouchStart,
-	        onTouchEnd: this.handleTouchEnd,
-	        onKeyboardFocus: this.handleKeyboardFocus
-	      };
-
-	      var labelElement = label && _react2.default.createElement(
-	        'span',
-	        { style: prepareStyles((0, _simpleAssign2.default)(styles.label, labelStyle)) },
-	        label
-	      );
-
-	      var iconCloned = icon && (0, _react.cloneElement)(icon, {
-	        color: icon.props.color || styles.label.color,
-	        style: (0, _simpleAssign2.default)(styles.icon, icon.props.style)
-	      });
-
-	      // Place label before or after children.
-	      var childrenFragment = labelPosition === 'before' ? {
-	        labelElement: labelElement,
-	        iconCloned: iconCloned,
-	        children: children
-	      } : {
-	        children: children,
-	        iconCloned: iconCloned,
-	        labelElement: labelElement
-	      };
-
-	      var enhancedButtonChildren = (0, _childUtils.createChildFragment)(childrenFragment);
-
-	      return _react2.default.createElement(
-	        _Paper2.default,
-	        {
-	          className: className,
-	          style: (0, _simpleAssign2.default)(styles.root, style),
-	          zDepth: this.state.zDepth
-	        },
-	        _react2.default.createElement(
-	          _EnhancedButton2.default,
-	          (0, _extends3.default)({}, other, buttonEventHandlers, {
-	            ref: 'container',
-	            disabled: disabled,
-	            style: (0, _simpleAssign2.default)(styles.button, buttonStyle),
-	            focusRippleColor: mergedRippleStyles.color,
-	            touchRippleColor: mergedRippleStyles.color,
-	            focusRippleOpacity: mergedRippleStyles.opacity,
-	            touchRippleOpacity: mergedRippleStyles.opacity
-	          }),
-	          _react2.default.createElement(
-	            'div',
-	            {
-	              ref: 'overlay',
-	              style: prepareStyles((0, _simpleAssign2.default)(styles.overlay, overlayStyle))
-	            },
-	            enhancedButtonChildren
-	          )
-	        )
-	      );
-	    }
-	  }]);
-	  return RaisedButton;
-	}(_react.Component);
-
-	RaisedButton.muiName = 'RaisedButton';
-	RaisedButton.defaultProps = {
-	  disabled: false,
-	  labelPosition: 'after',
-	  fullWidth: false,
-	  primary: false,
-	  secondary: false
-	};
-	RaisedButton.contextTypes = {
-	  muiTheme: _react.PropTypes.object.isRequired
-	};
-	process.env.NODE_ENV !== "production" ? RaisedButton.propTypes = {
-	  /**
-	   * Override the default background color for the button,
-	   * but not the default disabled background color
-	   * (use `disabledBackgroundColor` for this).
-	   */
-	  backgroundColor: _react.PropTypes.string,
-	  /**
-	   * Override the inline-styles of the button element.
-	   */
-	  buttonStyle: _react.PropTypes.object,
-	  /**
-	   * The content of the button.
-	   * If a label is provided via the `label` prop, the text within the label
-	   * will be displayed in addition to the content provided here.
-	   */
-	  children: _react.PropTypes.node,
-	  /**
-	   * The CSS class name of the root element.
-	   */
-	  className: _react.PropTypes.string,
-	  /**
-	   * If true, the button will be disabled.
-	   */
-	  disabled: _react.PropTypes.bool,
-	  /**
-	   * Override the default background color for the button
-	   * when it is disabled.
-	   */
-	  disabledBackgroundColor: _react.PropTypes.string,
-	  /**
-	   * The color of the button's label when the button is disabled.
-	   */
-	  disabledLabelColor: _react.PropTypes.string,
-	  /**
-	   * If true, the button will take up the full width of its container.
-	   */
-	  fullWidth: _react.PropTypes.bool,
-	  /**
-	   * The URL to link to when the button is clicked.
-	   */
-	  href: _react.PropTypes.string,
-	  /**
-	   * An icon to be displayed within the button.
-	   */
-	  icon: _react.PropTypes.node,
-	  /**
-	   * The label to be displayed within the button.
-	   * If content is provided via the `children` prop, that content will be
-	   * displayed in addition to the label provided here.
-	   */
-	  label: validateLabel,
-	  /**
-	   * The color of the button's label.
-	   */
-	  labelColor: _react.PropTypes.string,
-	  /**
-	   * The position of the button's label relative to the button's `children`.
-	   */
-	  labelPosition: _react.PropTypes.oneOf(['before', 'after']),
-	  /**
-	   * Override the inline-styles of the button's label element.
-	   */
-	  labelStyle: _react.PropTypes.object,
-	  /** @ignore */
-	  onMouseDown: _react.PropTypes.func,
-	  /** @ignore */
-	  onMouseEnter: _react.PropTypes.func,
-	  /** @ignore */
-	  onMouseLeave: _react.PropTypes.func,
-	  /** @ignore */
-	  onMouseUp: _react.PropTypes.func,
-	  /** @ignore */
-	  onTouchEnd: _react.PropTypes.func,
-	  /** @ignore */
-	  onTouchStart: _react.PropTypes.func,
-	  /**
-	   * Override the inline style of the button overlay.
-	   */
-	  overlayStyle: _react.PropTypes.object,
-	  /**
-	   * If true, the button will use the theme's primary color.
-	   */
-	  primary: _react.PropTypes.bool,
-	  /**
-	   * Override the inline style of the ripple element.
-	   */
-	  rippleStyle: _react.PropTypes.object,
-	  /**
-	   * If true, the button will use the theme's secondary color.
-	   * If both `secondary` and `primary` are true, the button will use
-	   * the theme's primary color.
-	   */
-	  secondary: _react.PropTypes.bool,
-	  /**
-	   * Override the inline-styles of the root element.
-	   */
-	  style: _react.PropTypes.object
-	} : void 0;
-	exports.default = RaisedButton;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(328)))
-
-/***/ }),
-/* 769 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = undefined;
-
-	var _Paper = __webpack_require__(770);
-
-	var _Paper2 = _interopRequireDefault(_Paper);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	exports.default = _Paper2.default;
-
-/***/ }),
-/* 770 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _extends2 = __webpack_require__(670);
-
-	var _extends3 = _interopRequireDefault(_extends2);
-
-	var _objectWithoutProperties2 = __webpack_require__(675);
-
-	var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
-
-	var _getPrototypeOf = __webpack_require__(505);
-
-	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
-
-	var _classCallCheck2 = __webpack_require__(531);
-
-	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-	var _createClass2 = __webpack_require__(532);
-
-	var _createClass3 = _interopRequireDefault(_createClass2);
-
-	var _possibleConstructorReturn2 = __webpack_require__(536);
-
-	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
-
-	var _inherits2 = __webpack_require__(582);
-
-	var _inherits3 = _interopRequireDefault(_inherits2);
-
-	var _simpleAssign = __webpack_require__(676);
-
-	var _simpleAssign2 = _interopRequireDefault(_simpleAssign);
-
-	var _react = __webpack_require__(326);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _propTypes = __webpack_require__(706);
-
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-
-	var _transitions = __webpack_require__(681);
-
-	var _transitions2 = _interopRequireDefault(_transitions);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function getStyles(props, context) {
-	  var rounded = props.rounded,
-	      circle = props.circle,
-	      transitionEnabled = props.transitionEnabled,
-	      zDepth = props.zDepth;
-	  var _context$muiTheme = context.muiTheme,
-	      baseTheme = _context$muiTheme.baseTheme,
-	      paper = _context$muiTheme.paper;
-
-
-	  return {
-	    root: {
-	      color: paper.color,
-	      backgroundColor: paper.backgroundColor,
-	      transition: transitionEnabled && _transitions2.default.easeOut(),
-	      boxSizing: 'border-box',
-	      fontFamily: baseTheme.fontFamily,
-	      WebkitTapHighlightColor: 'rgba(0,0,0,0)', // Remove mobile color flashing (deprecated)
-	      boxShadow: paper.zDepthShadows[zDepth - 1], // No shadow for 0 depth papers
-	      borderRadius: circle ? '50%' : rounded ? '2px' : '0px'
-	    }
-	  };
-	}
-
-	var Paper = function (_Component) {
-	  (0, _inherits3.default)(Paper, _Component);
-
-	  function Paper() {
-	    (0, _classCallCheck3.default)(this, Paper);
-	    return (0, _possibleConstructorReturn3.default)(this, (Paper.__proto__ || (0, _getPrototypeOf2.default)(Paper)).apply(this, arguments));
-	  }
-
-	  (0, _createClass3.default)(Paper, [{
-	    key: 'render',
-	    value: function render() {
-	      var _props = this.props,
-	          children = _props.children,
-	          circle = _props.circle,
-	          rounded = _props.rounded,
-	          style = _props.style,
-	          transitionEnabled = _props.transitionEnabled,
-	          zDepth = _props.zDepth,
-	          other = (0, _objectWithoutProperties3.default)(_props, ['children', 'circle', 'rounded', 'style', 'transitionEnabled', 'zDepth']);
-	      var prepareStyles = this.context.muiTheme.prepareStyles;
-
-	      var styles = getStyles(this.props, this.context);
-
-	      return _react2.default.createElement(
-	        'div',
-	        (0, _extends3.default)({}, other, { style: prepareStyles((0, _simpleAssign2.default)(styles.root, style)) }),
-	        children
-	      );
-	    }
-	  }]);
-	  return Paper;
-	}(_react.Component);
-
-	Paper.defaultProps = {
-	  circle: false,
-	  rounded: true,
-	  transitionEnabled: true,
-	  zDepth: 1
-	};
-	Paper.contextTypes = {
-	  muiTheme: _react.PropTypes.object.isRequired
-	};
-	process.env.NODE_ENV !== "production" ? Paper.propTypes = {
-	  /**
-	   * Children passed into the paper element.
-	   */
-	  children: _react.PropTypes.node,
-	  /**
-	   * Set to true to generate a circlular paper container.
-	   */
-	  circle: _react.PropTypes.bool,
-	  /**
-	   * By default, the paper container will have a border radius.
-	   * Set this to false to generate a container with sharp corners.
-	   */
-	  rounded: _react.PropTypes.bool,
-	  /**
-	   * Override the inline-styles of the root element.
-	   */
-	  style: _react.PropTypes.object,
-	  /**
-	   * Set to false to disable CSS transitions for the paper element.
-	   */
-	  transitionEnabled: _react.PropTypes.bool,
-	  /**
-	   * This number represents the zDepth of the paper shadow.
-	   */
-	  zDepth: _propTypes2.default.zDepth
-	} : void 0;
-	exports.default = Paper;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(328)))
-
-/***/ }),
-/* 771 */
+/* 776 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(772);
+	var content = __webpack_require__(777);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(661)(content, {});
@@ -42518,7 +42523,7 @@
 	}
 
 /***/ }),
-/* 772 */
+/* 777 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(656)();
@@ -42532,7 +42537,7 @@
 
 
 /***/ }),
-/* 773 */
+/* 778 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/*global XDomainRequest */
@@ -42552,9 +42557,9 @@
 	//     requestedValuesTimeStamp
 	//     receivedValuesTimeStamp
 
-	var RSVP = __webpack_require__(774);
+	var RSVP = __webpack_require__(779);
 
-	var EventEmitter2 = __webpack_require__(776).EventEmitter2;
+	var EventEmitter2 = __webpack_require__(781).EventEmitter2;
 	var events = new EventEmitter2({
 	    wildcard: true
 	});
@@ -42887,7 +42892,7 @@
 
 
 /***/ }),
-/* 774 */
+/* 779 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var require;/* WEBPACK VAR INJECTION */(function(process, setImmediate, global) {/*!
@@ -45316,7 +45321,7 @@
 	function attemptVertex() {
 	  try {
 	    var r = require;
-	    var vertx = __webpack_require__(775);
+	    var vertx = __webpack_require__(780);
 	    vertxNext = vertx.runOnLoop || vertx.runOnContext;
 	    return useVertxTimer();
 	  } catch (e) {
@@ -45436,16 +45441,16 @@
 
 	//# sourceMappingURL=rsvp.map
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(328), __webpack_require__(749).setImmediate, (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(328), __webpack_require__(758).setImmediate, (function() { return this; }())))
 
 /***/ }),
-/* 775 */
+/* 780 */
 /***/ (function(module, exports) {
 
 	/* (ignored) */
 
 /***/ }),
-/* 776 */
+/* 781 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(process) {/*!
@@ -46228,12 +46233,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(328)))
 
 /***/ }),
-/* 777 */
+/* 782 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var EventEmitter2 = __webpack_require__(776).EventEmitter2;
+	var EventEmitter2 = __webpack_require__(781).EventEmitter2;
 	var events = new EventEmitter2({
 	  wildcard: true
 	});
@@ -46415,7 +46420,7 @@
 	};
 
 /***/ }),
-/* 778 */
+/* 783 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -46430,45 +46435,45 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Slider = __webpack_require__(729);
+	var _Slider = __webpack_require__(739);
 
 	var _Slider2 = _interopRequireDefault(_Slider);
 
-	var _RadioButton = __webpack_require__(779);
+	var _RadioButton = __webpack_require__(784);
 
-	var _SelectField = __webpack_require__(785);
+	var _SelectField = __webpack_require__(790);
 
 	var _SelectField2 = _interopRequireDefault(_SelectField);
 
-	var _MenuItem = __webpack_require__(803);
+	var _MenuItem = __webpack_require__(808);
 
 	var _MenuItem2 = _interopRequireDefault(_MenuItem);
 
-	var _RaisedButton = __webpack_require__(767);
+	var _RaisedButton = __webpack_require__(730);
 
 	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
 
-	var _labModel = __webpack_require__(804);
+	var _labModel = __webpack_require__(809);
 
 	var _labModel2 = _interopRequireDefault(_labModel);
 
-	var _meter = __webpack_require__(808);
+	var _meter = __webpack_require__(813);
 
 	var _meter2 = _interopRequireDefault(_meter);
 
-	var _models = __webpack_require__(809);
+	var _models = __webpack_require__(814);
 
 	var _models2 = _interopRequireDefault(_models);
 
 	var _utils = __webpack_require__(725);
 
-	var _aperture = __webpack_require__(824);
+	var _aperture = __webpack_require__(829);
 
 	var _aperture2 = _interopRequireDefault(_aperture);
 
-	__webpack_require__(840);
+	__webpack_require__(845);
 
-	__webpack_require__(842);
+	__webpack_require__(847);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -46712,7 +46717,7 @@
 	};
 
 /***/ }),
-/* 779 */
+/* 784 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -46722,11 +46727,11 @@
 	});
 	exports.default = exports.RadioButtonGroup = exports.RadioButton = undefined;
 
-	var _RadioButton2 = __webpack_require__(780);
+	var _RadioButton2 = __webpack_require__(785);
 
 	var _RadioButton3 = _interopRequireDefault(_RadioButton2);
 
-	var _RadioButtonGroup2 = __webpack_require__(784);
+	var _RadioButtonGroup2 = __webpack_require__(789);
 
 	var _RadioButtonGroup3 = _interopRequireDefault(_RadioButtonGroup2);
 
@@ -46737,7 +46742,7 @@
 	exports.default = _RadioButton3.default;
 
 /***/ }),
-/* 780 */
+/* 785 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -46786,15 +46791,15 @@
 
 	var _transitions2 = _interopRequireDefault(_transitions);
 
-	var _EnhancedSwitch = __webpack_require__(781);
+	var _EnhancedSwitch = __webpack_require__(786);
 
 	var _EnhancedSwitch2 = _interopRequireDefault(_EnhancedSwitch);
 
-	var _radioButtonUnchecked = __webpack_require__(782);
+	var _radioButtonUnchecked = __webpack_require__(787);
 
 	var _radioButtonUnchecked2 = _interopRequireDefault(_radioButtonUnchecked);
 
-	var _radioButtonChecked = __webpack_require__(783);
+	var _radioButtonChecked = __webpack_require__(788);
 
 	var _radioButtonChecked2 = _interopRequireDefault(_radioButtonChecked);
 
@@ -47014,7 +47019,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(328)))
 
 /***/ }),
-/* 781 */
+/* 786 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -47059,7 +47064,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactEventListener = __webpack_require__(759);
+	var _reactEventListener = __webpack_require__(768);
 
 	var _reactEventListener2 = _interopRequireDefault(_reactEventListener);
 
@@ -47079,7 +47084,7 @@
 
 	var _TouchRipple2 = _interopRequireDefault(_TouchRipple);
 
-	var _Paper = __webpack_require__(769);
+	var _Paper = __webpack_require__(732);
 
 	var _Paper2 = _interopRequireDefault(_Paper);
 
@@ -47471,7 +47476,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(328)))
 
 /***/ }),
-/* 782 */
+/* 787 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47508,7 +47513,7 @@
 	exports.default = ToggleRadioButtonUnchecked;
 
 /***/ }),
-/* 783 */
+/* 788 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47545,7 +47550,7 @@
 	exports.default = ToggleRadioButtonChecked;
 
 /***/ }),
-/* 784 */
+/* 789 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -47590,7 +47595,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _RadioButton = __webpack_require__(779);
+	var _RadioButton = __webpack_require__(784);
 
 	var _RadioButton2 = _interopRequireDefault(_RadioButton);
 
@@ -47786,7 +47791,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(328)))
 
 /***/ }),
-/* 785 */
+/* 790 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47796,7 +47801,7 @@
 	});
 	exports.default = undefined;
 
-	var _SelectField = __webpack_require__(786);
+	var _SelectField = __webpack_require__(791);
 
 	var _SelectField2 = _interopRequireDefault(_SelectField);
 
@@ -47805,7 +47810,7 @@
 	exports.default = _SelectField2.default;
 
 /***/ }),
-/* 786 */
+/* 791 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -47850,11 +47855,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _TextField = __webpack_require__(756);
+	var _TextField = __webpack_require__(765);
 
 	var _TextField2 = _interopRequireDefault(_TextField);
 
-	var _DropDownMenu = __webpack_require__(787);
+	var _DropDownMenu = __webpack_require__(792);
 
 	var _DropDownMenu2 = _interopRequireDefault(_DropDownMenu);
 
@@ -48096,7 +48101,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(328)))
 
 /***/ }),
-/* 787 */
+/* 792 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48106,11 +48111,11 @@
 	});
 	exports.default = exports.MenuItem = exports.DropDownMenu = undefined;
 
-	var _DropDownMenu2 = __webpack_require__(788);
+	var _DropDownMenu2 = __webpack_require__(793);
 
 	var _DropDownMenu3 = _interopRequireDefault(_DropDownMenu2);
 
-	var _MenuItem2 = __webpack_require__(801);
+	var _MenuItem2 = __webpack_require__(806);
 
 	var _MenuItem3 = _interopRequireDefault(_MenuItem2);
 
@@ -48121,7 +48126,7 @@
 	exports.default = _DropDownMenu3.default;
 
 /***/ }),
-/* 788 */
+/* 793 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -48174,23 +48179,23 @@
 
 	var _transitions2 = _interopRequireDefault(_transitions);
 
-	var _arrowDropDown = __webpack_require__(789);
+	var _arrowDropDown = __webpack_require__(794);
 
 	var _arrowDropDown2 = _interopRequireDefault(_arrowDropDown);
 
-	var _Menu = __webpack_require__(790);
+	var _Menu = __webpack_require__(795);
 
 	var _Menu2 = _interopRequireDefault(_Menu);
 
-	var _ClearFix = __webpack_require__(793);
+	var _ClearFix = __webpack_require__(798);
 
 	var _ClearFix2 = _interopRequireDefault(_ClearFix);
 
-	var _Popover = __webpack_require__(795);
+	var _Popover = __webpack_require__(800);
 
 	var _Popover2 = _interopRequireDefault(_Popover);
 
-	var _PopoverAnimationVertical = __webpack_require__(800);
+	var _PopoverAnimationVertical = __webpack_require__(805);
 
 	var _PopoverAnimationVertical2 = _interopRequireDefault(_PopoverAnimationVertical);
 
@@ -48621,7 +48626,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(328)))
 
 /***/ }),
-/* 789 */
+/* 794 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48658,7 +48663,7 @@
 	exports.default = NavigationArrowDropDown;
 
 /***/ }),
-/* 790 */
+/* 795 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -48715,7 +48720,7 @@
 
 	var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
 
-	var _ClickAwayListener = __webpack_require__(791);
+	var _ClickAwayListener = __webpack_require__(796);
 
 	var _ClickAwayListener2 = _interopRequireDefault(_ClickAwayListener);
 
@@ -48731,7 +48736,7 @@
 
 	var _List2 = _interopRequireDefault(_List);
 
-	var _menuUtils = __webpack_require__(792);
+	var _menuUtils = __webpack_require__(797);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -49344,7 +49349,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(328)))
 
 /***/ }),
-/* 791 */
+/* 796 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -49475,7 +49480,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(328)))
 
 /***/ }),
-/* 792 */
+/* 797 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49519,7 +49524,7 @@
 	}();
 
 /***/ }),
-/* 793 */
+/* 798 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -49540,7 +49545,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _BeforeAfterWrapper = __webpack_require__(794);
+	var _BeforeAfterWrapper = __webpack_require__(799);
 
 	var _BeforeAfterWrapper2 = _interopRequireDefault(_BeforeAfterWrapper);
 
@@ -49587,7 +49592,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(328)))
 
 /***/ }),
-/* 794 */
+/* 799 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -49743,7 +49748,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(328)))
 
 /***/ }),
-/* 795 */
+/* 800 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -49792,11 +49797,11 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _reactEventListener = __webpack_require__(759);
+	var _reactEventListener = __webpack_require__(768);
 
 	var _reactEventListener2 = _interopRequireDefault(_reactEventListener);
 
-	var _RenderToLayer = __webpack_require__(796);
+	var _RenderToLayer = __webpack_require__(801);
 
 	var _RenderToLayer2 = _interopRequireDefault(_RenderToLayer);
 
@@ -49804,19 +49809,19 @@
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _Paper = __webpack_require__(769);
+	var _Paper = __webpack_require__(732);
 
 	var _Paper2 = _interopRequireDefault(_Paper);
 
-	var _lodash = __webpack_require__(797);
+	var _lodash = __webpack_require__(802);
 
 	var _lodash2 = _interopRequireDefault(_lodash);
 
-	var _PopoverAnimationDefault = __webpack_require__(798);
+	var _PopoverAnimationDefault = __webpack_require__(803);
 
 	var _PopoverAnimationDefault2 = _interopRequireDefault(_PopoverAnimationDefault);
 
-	var _iOSHelpers = __webpack_require__(799);
+	var _iOSHelpers = __webpack_require__(804);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -50257,7 +50262,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(328)))
 
 /***/ }),
-/* 796 */
+/* 801 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -50442,7 +50447,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(328)))
 
 /***/ }),
-/* 797 */
+/* 802 */
 /***/ (function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -50888,7 +50893,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 798 */
+/* 803 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -50933,7 +50938,7 @@
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _Paper = __webpack_require__(769);
+	var _Paper = __webpack_require__(732);
 
 	var _Paper2 = _interopRequireDefault(_Paper);
 
@@ -51062,7 +51067,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(328)))
 
 /***/ }),
-/* 799 */
+/* 804 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -51094,7 +51099,7 @@
 	};
 
 /***/ }),
-/* 800 */
+/* 805 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -51131,7 +51136,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Paper = __webpack_require__(769);
+	var _Paper = __webpack_require__(732);
 
 	var _Paper2 = _interopRequireDefault(_Paper);
 
@@ -51243,7 +51248,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(328)))
 
 /***/ }),
-/* 801 */
+/* 806 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -51296,11 +51301,11 @@
 
 	var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
 
-	var _Popover = __webpack_require__(795);
+	var _Popover = __webpack_require__(800);
 
 	var _Popover2 = _interopRequireDefault(_Popover);
 
-	var _check = __webpack_require__(802);
+	var _check = __webpack_require__(807);
 
 	var _check2 = _interopRequireDefault(_check);
 
@@ -51308,7 +51313,7 @@
 
 	var _ListItem2 = _interopRequireDefault(_ListItem);
 
-	var _Menu = __webpack_require__(790);
+	var _Menu = __webpack_require__(795);
 
 	var _Menu2 = _interopRequireDefault(_Menu);
 
@@ -51625,7 +51630,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(328)))
 
 /***/ }),
-/* 802 */
+/* 807 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -51662,7 +51667,7 @@
 	exports.default = NavigationCheck;
 
 /***/ }),
-/* 803 */
+/* 808 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -51672,7 +51677,7 @@
 	});
 	exports.default = undefined;
 
-	var _MenuItem = __webpack_require__(801);
+	var _MenuItem = __webpack_require__(806);
 
 	var _MenuItem2 = _interopRequireDefault(_MenuItem);
 
@@ -51681,7 +51686,7 @@
 	exports.default = _MenuItem2.default;
 
 /***/ }),
-/* 804 */
+/* 809 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -51700,19 +51705,19 @@
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _reactLab = __webpack_require__(726);
+	var _reactLab = __webpack_require__(736);
 
 	var _reactLab2 = _interopRequireDefault(_reactLab);
 
-	var _CircularProgress = __webpack_require__(734);
+	var _CircularProgress = __webpack_require__(743);
 
 	var _CircularProgress2 = _interopRequireDefault(_CircularProgress);
 
-	var _interactive = __webpack_require__(805);
+	var _interactive = __webpack_require__(810);
 
 	var _interactive2 = _interopRequireDefault(_interactive);
 
-	__webpack_require__(806);
+	__webpack_require__(811);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -51828,19 +51833,19 @@
 	};
 
 /***/ }),
-/* 805 */
+/* 810 */
 /***/ (function(module, exports) {
 
 	module.exports = {"title":"Lab Interactive","aspectRatio":1,"theme":"no-framing","showTopBar":false,"showBottomBar":false,"models":[{"type":"md2d","id":"model"}],"parameters":[]}
 
 /***/ }),
-/* 806 */
+/* 811 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(807);
+	var content = __webpack_require__(812);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(661)(content, {});
@@ -51860,7 +51865,7 @@
 	}
 
 /***/ }),
-/* 807 */
+/* 812 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(656)();
@@ -51874,7 +51879,7 @@
 
 
 /***/ }),
-/* 808 */
+/* 813 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -51893,7 +51898,7 @@
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _Slider = __webpack_require__(729);
+	var _Slider = __webpack_require__(739);
 
 	var _Slider2 = _interopRequireDefault(_Slider);
 
@@ -52172,7 +52177,7 @@
 	};
 
 /***/ }),
-/* 809 */
+/* 814 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -52182,59 +52187,59 @@
 	});
 	exports.MAX_TEMP = exports.MIN_TEMP = undefined;
 
-	var _solid1Wood = __webpack_require__(810);
+	var _solid1Wood = __webpack_require__(815);
 
 	var _solid1Wood2 = _interopRequireDefault(_solid1Wood);
 
-	var _solid1Stone = __webpack_require__(811);
+	var _solid1Stone = __webpack_require__(816);
 
 	var _solid1Stone2 = _interopRequireDefault(_solid1Stone);
 
-	var _solid = __webpack_require__(812);
+	var _solid = __webpack_require__(817);
 
 	var _solid2 = _interopRequireDefault(_solid);
 
-	var _solid3 = __webpack_require__(813);
+	var _solid3 = __webpack_require__(818);
 
 	var _solid4 = _interopRequireDefault(_solid3);
 
-	var _solid5 = __webpack_require__(814);
+	var _solid5 = __webpack_require__(819);
 
 	var _solid6 = _interopRequireDefault(_solid5);
 
-	var _liquid1Oil = __webpack_require__(815);
+	var _liquid1Oil = __webpack_require__(820);
 
 	var _liquid1Oil2 = _interopRequireDefault(_liquid1Oil);
 
-	var _liquid1Soap = __webpack_require__(816);
+	var _liquid1Soap = __webpack_require__(821);
 
 	var _liquid1Soap2 = _interopRequireDefault(_liquid1Soap);
 
-	var _liquid = __webpack_require__(817);
+	var _liquid = __webpack_require__(822);
 
 	var _liquid2 = _interopRequireDefault(_liquid);
 
-	var _liquid3 = __webpack_require__(818);
+	var _liquid3 = __webpack_require__(823);
 
 	var _liquid4 = _interopRequireDefault(_liquid3);
 
-	var _liquid5 = __webpack_require__(819);
+	var _liquid5 = __webpack_require__(824);
 
 	var _liquid6 = _interopRequireDefault(_liquid5);
 
-	var _gas = __webpack_require__(820);
+	var _gas = __webpack_require__(825);
 
 	var _gas2 = _interopRequireDefault(_gas);
 
-	var _gas3 = __webpack_require__(821);
+	var _gas3 = __webpack_require__(826);
 
 	var _gas4 = _interopRequireDefault(_gas3);
 
-	var _gas5 = __webpack_require__(822);
+	var _gas5 = __webpack_require__(827);
 
 	var _gas6 = _interopRequireDefault(_gas5);
 
-	var _uniform = __webpack_require__(823);
+	var _uniform = __webpack_require__(828);
 
 	var _uniform2 = _interopRequireDefault(_uniform);
 
@@ -52385,91 +52390,91 @@
 	};
 
 /***/ }),
-/* 810 */
+/* 815 */
 /***/ (function(module, exports) {
 
 	module.exports = {"type":"md2d","imagePath":"","width":2.8,"height":2.5,"unitsScheme":"md2d","lennardJonesForces":true,"coulombForces":true,"temperatureControl":true,"gravitationalField":false,"timeStep":1,"dielectricConstant":1,"realisticDielectricEffect":true,"solventForceFactor":1.25,"solventForceType":0,"additionalSolventForceMult":4,"additionalSolventForceThreshold":10,"polarAAEpsilon":-2,"viscosity":1,"timeStepsPerTick":50,"DNAState":"dna","DNA":"","DNAMutations":true,"useQuantumDynamics":false,"useChemicalReactions":false,"useDuration":"codap","requestedDuration":null,"skipPECheckOnAddAtom":false,"viewOptions":{"viewPortWidth":2.5,"viewPortHeight":2.5,"viewPortZoom":1,"viewPortX":0.1,"viewPortY":0,"viewPortDrag":false,"backgroundColor":"#eee","showClock":false,"markColor":"#f8b500","atomRadiusScale":1,"keShading":false,"keShadingMinEnergy":0,"keShadingMaxEnergy":0.2,"chargeShading":false,"aminoAcidColorScheme":"hydrophobicity","aminoAcidLabels":true,"useThreeLetterCode":true,"showChargeSymbols":false,"showVDWLines":false,"VDWLinesCutoff":"medium","showVelocityVectors":false,"showForceVectors":false,"showElectricField":false,"electricFieldDensity":18,"electricFieldColor":"auto","showAtomTrace":false,"images":[],"imageMapping":{},"textBoxes":[],"xlabel":false,"ylabel":false,"xunits":false,"yunits":false,"controlButtons":"play_reset","gridLines":false,"atomNumbers":false,"enableAtomTooltips":false,"enableKeyboardHandlers":true,"atomTraceColor":"#6913c5","velocityVectors":{"color":"#000","width":0.01,"length":2},"forceVectors":{"color":"#169C30","width":0.01,"length":2},"forceVectorsDirectionOnly":false,"onAtomDrag":"translate"},"atoms":{"x":[2.2593157230694683,1.959442753470773,1.972728375625846,1.3861438306706004,0.7921535139683007,1.087334968194759,1.6675780843574954,1.6671159902615829,1.958511313663236,2.2558155818755004,2.557583113299741,2.2668000354574405,2.551319780769505,1.677025447906193,0.48840459353004473,0.5049060469239146,0.7908401466209649,1.3732450886468683,1.0782805516372334,1.3641975769722232,2.2577365748153486,2.5648981679649503,2.2734744036068006,1.6804832266552574,1.9870914150959487,0.7920080158509597,1.0733863466351647,1.6684934474764952,1.3803648727564086,2.2827733132174584,1.9633139896708354,2.2500311967906086,1.9637747628317483,1.3718871343298247,1.650312510701168,1.6682219236901945,0.7809936418886816,0.49815319456492557,1.964313659673179,0.5039022988754345,1.0846990469714215,0.8016208333191714,1.3879113374837675,2.573059509819279,1.0914855365972966,0.7706047965289065,0.18758527257652233,0.21417929722139437,1.0665396521482635,2.552146122165523,0.4669414230060067,2.554807941153877,1.0482495153739035,0.20768862106388994,0.4839233833375334,1.3606348658318717,0.758707991523798,0.4486644718834474,0.19452499265412823,0.16777881741842368,0.19318153403986202],"y":[1.0306888607632274,1.1760212869822024,0.5163808061511307,0.5076389813640515,1.1547935020869695,0.6813720867370401,1.3501500445042822,2.007437694525442,1.8337985698984736,1.3558154958775321,0.5279092465054629,0.7011425053211653,1.1778977700784037,0.6974289917026283,1.3387176880981266,0.6788190901802174,0.4961669580769805,1.1723934166132344,1.3435273054085388,1.8246436893206626,2.006356511628929,0.8550276655764654,0.373045707720151,0.36908692861982845,0.18744141187549984,0.8268269845244799,1.6696703148156604,1.6765249738721217,0.8396431262756235,2.3308200318635737,2.1606119640077246,1.6828357818077508,1.5038556637221776,1.4957998807549087,2.335724625383672,1.0250060002763735,1.487993917656424,1.0103969118230187,0.8461331075740433,0.343314727198111,1.0111332863029971,0.17177550071204933,0.17982145051975124,2.1508561121818524,0.3552563779309764,1.8176733906713485,1.805071010397386,0.5036792707831327,1.9982964211981404,1.831253703916032,1.9931722571253812,1.502460539881153,2.330584810407891,0.8299195850437826,1.6620516313775189,2.1489596816489795,2.1418491941562747,2.321035300788749,1.4803696198031553,2.131444247671352,1.1547583124390186],"element":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"vx":[-0.000028007452222460638,-0.00003206913008245524,0.00012084156887449255,-0.00004853592382567735,-0.00017412497616838308,-0.0000827304791703167,0.000011510951268325878,0.00004247967231539358,0.000004969725295511981,-0.000037951380570436286,-0.000007937539891841839,0.000022677587704472138,-0.000101507030306633,0.000028180705931474163,-0.00007648673267803971,0.00010109135369761456,0.000012767077326473758,-0.00008352685471913607,0.0000252531315628611,0.0000293373033418745,0.000017048452539080848,-0.00000742380244821206,-0.000030390876953925264,-0.000023288598960864855,-0.0000015480380884153277,-0.000006728714704395285,0.000016461862176093107,-0.00009532743819861073,-0.00007801676989071682,0.000007739908923427654,-0.000018274780222746197,0.000005111774575502011,0.00010976581203692649,-0.00014962311459108184,0.0001355492941955095,-0.000045301156309303126,-0.00009618549072676367,0.0001080373583170587,-0.00001746125846716357,0.00012183426997859039,0.0001444000369683278,0.00014304040058747095,0.00003697543996077801,0.000025570453606534154,-0.00009837310619249774,-0.000026640405567670216,-0.00001278119481433525,0.00014718734912945317,-0.00010531288381141591,-0.00004197094780195177,0.000036661484606356264,-0.00006363104330212285,0.00009057459409344319,0.00016271224838986203,-0.00008276433953268719,-0.000030396204258015675,0.00013553983817500066,-0.00008284389703343686,-0.0000026045862258220962,-0.00007547883594918376,0.00012343574473343725],"vy":[-0.0000752356182071923,0.00004314283156650063,0.0000729223259884432,-0.0001551934149040607,0.0000044793289942052145,0.00009504890837528209,0.000009558677305693073,-0.00009355924915798906,-0.000013147343685372792,0.00013297934962788527,0.00009996426961428869,-0.00005155610676825053,-0.000027041520233537605,0.00007274138118654512,-0.000079968675862214,0.00004120177990796731,0.0001104334021351443,0.000013636216273066057,-0.00007337558793821545,-0.00018747589604612943,0.000021513005725330155,-0.00007109688473775657,0.00006420834533940831,-0.00007786615247161001,0.00005429217124978322,-0.00010398234663528174,0.0000821663169064222,0.00023405038246284465,0.000046779092093418226,-0.0000067691161876593775,-0.00005583252580300058,0.00005382629137797028,0.00002091469582157531,-0.00003536705657981025,-0.00007250278399736718,0.000027332391886985616,-0.00007820467519970063,0.000037699582642930904,0.000007613715552273089,-0.000006990673485441996,0.00007003403118030968,-0.0000438014958685538,-1.6155675651810402e-7,-0.00005862862786024413,0.00006915047195084291,-0.00011126228682257286,-0.00008875777985089495,-0.00009613138400172092,-0.00009223356717522547,0.000031725027751461684,-0.00003507192419898774,0.00004832080515834101,-0.000034188409941446205,-0.00002244910585353404,-0.00009645322755329319,-0.00000531355378982973,-0.000054269241273297977,0.000032511168054167256,0.000030903715242806095,-0.000015981576852440908,-0.0000517691865628003],"charge":[-1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1],"friction":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"pinned":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"elements":{"mass":[120,240,360,480,600],"sigma":[0.29,0.18,0.25,0.28,0.3],"epsilon":[-0.6000000238418579,-0.1,-0.1,-0.1,-0.1],"color":[-4539718,-6579301,-8092540,-2236963,-3881788]},"pairwiseLJProperties":[]}
 
 /***/ }),
-/* 811 */
+/* 816 */
 /***/ (function(module, exports) {
 
 	module.exports = {"type":"md2d","imagePath":"","width":2.8,"height":2.5,"unitsScheme":"md2d","lennardJonesForces":true,"coulombForces":true,"temperatureControl":true,"gravitationalField":false,"timeStep":1,"dielectricConstant":1,"realisticDielectricEffect":true,"solventForceFactor":1.25,"solventForceType":0,"additionalSolventForceMult":4,"additionalSolventForceThreshold":10,"polarAAEpsilon":-2,"viscosity":1,"timeStepsPerTick":50,"DNAState":"dna","DNA":"","DNAMutations":true,"useQuantumDynamics":false,"useChemicalReactions":false,"useDuration":"codap","requestedDuration":null,"skipPECheckOnAddAtom":false,"viewOptions":{"viewPortWidth":2.5,"viewPortHeight":2.5,"viewPortZoom":1,"viewPortX":0.1,"viewPortY":0,"viewPortDrag":false,"backgroundColor":"#eee","showClock":false,"markColor":"#f8b500","atomRadiusScale":1,"keShading":false,"keShadingMinEnergy":0,"keShadingMaxEnergy":0.2,"chargeShading":false,"aminoAcidColorScheme":"hydrophobicity","aminoAcidLabels":true,"useThreeLetterCode":true,"showChargeSymbols":false,"showVDWLines":false,"VDWLinesCutoff":"medium","showVelocityVectors":false,"showForceVectors":false,"showElectricField":false,"electricFieldDensity":18,"electricFieldColor":"auto","showAtomTrace":false,"images":[],"imageMapping":{},"textBoxes":[],"xlabel":false,"ylabel":false,"xunits":false,"yunits":false,"controlButtons":"play_reset","gridLines":false,"atomNumbers":false,"enableAtomTooltips":false,"enableKeyboardHandlers":true,"atomTraceColor":"#6913c5","velocityVectors":{"color":"#000","width":0.01,"length":2},"forceVectors":{"color":"#169C30","width":0.01,"length":2},"forceVectorsDirectionOnly":false,"onAtomDrag":"translate"},"atoms":{"x":[2.2593157230694683,1.959442753470773,1.972728375625846,1.3861438306706004,0.7921535139683007,1.087334968194759,1.6675780843574954,1.6671159902615829,1.958511313663236,2.2558155818755004,2.557583113299741,2.2668000354574405,2.551319780769505,1.677025447906193,0.48840459353004473,0.5049060469239146,0.7908401466209649,1.3732450886468683,1.0782805516372334,1.3641975769722232,2.2577365748153486,2.5648981679649503,2.2734744036068006,1.6804832266552574,1.9870914150959487,0.7920080158509597,1.0733863466351647,1.6684934474764952,1.3803648727564086,2.2827733132174584,1.9633139896708354,2.2500311967906086,1.9637747628317483,1.3718871343298247,1.650312510701168,1.6682219236901945,0.7809936418886816,0.49815319456492557,1.964313659673179,0.5039022988754345,1.0846990469714215,0.8016208333191714,1.3879113374837675,2.573059509819279,1.0914855365972966,0.7706047965289065,0.18758527257652233,0.21417929722139437,1.0665396521482635,2.552146122165523,0.4669414230060067,2.554807941153877,1.0482495153739035,0.20768862106388994,0.4839233833375334,1.3606348658318717,0.758707991523798,0.4486644718834474,0.19452499265412823,0.16777881741842368,0.19318153403986202],"y":[1.0306888607632274,1.1760212869822024,0.5163808061511307,0.5076389813640515,1.1547935020869695,0.6813720867370401,1.3501500445042822,2.007437694525442,1.8337985698984736,1.3558154958775321,0.5279092465054629,0.7011425053211653,1.1778977700784037,0.6974289917026283,1.3387176880981266,0.6788190901802174,0.4961669580769805,1.1723934166132344,1.3435273054085388,1.8246436893206626,2.006356511628929,0.8550276655764654,0.373045707720151,0.36908692861982845,0.18744141187549984,0.8268269845244799,1.6696703148156604,1.6765249738721217,0.8396431262756235,2.3308200318635737,2.1606119640077246,1.6828357818077508,1.5038556637221776,1.4957998807549087,2.335724625383672,1.0250060002763735,1.487993917656424,1.0103969118230187,0.8461331075740433,0.343314727198111,1.0111332863029971,0.17177550071204933,0.17982145051975124,2.1508561121818524,0.3552563779309764,1.8176733906713485,1.805071010397386,0.5036792707831327,1.9982964211981404,1.831253703916032,1.9931722571253812,1.502460539881153,2.330584810407891,0.8299195850437826,1.6620516313775189,2.1489596816489795,2.1418491941562747,2.321035300788749,1.4803696198031553,2.131444247671352,1.1547583124390186],"element":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"vx":[-0.000028007452222460638,-0.00003206913008245524,0.00012084156887449255,-0.00004853592382567735,-0.00017412497616838308,-0.0000827304791703167,0.000011510951268325878,0.00004247967231539358,0.000004969725295511981,-0.000037951380570436286,-0.000007937539891841839,0.000022677587704472138,-0.000101507030306633,0.000028180705931474163,-0.00007648673267803971,0.00010109135369761456,0.000012767077326473758,-0.00008352685471913607,0.0000252531315628611,0.0000293373033418745,0.000017048452539080848,-0.00000742380244821206,-0.000030390876953925264,-0.000023288598960864855,-0.0000015480380884153277,-0.000006728714704395285,0.000016461862176093107,-0.00009532743819861073,-0.00007801676989071682,0.000007739908923427654,-0.000018274780222746197,0.000005111774575502011,0.00010976581203692649,-0.00014962311459108184,0.0001355492941955095,-0.000045301156309303126,-0.00009618549072676367,0.0001080373583170587,-0.00001746125846716357,0.00012183426997859039,0.0001444000369683278,0.00014304040058747095,0.00003697543996077801,0.000025570453606534154,-0.00009837310619249774,-0.000026640405567670216,-0.00001278119481433525,0.00014718734912945317,-0.00010531288381141591,-0.00004197094780195177,0.000036661484606356264,-0.00006363104330212285,0.00009057459409344319,0.00016271224838986203,-0.00008276433953268719,-0.000030396204258015675,0.00013553983817500066,-0.00008284389703343686,-0.0000026045862258220962,-0.00007547883594918376,0.00012343574473343725],"vy":[-0.0000752356182071923,0.00004314283156650063,0.0000729223259884432,-0.0001551934149040607,0.0000044793289942052145,0.00009504890837528209,0.000009558677305693073,-0.00009355924915798906,-0.000013147343685372792,0.00013297934962788527,0.00009996426961428869,-0.00005155610676825053,-0.000027041520233537605,0.00007274138118654512,-0.000079968675862214,0.00004120177990796731,0.0001104334021351443,0.000013636216273066057,-0.00007337558793821545,-0.00018747589604612943,0.000021513005725330155,-0.00007109688473775657,0.00006420834533940831,-0.00007786615247161001,0.00005429217124978322,-0.00010398234663528174,0.0000821663169064222,0.00023405038246284465,0.000046779092093418226,-0.0000067691161876593775,-0.00005583252580300058,0.00005382629137797028,0.00002091469582157531,-0.00003536705657981025,-0.00007250278399736718,0.000027332391886985616,-0.00007820467519970063,0.000037699582642930904,0.000007613715552273089,-0.000006990673485441996,0.00007003403118030968,-0.0000438014958685538,-1.6155675651810402e-7,-0.00005862862786024413,0.00006915047195084291,-0.00011126228682257286,-0.00008875777985089495,-0.00009613138400172092,-0.00009223356717522547,0.000031725027751461684,-0.00003507192419898774,0.00004832080515834101,-0.000034188409941446205,-0.00002244910585353404,-0.00009645322755329319,-0.00000531355378982973,-0.000054269241273297977,0.000032511168054167256,0.000030903715242806095,-0.000015981576852440908,-0.0000517691865628003],"charge":[-1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1],"friction":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"pinned":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"elements":{"mass":[120,240,360,480,600],"sigma":[0.32,0.18,0.25,0.28,0.3],"epsilon":[-0.6000000238418579,-0.1,-0.1,-0.1,-0.1],"color":[-2236963,-3881788,-4539718,-6579301,-8092540]},"pairwiseLJProperties":[]}
 
 /***/ }),
-/* 812 */
+/* 817 */
 /***/ (function(module, exports) {
 
 	module.exports = {"type":"md2d","imagePath":"","width":1.8,"height":1.8,"unitsScheme":"md2d","lennardJonesForces":true,"coulombForces":true,"temperatureControl":true,"targetTemperature":300,"gravitationalField":false,"timeStep":1,"dielectricConstant":1,"realisticDielectricEffect":true,"solventForceFactor":1.25,"solventForceType":0,"additionalSolventForceMult":4,"additionalSolventForceThreshold":10,"polarAAEpsilon":-2,"viscosity":1,"timeStepsPerTick":50,"DNAState":"dna","DNA":"","DNAMutations":true,"useQuantumDynamics":false,"useChemicalReactions":false,"useDuration":"codap","requestedDuration":null,"skipPECheckOnAddAtom":false,"viewOptions":{"viewPortWidth":1.8,"viewPortHeight":1.8,"viewPortZoom":1,"viewPortX":0,"viewPortY":0,"viewPortDrag":false,"backgroundColor":"#eee","showClock":true,"markColor":"#ff0","atomRadiusScale":1,"keShading":false,"keShadingMinEnergy":0,"keShadingMaxEnergy":0.2,"chargeShading":false,"aminoAcidColorScheme":"hydrophobicity","aminoAcidLabels":true,"useThreeLetterCode":true,"showChargeSymbols":false,"showVDWLines":false,"VDWLinesCutoff":"medium","showVelocityVectors":false,"showForceVectors":false,"showElectricField":false,"electricFieldDensity":18,"electricFieldColor":"auto","showAtomTrace":false,"images":[],"imageMapping":{},"textBoxes":[],"xlabel":false,"ylabel":false,"xunits":false,"yunits":false,"controlButtons":"play_reset","gridLines":false,"atomNumbers":false,"enableAtomTooltips":false,"enableKeyboardHandlers":true,"atomTraceColor":"#f00","velocityVectors":{"color":"#000","width":0.01,"length":2},"forceVectors":{"color":"#169C30","width":0.01,"length":2},"forceVectorsDirectionOnly":false,"onAtomDrag":"translate"},"atoms":{"x":[1.6609196275525762,1.4531178321561722,1.2486376855701193,1.4535068257251242,1.0219048155304693,0.5704488442626249,0.7899703085267801,1.2351139927547525,1.2258784750321077,1.4417383634539063,1.6718028939381169,0.3576665144253532,1.6761598855814368,1.6696713198083866,1.2332364437528451,0.8029199446985873,0.35164817026473144,0.3532206426108604,0.5818325193258992,1.0087791016276815,0.7933985659418662,1.011132440797168,1.4484824958516143,1.674071816388468,1.664648905629991,1.2417941659538136,1.46283375205434,0.575057366436032,0.7881959551375258,1.229902345246751,1.011075647560049,1.6626860710527114,1.4494015292920377,1.6565350416123084,1.4525850968843435,1.0163201571699967,1.2298363109713866,1.2361651785732246,0.5633833751658851,0.3491196100949484,1.4535782913730393,0.35901023277965716,0.795028116113994,0.576653022884195,1.0222573072713494,0.7964328590797993,1.0048721614029874,0.5761845884439813,0.5789446883183282,0.14438932292004766,0.14028565239247054,0.14543966117015017,0.7947477722972993,0.3557924317953639,0.795207680350769,0.12283608262585613,0.3503692600722993,1.0124826164606917,0.5745093638519972,0.3569427349846335,0.15907925813145973,0.13280929861638607,0.14311836171231335,0.13609808276138666],"y":[0.8124252002085631,0.8143013918755062,0.1484414139709223,0.37054455202802444,0.35409978379504353,0.7977083489523792,0.5711118571418958,1.0209697032882095,1.4559517800347943,1.2456416465591227,1.0326878878252992,0.12889837993679282,0.15018589157021695,0.5856680076163453,0.5732573136209489,0.12955235631433493,1.0108602085916552,0.5699795028419314,0.345923116603527,0.8034150245597399,1.0150705571097,1.237146405191428,1.6748810419727895,1.4724682420323987,0.371394940889753,0.360902013959397,0.14753457849055718,0.5717866164616127,1.2233967520319082,1.2356300667897673,0.5792205280486887,1.7017598823014124,1.4537629454435401,1.2514400907064038,1.0269252079152729,1.0262502549774521,1.6918547751785962,0.7980680306326413,1.0106906800001498,0.7918712510518264,0.594653840271654,0.3469675853259067,0.7861135078329853,0.12362843580241775,0.14689992901111532,0.35141067346132154,1.674325627705962,1.232099481899823,1.671161653419803,1.6680815600849592,1.2315842867534663,0.3516926452517418,1.4534923841432905,1.448044596962567,1.6604158281707304,0.5754992271327735,1.2334337262378738,1.4635295111264617,1.4563021752316039,1.6742721580834636,0.1499320648446723,0.9996595291815763,1.4409351434327373,0.7907554052845966],"element":[1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,2],"vx":[-0.0003606476396116478,-0.00007905217059989334,0.00009891274960668998,-0.00009258171621951749,0.0000031388469297820988,0.00009570782585348408,0.000025934996988565486,0.00004072081366571182,-0.00009461419236396854,-0.00015385518140833675,-0.00007920779861898217,-0.00009683703281310418,-0.000023104910557104124,-0.000007947761813098917,0.00008206114786438476,0.000006857078097520912,-0.000030504657532281523,0.00006309457440018006,0.00006296788305141603,0.00005284285749948993,0.0001236394147937047,0.000014779632002957518,0.00005217694023277126,0.00010430741619459526,-0.0003566803172615915,0.00014110640504737742,0.0001281457340366558,0.00004513109856901214,0.00004536438720936823,-0.000028661134784312497,-0.000024939077832229315,-0.0001448234320831598,-0.000005751573108071759,-0.000264969231403677,-0.00007445015612038304,0.00015516182846975795,0.000029240635063610302,0.000010509323863235028,-0.00007335092134258508,0.00004597588270311706,-0.000045586661468201915,-0.00009722097509507347,0.000041936848355326316,-0.0001446154630056469,-0.00006542309092865164,-0.00016089092932935863,-0.00009314562022561242,0.0000826314316803191,0.00004092542214148855,0.000024345273281115156,0.000019132881668990463,-0.000047581329997452274,0.00008172754520075825,-0.000025921099050228382,0.000035308445659668045,-0.00008390276181937132,-0.0000854518523813823,-0.00003468777955060843,-0.00003785556916819052,0.00006032489960224339,-0.00011028685847217333,0.00010439676357878456,-0.0001054790860509106,0.00005186168985964304],"vy":[0.000013402160975576242,0.00008171711209663287,0.00008249237045116755,0.00003374309691249075,-0.000057524687774044355,0.000008115767190076937,0.00008025372149178932,-0.000032907896914898744,-0.000052644568029322044,-0.00009339243178026384,0.000054639680867613615,0.0000072631596785380055,-0.00009565198559343896,-0.00010269606889494224,-0.00011428673530983916,0.000020805903755419685,-0.00006414235881043973,0.00006361094322400955,-0.000045295093568269756,0.00013064610627216538,0.00013056496662884381,0.00003568061206825334,-0.000007135913733373883,0.0000033595842467811764,0.000030041369586101394,0.000048844534536343284,-0.00001937716068708837,0.00003522830255336413,-0.00011914538093727941,-0.00013141309096190853,-0.000003942684432763411,0.00015923641757810812,-0.00025303475513366243,0.0001168257477017032,-0.00007580385419404955,0.00015628854315335428,-0.000031884046127256605,-0.00010964165081794617,-0.00000581161360437225,-0.0000517023901514238,0.00010136471808005278,-0.000012336652449336977,-0.00006876270439978842,-0.00009087566471748826,0.00025759350582203587,0.000014841605585209269,0.00002142954391388124,-0.000044859062513245474,-0.000005751211514734645,0.000035661198316120425,-0.0000178108586144169,0.00006565140531570142,-0.000048938617058972466,-0.00008449326072034606,-0.0001350940909382943,0.00010328575117211194,0.00007052114470295052,0.000052338922373337444,-0.00015538346253448688,-0.000039889330463859,0.00020318277113741317,-0.00012276873184538875,-0.00004465255616102965,-0.0000024309115793455887],"charge":[-1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1],"friction":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"pinned":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"elements":{"mass":[120,240,360,480,600],"sigma":[0.07,0.18,0.25,0.28,0.3],"epsilon":[-0.1,-0.1,-0.1,-0.1,-0.1],"color":[-855310,-13057,-6958434,-2539040,-855310]},"pairwiseLJProperties":[]}
 
 /***/ }),
-/* 813 */
+/* 818 */
 /***/ (function(module, exports) {
 
 	module.exports = {"type":"md2d","imagePath":"","width":3.25,"height":3.1,"unitsScheme":"md2d","lennardJonesForces":true,"coulombForces":true,"temperatureControl":true,"targetTemperature":300,"gravitationalField":false,"timeStep":1,"dielectricConstant":1,"realisticDielectricEffect":true,"solventForceFactor":1.25,"solventForceType":0,"additionalSolventForceMult":4,"additionalSolventForceThreshold":10,"polarAAEpsilon":-2,"viscosity":1,"timeStepsPerTick":50,"DNAState":"dna","DNA":"","DNAMutations":true,"useQuantumDynamics":false,"useChemicalReactions":false,"useDuration":"codap","requestedDuration":null,"skipPECheckOnAddAtom":false,"viewOptions":{"viewPortWidth":3.1,"viewPortHeight":3.1,"viewPortZoom":1,"viewPortX":0.075,"viewPortY":0,"viewPortDrag":false,"backgroundColor":"#eee","showClock":true,"markColor":"#ff0","atomRadiusScale":1,"keShading":false,"keShadingMinEnergy":0,"keShadingMaxEnergy":0.2,"chargeShading":false,"aminoAcidColorScheme":"hydrophobicity","aminoAcidLabels":true,"useThreeLetterCode":true,"showChargeSymbols":false,"showVDWLines":false,"VDWLinesCutoff":"short","showVelocityVectors":false,"showForceVectors":false,"showElectricField":false,"electricFieldDensity":18,"electricFieldColor":"auto","showAtomTrace":false,"images":[],"imageMapping":{},"textBoxes":[],"xlabel":false,"ylabel":false,"xunits":false,"yunits":false,"controlButtons":"play_reset","gridLines":false,"atomNumbers":false,"enableAtomTooltips":false,"enableKeyboardHandlers":true,"atomTraceColor":"#f00","velocityVectors":{"color":"#000","width":0.01,"length":2},"forceVectors":{"color":"#169C30","width":0.01,"length":2},"forceVectorsDirectionOnly":false,"onAtomDrag":"translate"},"atoms":{"x":[0.17945102681776826,0.37575119571735627,0.5724889727191632,0.758733136400109,0.9458314431641449,1.1330941441212066,1.3285666317020692,1.5245862216158426,1.713094517623087,1.9089717488467284,2.1015545168491774,2.295039047652729,2.4837792196952004,2.6653877558261225,2.8487484071879705,3.0485469964220835,0.1630357673549281,0.363065146216459,0.5506044801394698,0.7513055649163121,0.944685723531148,1.1404116064686254,1.333654564153978,1.524802728041881,1.7122201873787928,1.9021406251251647,2.096819142342314,2.2905489840006577,2.4823023706068477,2.6813570298932228,2.8777375628718316,3.064963785199192,0.16709100054177964,0.3649009103641212,0.5468008696241206,0.746242894119294,0.9402492313521125,1.1394826479072833,1.3304514790684683,1.5168432416845565,1.7099266652526668,1.9024875321167642,2.0966623386960324,2.288493186432801,2.4843898133277387,2.6744914668340654,2.867600485674291,3.0719330623878505,0.1655471251197802,0.3712492640546362,0.5613156976794885,0.7519795119092271,0.9439620456819914,1.1370745458144016,1.3258752359439103,1.5162348595076676,1.7044410712205338,1.8974588635433105,2.0921790763721675,2.290293683240616,2.489969349356988,2.679488459919647,2.8736039256575454,3.074478060751616,0.17067949418055103,0.36891486440512605,0.5695240197801944,0.7665697569642123,0.9545756595824461,1.1424320319048713,1.339578524920843,1.530314232244584,1.7206070076800069,1.9099198160607784,2.1019252237119743,2.295890866992316,2.486664957045213,2.682743036502355,2.8753800232906572,3.075988586205683,0.19061443110783194,0.37662711907213686,0.5758507403495711,0.7582553131352816,0.950743910462438,1.1432719431631289,1.3380581346784692,1.529555603038066,1.720336643868896,1.912472206900651,2.109804062012967,2.2982607040490826,2.498993377675423,2.694370015648329,2.8840552392086414,3.084234290445798,0.19201162088137266,0.3913923042315781,0.5877074628818914,0.779327221310217,0.966585835539155,1.1518094743583167,1.3357406855282867,1.5295578024912575,1.7293304509702654,1.9241815253056498,2.1202603299095655,2.310010649236009,2.4996768166066308,2.67926110307932,2.879604095149816,3.08356793820629,0.20264131900867136,0.4020702748502731,0.5903375108456379,0.7717559229072809,0.9567284992525095,1.1581427637637463,1.350441016554114,1.5403828588882709,1.7376458946334001,1.9318111339206643,2.1259623208750607,2.3132372296886294,2.5004335599297756,2.6877726608091383,2.8679158664413795,3.0633233656191496],"y":[2.8064738367744217,2.8927252975860545,2.7881648376347363,2.899302324364395,2.783648113839688,2.8976124570590334,2.7957892068316634,2.8920791799068892,2.7958614230788847,2.8905320072643668,2.78688480766037,2.8911485280881246,2.798342608744219,2.9102443471272146,2.8028803817153367,2.8845979750949495,2.4295744805073283,2.5114316775765113,2.4162959342744874,2.4999752686144037,2.414081760214909,2.501939409515463,2.4257395786647113,2.5076822134687204,2.4218535169869866,2.5121016838580754,2.4200224848247722,2.503489419358756,2.4275093067684383,2.504407358745796,2.414973456520819,2.516455967227205,2.044377352079164,2.1353549731003243,2.0468913007933556,2.128354389633426,2.0539707002435326,2.1341599347250284,2.0474579757638782,2.140403636018302,2.0483559607238866,2.1366060732372465,2.0466563557315243,2.1383889168743426,2.0566832660018006,2.1447691468920773,2.0523021140203106,2.1308232297581426,1.673886706501823,1.7519000226910815,1.6755856723541585,1.7656861721593835,1.6796157934031772,1.7694788013060254,1.6717574792063126,1.7655441931154248,1.6702558934038378,1.7636055056706326,1.6853757252465795,1.766338449640618,1.6793508378438564,1.773724168363147,1.680613581853547,1.765648759142255,1.3013037553380322,1.3911978604060538,1.305306410425067,1.387413346830365,1.3089597206219,1.3948115511347623,1.304479665692563,1.3897718662399263,1.3020490070627817,1.397957645163061,1.3134364481987508,1.3977307178718634,1.313667744328861,1.3990954494825145,1.317884289825148,1.4025498377942638,0.9204230510635582,1.0252127333649839,0.929669062729437,1.0241353526079038,0.936866074851385,1.0237282143298612,0.9319333600902467,1.0175746037794522,0.9283069723773413,1.0247488314909017,0.9328107849025166,1.0316522055433384,0.9516840556270103,1.039101412961717,0.9386905244286434,1.024301548491842,0.5537833754720303,0.6415624902233166,0.5642662135503579,0.646385858452933,0.5524574231012017,0.6484419771323988,0.5520253453361957,0.6405851604689969,0.5610424582124415,0.644667009597627,0.5663197202126257,0.6485946114390011,0.5609003856770058,0.6612422890592654,0.5716465904037064,0.6524181483448563,0.19443928036095023,0.27196024452702267,0.16574235465143805,0.2738279533836193,0.16721905527592637,0.263674411246097,0.1641584685840546,0.2728777526950695,0.1846159098493639,0.28717705239614844,0.18295363315547997,0.28028576182707754,0.18867711167270257,0.2801091019341212,0.1763130694600891,0.272473869363226],"element":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],"vx":[0.00019541321352806306,-0.000004297852173547731,0.00009108685852316954,-0.0000696053498790153,-0.00010438566432662752,-0.00016714812486831514,-0.0000666931331828546,-0.0002604205308482336,-0.00011717822635033985,-0.00003694471766915356,0.00013435955517700272,0.00012918771029662868,0.000006491236218562417,0.00010247305851578317,-0.00013588986579519507,0.00009184141722669155,0.00016617659396513267,-0.000019063018381865522,0.0003217633552880569,-0.00001577101463145093,-0.0004278337350620295,0.00009199621870717225,0.000006967864440559683,0.00011549590429741418,0.00038297507169926943,0.000055512752989701814,-0.00016195444255089116,-0.0001970507451274091,-0.00011990231960656341,-0.0002145082259728086,0.0003338280262893767,-0.0004101386358081933,0.00005158805598502564,-0.00007812103292272893,0.00011515467914807994,0.00008474984018410573,-0.0004363789023174889,0.00002006960385526135,0.000045833781858667076,0.000034822671036586174,0.00014116907275951883,-0.000016190441593487552,0.00015251168737936301,-0.00012195358949273628,0.000051519025467906497,0.00013432254595907377,-0.000103071225374181,-0.000021434445597559222,0.00010120121636917301,0.000028751773485174,-0.0004446165373633174,0.000029463794384292578,-0.00043884399674671865,0.0003489695571821399,-0.00016851419781263339,-0.00009543147828386033,-0.00008886344411088593,-0.00024232943064104342,0.00005144323334591412,-0.00009800574753876198,0.0002088455870437041,0.0004858778935290082,-0.00012929566406002686,-0.00003753721586913075,-0.00008357593510925962,-0.0003833034747313349,0.00027996246935381333,-0.000167555935609524,0.0002847039202731466,-0.00007807189060853182,-0.00005891295890352893,0.000467561779298294,-0.00010734936461158789,-0.00020006349582592402,-0.00005030941039235514,0.000050647413779505856,0.00007473040596209026,0.000194782716884435,0.00019912555320030536,-0.00012765004353795806,0.0002127144214752886,0.00010812051243835456,-0.00023201335735779143,0.00047167842259135926,0.000004158788951160539,-0.0001490580822956311,-0.00003303973941739657,-0.00014554668436649824,0.000013019127328733467,-0.00014705733369002957,-0.0002442451623298977,-0.00026322281024516384,0.0002843101169476152,-0.00017970271340104823,0.00029775326625891747,-0.000012634325485516014,0.00006977628412185483,-0.00010609890959189018,0.00033410377548583227,0.00004165049666775123,-0.00015257633498060987,0.0003547333728399526,0.00011885819700290903,-0.00010996175945392027,-0.000014666762165766602,0.00017861335000636324,-0.0001666640452896267,-0.00010473610365664399,0.00027244301911695084,-0.00013600187481479614,0.000132338562994976,-0.000349831543147698,0.00028316754001548623,-0.00003250307274953248,0.00008002091731470793,-0.0001532669982768643,-0.00015267999519615342,-0.00003404568806740998,0.00006793821539437216,0.0002595293177100421,-0.00004843807863246387,0.0000885993211916506,0.0001597274146011037,0.00006423332991052372,0.0003711277834192409,0.00031320196083064143,0.00045134431729241674,0.00021160704200413676],"vy":[-0.00006810080488954082,-0.0004747852362893423,-0.00020949438689988717,-0.0001899870081146486,0.00021510895627062008,0.00010000467553120957,0.00007716052513085754,-0.00039693669851802806,-0.00017928562851194293,-0.00021330102676215304,0.00014434776282391863,-0.00018602937731185048,-0.00009461239040966615,-0.0003391261088094635,0.00018065780031211712,0.0002909480953501897,0.00005453888472070174,-0.000377168004055898,0.00010267029566503371,-0.00021632788375227022,-0.0004185195678236061,0.00035924257098628735,0.00029940513350199736,0.00023873623096904584,0.0001299106249769881,0.000004903210653895242,0.00039697761688782713,-0.00003355325911353204,0.00007664223806575219,0.00006222480254323851,-0.00031010115909965946,0.00009322680493696225,-0.00006887838728437297,-0.0003986098722908663,-0.00017837946282609895,0.00012746871324700228,0.0001800626281736132,-0.00018989634456043005,0.0001483577205169021,0.00008012018860167718,0.00013711297132784023,0.00020020998403533804,-0.00021943417284891548,0.00012210392437151426,5.416862690740991e-7,0.00011708634749129379,0.00012879065089288727,-0.00018448471688369081,0.00014818739316242702,0.00007299114656413368,0.000173827671384786,0.0002490125612839429,-0.0000981143804101374,0.00009319790467540815,-0.000017003221721680986,0.00022788241132867538,-0.00003046387895207648,9.856845382630967e-7,-0.0001516324272049214,-0.0000734468669328149,0.00007741071719510375,0.0001242317646183756,-0.000041071894845238714,0.00020025840820617219,-0.00016551360412617947,-0.00021149370139486823,0.00013862611067867126,0.0002638086292039952,-0.00004186118984330164,0.0004600643172300472,-0.0006100537985706632,0.00008062321046140921,-0.000013335726343908744,0.00020588908917131286,-0.00011325737817172369,-0.000098385580483707,0.00009947280326555864,0.00009709226910155134,0.00028724474703415164,0.00023268550762842424,-0.00008717666130999667,0.00020493167355969803,-0.00010174523374217253,0.00020429697991509695,-0.000015930943005784633,-0.00018545802971413108,0.000022911324053035343,0.000038904599300066244,-0.00011545223157881391,-0.0002786947602812201,0.00005538759491046507,0.00024117329546214595,-0.0001271761399811613,-0.0004617050113021941,0.00005916195744765914,-0.00010231903999144842,-0.0004129411895791743,0.00009377012040794866,-0.000052365048057371814,0.00006284971492458785,-0.000017155904630526024,0.00021750272788048308,0.00011644548701481818,-0.000005440462791810702,-0.0002989148368867744,0.0000012068894651460137,-0.00028305685594453976,0.00011291302891068822,-0.00010145919202366253,0.0000396773583394126,-0.00009825591143572679,-0.0005081365810316794,-0.000021739237719568314,-0.0003548152563956216,0.00015813643546436592,0.00031471022769480816,0.00018677280618031882,-0.00023409657820877992,0.00003935034626870969,-0.000017758518048973435,-0.00007997242609842861,-0.00011520451406473847,-0.00004528454746197012,-0.00021538929467298596,0.0003063188654928059,-0.000254898281255094,-0.0002016900703948426,0.000039694716591312455],"charge":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"friction":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"pinned":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"radialBonds":{"atom1":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127],"atom2":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126],"length":[0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22],"strength":[2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000],"type":[101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101]},"angularBonds":{"atom1":[2,3,4,5,6,7,8,9,10,11,12,13,14,15,18,19,20,21,22,23,24,25,26,27,28,29,30,31,34,35,36,37,38,39,40,41,42,43,44,45,46,47,50,51,52,53,54,55,56,57,58,59,60,61,62,63,66,67,68,69,70,71,72,73,74,75,76,77,78,79,82,83,84,85,86,87,88,89,90,91,92,93,94,95,98,99,100,101,102,103,104,105,106,107,108,109,110,111,114,115,116,117,118,119,120,121,122,123,124,125,126,127],"atom2":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,16,17,18,19,20,21,22,23,24,25,26,27,28,29,32,33,34,35,36,37,38,39,40,41,42,43,44,45,48,49,50,51,52,53,54,55,56,57,58,59,60,61,64,65,66,67,68,69,70,71,72,73,74,75,76,77,80,81,82,83,84,85,86,87,88,89,90,91,92,93,96,97,98,99,100,101,102,103,104,105,106,107,108,109,112,113,114,115,116,117,118,119,120,121,122,123,124,125],"atom3":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,17,18,19,20,21,22,23,24,25,26,27,28,29,30,33,34,35,36,37,38,39,40,41,42,43,44,45,46,49,50,51,52,53,54,55,56,57,58,59,60,61,62,65,66,67,68,69,70,71,72,73,74,75,76,77,78,81,82,83,84,85,86,87,88,89,90,91,92,93,94,97,98,99,100,101,102,103,104,105,106,107,108,109,110,113,114,115,116,117,118,119,120,121,122,123,124,125,126],"strength":[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],"angle":[2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957]},"elements":{"mass":[120,60,360,480,600],"sigma":[0.07,0.32,0.3,0.28,0.3],"epsilon":[-0.1,-0.7,-0.1,-0.1,-0.1],"color":[-855310,-6958434,-6710887,-2539040,-855310]},"pairwiseLJProperties":[]}
 
 /***/ }),
-/* 814 */
+/* 819 */
 /***/ (function(module, exports) {
 
 	module.exports = {"type":"md2d","imagePath":"","width":2.6,"height":2.5,"unitsScheme":"md2d","lennardJonesForces":true,"coulombForces":true,"temperatureControl":true,"gravitationalField":false,"timeStep":0.5,"dielectricConstant":1,"realisticDielectricEffect":true,"solventForceFactor":1.25,"solventForceType":0,"additionalSolventForceMult":4,"additionalSolventForceThreshold":10,"polarAAEpsilon":-2,"viscosity":1,"timeStepsPerTick":50,"DNAState":"dna","DNA":"","DNAMutations":true,"useQuantumDynamics":false,"useChemicalReactions":false,"useDuration":"codap","requestedDuration":null,"skipPECheckOnAddAtom":false,"viewOptions":{"viewPortWidth":2.5,"viewPortHeight":2.5,"viewPortZoom":1,"viewPortX":0,"viewPortY":0,"viewPortDrag":false,"backgroundColor":"#eee","showClock":false,"markColor":"#f8b500","atomRadiusScale":1,"keShading":false,"keShadingMinEnergy":0,"keShadingMaxEnergy":0.2,"chargeShading":false,"aminoAcidColorScheme":"hydrophobicity","aminoAcidLabels":true,"useThreeLetterCode":true,"showChargeSymbols":false,"showVDWLines":false,"VDWLinesCutoff":"medium","showVelocityVectors":false,"showForceVectors":false,"showElectricField":false,"electricFieldDensity":18,"electricFieldColor":"auto","showAtomTrace":false,"images":[],"imageMapping":{},"textBoxes":[],"xlabel":false,"ylabel":false,"xunits":false,"yunits":false,"controlButtons":"play_reset","gridLines":false,"atomNumbers":false,"enableAtomTooltips":false,"enableKeyboardHandlers":true,"atomTraceColor":"#6913c5","velocityVectors":{"color":"#000","width":0.01,"length":2},"forceVectors":{"color":"#169C30","width":0.01,"length":2},"forceVectorsDirectionOnly":false,"onAtomDrag":"translate"},"atoms":{"x":[2.1,1.8,1.5,1.2,0.9,2.25,1.95,1.65,1.35,1.05,0.75,2.1,1.8,1.5,1.2,0.9],"y":[0.9,0.9,0.9,0.9,0.9,1.2,1.2,1.2,1.2,1.2,1.2,1.5,1.5,1.5,1.5,1.5],"element":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"vx":[-0.000028007452222460638,-0.00003206913008245524,0.00012084156887449255,-0.00004853592382567735,-0.00017412497616838308,-0.0000827304791703167,0.000011510951268325878,0.00004247967231539358,0.000004969725295511981,-0.000037951380570436286,-0.000007937539891841839,0.000022677587704472138,-0.000101507030306633,0.000028180705931474163,-0.00007648673267803971,0.00010109135369761456],"vy":[-0.0000752356182071923,0.00004314283156650063,0.0000729223259884432,-0.0001551934149040607,0.0000044793289942052145,0.00009504890837528209,0.000009558677305693073,-0.00009355924915798906,-0.000013147343685372792,0.00013297934962788527,0.00009996426961428869,-0.00005155610676825053,-0.000027041520233537605,0.00007274138118654512,-0.000079968675862214,0.00004120177990796731],"charge":[1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1],"friction":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"pinned":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"elements":{"mass":[120],"sigma":[0.3],"epsilon":[-0.6000000238418579],"color":[-13057]},"pairwiseLJProperties":[],"lines":{"x1":[1.57,0.93,0.37,0,0,0.37,0.93,1.57,2.16,2.5,2.5,2.16],"y1":[0,0,0.3,0.93,1.57,2.16,2.45,2.45,2.16,1.57,0.93,0.3],"x2":[0.93,0.37,0,0,0.37,0.93,1.57,2.16,2.5,2.5,2.16,1.57],"y2":[0,0.3,0.93,1.57,2.16,2.45,2.45,2.16,1.57,0.93,0.3,0],"beginStyle":["none","none","none","none","none","none","none","none","none","none","none","none"],"endStyle":["none","none","none","none","none","none","none","none","none","none","none","none"],"fence":[1,1,1,1,1,1,1,1,1,1,1,1],"lineColor":["black","black","black","black","black","black","black","black","black","black","black","black"],"lineWeight":[1,1,1,1,1,1,1,1,1,1,1,1],"lineDashes":["none","none","none","none","none","none","none","none","none","none","none","none"],"layer":[1,1,1,1,1,1,1,1,1,1,1,1],"layerPosition":[1,1,1,1,1,1,1,1,1,1,1,1],"visible":[1,1,1,1,1,1,1,1,1,1,1,1]}}
 
 /***/ }),
-/* 815 */
+/* 820 */
 /***/ (function(module, exports) {
 
 	module.exports = {"type":"md2d","imagePath":"","width":4,"height":2.5,"unitsScheme":"md2d","lennardJonesForces":true,"coulombForces":true,"temperatureControl":true,"gravitationalField":false,"timeStep":0.5,"dielectricConstant":1,"realisticDielectricEffect":true,"solventForceFactor":1.25,"solventForceType":0,"additionalSolventForceMult":4,"additionalSolventForceThreshold":10,"polarAAEpsilon":-2,"viscosity":1,"timeStepsPerTick":50,"DNAState":"dna","DNA":"","DNAMutations":true,"useQuantumDynamics":false,"useChemicalReactions":false,"useDuration":"codap","requestedDuration":null,"skipPECheckOnAddAtom":false,"viewOptions":{"viewPortWidth":2.5,"viewPortHeight":2.5,"viewPortZoom":1,"viewPortX":0.75,"viewPortY":0,"viewPortDrag":false,"backgroundColor":"#eee","showClock":true,"markColor":"#ff0","atomRadiusScale":1,"keShading":false,"keShadingMinEnergy":0,"keShadingMaxEnergy":0.2,"chargeShading":false,"aminoAcidColorScheme":"hydrophobicity","aminoAcidLabels":true,"useThreeLetterCode":true,"showChargeSymbols":true,"showVDWLines":false,"VDWLinesCutoff":"medium","showVelocityVectors":false,"showForceVectors":false,"showElectricField":false,"electricFieldDensity":18,"electricFieldColor":"auto","showAtomTrace":false,"images":[],"imageMapping":{},"textBoxes":[],"xlabel":false,"ylabel":false,"xunits":false,"yunits":false,"controlButtons":"play_reset","gridLines":false,"atomNumbers":false,"enableAtomTooltips":false,"enableKeyboardHandlers":true,"atomTraceColor":"#ff0","velocityVectors":{"color":"#000","width":0.01,"length":2},"forceVectors":{"color":"#169C30","width":0.01,"length":2},"forceVectorsDirectionOnly":false,"onAtomDrag":"translate"},"atoms":{"x":[2.5209773372724946,1.9783717434852255,2.7430318706782497,1.0896363093005206,2.8690472952062662,3.519853007072548,3.234141926228647,3.224077872288447,3.3956788344535282,1.7688109873618427,0.7588332319425128,3.823757683784257,0.8580484132246166,2.599995132650904,0.5427605141917081,1.9713616105189105,0.5049870016487487,1.9549216903673312,1.2799710965294515,0.15889302775303046,3.3955370653808785,2.411970897999325,3.6173895655500066,2.8559124725201714,3.0027688966368964,2.1980591772560696,3.8406444862235443,1.545397037572938,2.4902549291380036,1.4143448200626383,1.9649751730525526,2.867517966250986,2.3035555281927045,1.1042735585743229,0.1914133624524301,1.007951979238854,1.7259930424385674,0.5104031229691429,0.43542083514238433,1.9062920077717143,0.16943272378737187,1.316353052187058,1.0555935767756646,0.2239871726666686,3.803478526461126,1.2360355140858765,3.1454603878805187,0.8726344759352123,0.2193172685657651,0.38705634676045797,0.755848374979933,0.44766229155502485,2.2853896764822625,3.8429205910625,3.0659350149798006,2.3145934934847108,1.490864741813276,3.5019943086048415,3.699902349630892,3.314480654731347,2.530794469076666,0.7748391203075633,3.1382887745939008,1.6322066833748976,1.1895189470584613,2.1670342988383076,2.7371264230417034,1.8440082637914517,1.6268496591561759,2.586454547101964,3.8144922369593464,1.6029941228847298,0.5350460895343545,1.009516293970157,1.3932367355683135,2.6161874255675595,3.1789029482365363,2.873922554182567,1.3515264855753204,2.165840525902652,0.21553715710486487,3.4801406580023047,3.596289704092202,2.1751467909966697,0.5916822062604503],"y":[0.18652332375086417,1.1465672042103234,0.5490121542252305,0.16680162283378222,1.7930240686937122,0.4332166389866691,0.16954936879343394,1.0446982931852942,2.1750854232086856,0.945423618780716,1.640565156310111,0.5504154727610612,1.1480331029755686,1.1859125658440284,0.5635035511071453,1.481053854967193,1.4200193056260424,0.5890363678306284,1.7261837961993303,1.8785397093652096,0.7150957753719226,1.4441819296095633,2.003203436504649,2.227076833381953,1.3308405713560871,1.6595679417337976,1.8096571867972167,1.5817120651580137,2.338959168379172,0.8903372636849468,2.1092626886467896,0.24391185584742317,1.114149903717973,1.4594791054905176,2.303676013963903,2.2310428485560068,2.3471921957839768,1.7840338751274032,1.1302899063498497,1.7983334478021964,0.23130171817601308,2.0276561919801583,0.9069176098823022,0.5655097176770403,1.4820310413913185,1.1428239559589843,1.641138314978918,0.6100465855156705,1.363004470266805,2.106022379380484,2.058804188440156,0.20648969870508438,0.47294397557524975,1.135737664571227,0.6351726570846387,1.922514500959412,0.1541730652334121,1.0604406619889732,0.845632549008389,1.363888480267562,0.8056950101833246,0.26083622920651406,2.3329960398906637,1.9803060342222119,0.6250686552794025,0.18211023392907605,1.4544689306249887,0.27781676792747306,0.616234275276602,1.7233246122207566,2.333761727122818,1.289807727292486,2.3470483437668728,1.8527338575489234,0.4184934545254464,2.0370178777075307,1.9288174106955125,0.8666618874316732,2.311896638022109,2.3278218615089945,0.9089583407406175,1.6898191566552134,0.1638102952214419,0.8333806636107107,0.8690564223906512],"element":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"vx":[0.0004130494070254688,0.00011776351368894916,-0.0002090839883748339,-0.0002653218381197367,-0.0005263877116421397,-0.0006543884783894852,-0.00020913610602975075,0.0008317065447116474,-0.0005324622912918357,-0.0002610821964884297,-0.0010721629877837662,0.000010409151095277342,-0.00003090559636372495,0.0003316464383559914,0.0012571424714915508,-0.00016383286135820475,-0.0008302685958379214,0.00006766101108038973,-0.001958433347193559,0.00030376039574221724,0.0004799179973421566,0.0012176640018406815,-0.00048690883807809345,-0.000499752480380571,-0.00005586380463994287,0.000026203989507368363,-0.00012340691442962962,-0.00117026582365138,0.00003762608938080071,-0.00006180105870569893,-0.00031530515987852816,-0.0004197790644746717,-0.0003395689625938978,0.001023597833550715,-0.0014517237893713739,-0.0002209400079942867,0.0003612744847807048,-0.0002574318304562796,-0.0011112844612151407,0.00016972368036005965,0.0004374345577609042,-0.0004625438708730279,0.0008861920204312569,0.0005505048207774863,0.0011508680938254932,-0.0005864413236120642,-0.000049441765155553836,-0.0005262055907647506,0.0002408651776199138,0.0006750192594487435,-0.0011348248750009144,-0.00029587530640284366,0.0004113505694043181,0.0006079478771543637,-0.0009034610321566174,0.000060924032865804724,0.00004346511231578562,-0.0008334231653346966,0.0007898976893840967,0.0008801551292046266,-0.0004154041840748517,0.00026310392726968773,0.0005635187830121626,-0.0011108305554589186,-0.000431371292330384,-0.0003842762311369893,-0.0002790457842085451,-0.00025300382666154474,0.0007571904015560044,0.0009194830984243315,0.000389411586458509,-0.00008954835660909715,-0.0012531672308632486,0.000016374750051682238,0.00019701256617709475,-0.0005476013129629563,0.00044560868890881477,-0.0007265025074766399,0.000017356657039500936,-0.0002408356509370436,-0.0009998554288797664,-0.00022398431231756058,0.00030334474336573105,0.000005022228843249866,0.0008521343777374124],"vy":[-0.0000199088517908269,0.0010347901410523736,-0.0009026162920589373,-0.0001461760299410712,0.0002558833190405782,0.00030868763528971323,-0.0003502761480274452,-0.00064159191482169,-0.0013184552022669947,0.001546831607211189,0.0009337561641306642,0.0002846828925233498,0.0006198170062793852,-0.00012160919713158889,-0.00036765220012301397,0.0003583724681781249,0.00033233555742680205,0.00025181095172626186,0.0013146322820016267,0.0005940546609345238,-0.0007552289266258799,-0.001104481264415386,-0.00037361713785982194,0.0015271181037030174,-0.00012722668019619026,-0.0005956516587993346,0.0005232646338119279,-0.00038219957076272057,0.0008193911501823471,0.00041338308963730883,-0.0005641827292374871,0.0018509983012627148,-0.00026689782056377084,-0.0006881187806739804,-0.0005943566569854848,-0.0003582386112771383,0.00024347840395611928,-0.00018443425731216865,-0.00042028194727000424,0.0015148374163233282,-0.0013132870717085907,-0.0001623171109931357,-0.0006340910053115828,0.0009718259906375759,-0.0005319921672744992,-0.0009581769470062937,0.0004859721759993614,-0.000008122816265713822,0.0008359346181539016,0.00123460549238069,-0.0010722029994543318,0.00038688966323461,0.0007167719202899572,0.00100944738021743,0.00034583754392536275,-0.00012962211272847185,-0.0003058206136734336,-0.00028608247569100276,-0.0006726326923353728,0.0009839901486417447,-0.0006736225116014057,0.000587243120107538,0.0015005911317405403,-0.0024034312820492595,-0.0012102230509630884,0.0008135472142943292,-0.0005934505392069814,-0.0003534184015193089,0.000044040970113701195,0.0008737004415245843,0.0011046878677708376,0.0001863083368991012,0.0007705287297530601,-0.0003548041557331055,-0.0008828378225456074,0.0003139925301261712,-0.0005632613854939337,0.0005397747180377804,0.00031198931545801516,-0.00021448367260226253,-0.0002653857270951185,0.000041935275254898184,-0.0005624037073931185,0.0004878528312357868,0.0005736040776314676],"charge":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"friction":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"pinned":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"elements":{"mass":[20,40,60,80,600],"sigma":[0.295,0.14,0.21,0.28,0.3],"epsilon":[-0.05,-0.1,-0.1,-0.1,-0.1],"color":[-2236963,-3881788,-4539718,-6579301,-8092540]},"pairwiseLJProperties":[]}
 
 /***/ }),
-/* 816 */
+/* 821 */
 /***/ (function(module, exports) {
 
 	module.exports = {"type":"md2d","imagePath":"","width":4,"height":2.5,"unitsScheme":"md2d","lennardJonesForces":true,"coulombForces":true,"temperatureControl":true,"gravitationalField":false,"timeStep":0.5,"dielectricConstant":1,"realisticDielectricEffect":true,"solventForceFactor":1.25,"solventForceType":0,"additionalSolventForceMult":4,"additionalSolventForceThreshold":10,"polarAAEpsilon":-2,"viscosity":1,"timeStepsPerTick":50,"DNAState":"dna","DNA":"","DNAMutations":true,"useQuantumDynamics":false,"useChemicalReactions":false,"useDuration":"codap","requestedDuration":null,"skipPECheckOnAddAtom":false,"viewOptions":{"viewPortWidth":2.5,"viewPortHeight":2.5,"viewPortZoom":1,"viewPortX":0.75,"viewPortY":0,"viewPortDrag":false,"backgroundColor":"#eee","showClock":true,"markColor":"#ff0","atomRadiusScale":1,"keShading":false,"keShadingMinEnergy":0,"keShadingMaxEnergy":0.2,"chargeShading":false,"aminoAcidColorScheme":"hydrophobicity","aminoAcidLabels":true,"useThreeLetterCode":true,"showChargeSymbols":true,"showVDWLines":false,"VDWLinesCutoff":"medium","showVelocityVectors":false,"showForceVectors":false,"showElectricField":false,"electricFieldDensity":18,"electricFieldColor":"auto","showAtomTrace":false,"images":[],"imageMapping":{},"textBoxes":[],"xlabel":false,"ylabel":false,"xunits":false,"yunits":false,"controlButtons":"play_reset","gridLines":false,"atomNumbers":false,"enableAtomTooltips":false,"enableKeyboardHandlers":true,"atomTraceColor":"#ff0","velocityVectors":{"color":"#000","width":0.01,"length":2},"forceVectors":{"color":"#169C30","width":0.01,"length":2},"forceVectorsDirectionOnly":false,"onAtomDrag":"translate"},"atoms":{"x":[2.5209773372724946,1.9783717434852255,2.7430318706782497,1.0896363093005206,2.8690472952062662,3.519853007072548,3.234141926228647,3.224077872288447,3.3956788344535282,1.7688109873618427,0.7588332319425128,3.823757683784257,0.8580484132246166,2.599995132650904,0.5427605141917081,1.9713616105189105,0.5049870016487487,1.9549216903673312,1.2799710965294515,0.15889302775303046,3.3955370653808785,2.411970897999325,3.6173895655500066,2.8559124725201714,3.0027688966368964,2.1980591772560696,3.8406444862235443,1.545397037572938,2.4902549291380036,1.4143448200626383,1.9649751730525526,2.867517966250986,2.3035555281927045,1.1042735585743229,0.1914133624524301,1.007951979238854,1.7259930424385674,0.5104031229691429,0.43542083514238433,1.9062920077717143,0.16943272378737187,1.316353052187058,1.0555935767756646,0.2239871726666686,3.803478526461126,1.2360355140858765,3.1454603878805187,0.8726344759352123,0.2193172685657651,0.38705634676045797,0.755848374979933,0.44766229155502485,2.2853896764822625,3.8429205910625,3.0659350149798006,2.3145934934847108,1.490864741813276,3.5019943086048415,3.699902349630892,3.314480654731347,2.530794469076666,0.7748391203075633,3.1382887745939008,1.6322066833748976,1.1895189470584613,2.1670342988383076,2.7371264230417034,1.8440082637914517,1.6268496591561759,2.586454547101964,3.8144922369593464,1.6029941228847298,0.5350460895343545,1.009516293970157,1.3932367355683135,2.6161874255675595,3.1789029482365363,2.873922554182567,1.3515264855753204,2.165840525902652,0.21553715710486487,3.4801406580023047,3.596289704092202,2.1751467909966697,0.5916822062604503],"y":[0.18652332375086417,1.1465672042103234,0.5490121542252305,0.16680162283378222,1.7930240686937122,0.4332166389866691,0.16954936879343394,1.0446982931852942,2.1750854232086856,0.945423618780716,1.640565156310111,0.5504154727610612,1.1480331029755686,1.1859125658440284,0.5635035511071453,1.481053854967193,1.4200193056260424,0.5890363678306284,1.7261837961993303,1.8785397093652096,0.7150957753719226,1.4441819296095633,2.003203436504649,2.227076833381953,1.3308405713560871,1.6595679417337976,1.8096571867972167,1.5817120651580137,2.338959168379172,0.8903372636849468,2.1092626886467896,0.24391185584742317,1.114149903717973,1.4594791054905176,2.303676013963903,2.2310428485560068,2.3471921957839768,1.7840338751274032,1.1302899063498497,1.7983334478021964,0.23130171817601308,2.0276561919801583,0.9069176098823022,0.5655097176770403,1.4820310413913185,1.1428239559589843,1.641138314978918,0.6100465855156705,1.363004470266805,2.106022379380484,2.058804188440156,0.20648969870508438,0.47294397557524975,1.135737664571227,0.6351726570846387,1.922514500959412,0.1541730652334121,1.0604406619889732,0.845632549008389,1.363888480267562,0.8056950101833246,0.26083622920651406,2.3329960398906637,1.9803060342222119,0.6250686552794025,0.18211023392907605,1.4544689306249887,0.27781676792747306,0.616234275276602,1.7233246122207566,2.333761727122818,1.289807727292486,2.3470483437668728,1.8527338575489234,0.4184934545254464,2.0370178777075307,1.9288174106955125,0.8666618874316732,2.311896638022109,2.3278218615089945,0.9089583407406175,1.6898191566552134,0.1638102952214419,0.8333806636107107,0.8690564223906512],"element":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"vx":[0.0004130494070254688,0.00011776351368894916,-0.0002090839883748339,-0.0002653218381197367,-0.0005263877116421397,-0.0006543884783894852,-0.00020913610602975075,0.0008317065447116474,-0.0005324622912918357,-0.0002610821964884297,-0.0010721629877837662,0.000010409151095277342,-0.00003090559636372495,0.0003316464383559914,0.0012571424714915508,-0.00016383286135820475,-0.0008302685958379214,0.00006766101108038973,-0.001958433347193559,0.00030376039574221724,0.0004799179973421566,0.0012176640018406815,-0.00048690883807809345,-0.000499752480380571,-0.00005586380463994287,0.000026203989507368363,-0.00012340691442962962,-0.00117026582365138,0.00003762608938080071,-0.00006180105870569893,-0.00031530515987852816,-0.0004197790644746717,-0.0003395689625938978,0.001023597833550715,-0.0014517237893713739,-0.0002209400079942867,0.0003612744847807048,-0.0002574318304562796,-0.0011112844612151407,0.00016972368036005965,0.0004374345577609042,-0.0004625438708730279,0.0008861920204312569,0.0005505048207774863,0.0011508680938254932,-0.0005864413236120642,-0.000049441765155553836,-0.0005262055907647506,0.0002408651776199138,0.0006750192594487435,-0.0011348248750009144,-0.00029587530640284366,0.0004113505694043181,0.0006079478771543637,-0.0009034610321566174,0.000060924032865804724,0.00004346511231578562,-0.0008334231653346966,0.0007898976893840967,0.0008801551292046266,-0.0004154041840748517,0.00026310392726968773,0.0005635187830121626,-0.0011108305554589186,-0.000431371292330384,-0.0003842762311369893,-0.0002790457842085451,-0.00025300382666154474,0.0007571904015560044,0.0009194830984243315,0.000389411586458509,-0.00008954835660909715,-0.0012531672308632486,0.000016374750051682238,0.00019701256617709475,-0.0005476013129629563,0.00044560868890881477,-0.0007265025074766399,0.000017356657039500936,-0.0002408356509370436,-0.0009998554288797664,-0.00022398431231756058,0.00030334474336573105,0.000005022228843249866,0.0008521343777374124],"vy":[-0.0000199088517908269,0.0010347901410523736,-0.0009026162920589373,-0.0001461760299410712,0.0002558833190405782,0.00030868763528971323,-0.0003502761480274452,-0.00064159191482169,-0.0013184552022669947,0.001546831607211189,0.0009337561641306642,0.0002846828925233498,0.0006198170062793852,-0.00012160919713158889,-0.00036765220012301397,0.0003583724681781249,0.00033233555742680205,0.00025181095172626186,0.0013146322820016267,0.0005940546609345238,-0.0007552289266258799,-0.001104481264415386,-0.00037361713785982194,0.0015271181037030174,-0.00012722668019619026,-0.0005956516587993346,0.0005232646338119279,-0.00038219957076272057,0.0008193911501823471,0.00041338308963730883,-0.0005641827292374871,0.0018509983012627148,-0.00026689782056377084,-0.0006881187806739804,-0.0005943566569854848,-0.0003582386112771383,0.00024347840395611928,-0.00018443425731216865,-0.00042028194727000424,0.0015148374163233282,-0.0013132870717085907,-0.0001623171109931357,-0.0006340910053115828,0.0009718259906375759,-0.0005319921672744992,-0.0009581769470062937,0.0004859721759993614,-0.000008122816265713822,0.0008359346181539016,0.00123460549238069,-0.0010722029994543318,0.00038688966323461,0.0007167719202899572,0.00100944738021743,0.00034583754392536275,-0.00012962211272847185,-0.0003058206136734336,-0.00028608247569100276,-0.0006726326923353728,0.0009839901486417447,-0.0006736225116014057,0.000587243120107538,0.0015005911317405403,-0.0024034312820492595,-0.0012102230509630884,0.0008135472142943292,-0.0005934505392069814,-0.0003534184015193089,0.000044040970113701195,0.0008737004415245843,0.0011046878677708376,0.0001863083368991012,0.0007705287297530601,-0.0003548041557331055,-0.0008828378225456074,0.0003139925301261712,-0.0005632613854939337,0.0005397747180377804,0.00031198931545801516,-0.00021448367260226253,-0.0002653857270951185,0.000041935275254898184,-0.0005624037073931185,0.0004878528312357868,0.0005736040776314676],"charge":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"friction":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"pinned":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"elements":{"mass":[20,40,60,80,600],"sigma":[0.3,0.14,0.21,0.28,0.3],"epsilon":[-0.05,-0.1,-0.1,-0.1,-0.1],"color":[-4539718,-6579301,-8092540,-2236963,-3881788]},"pairwiseLJProperties":[]}
 
 /***/ }),
-/* 817 */
+/* 822 */
 /***/ (function(module, exports) {
 
 	module.exports = {"type":"md2d","imagePath":"","width":4,"height":2.5,"unitsScheme":"md2d","lennardJonesForces":true,"coulombForces":true,"temperatureControl":true,"gravitationalField":false,"timeStep":0.4,"dielectricConstant":11,"realisticDielectricEffect":true,"solventForceFactor":1.25,"solventForceType":0,"additionalSolventForceMult":4,"additionalSolventForceThreshold":10,"polarAAEpsilon":-2,"viscosity":1,"timeStepsPerTick":50,"DNAState":"dna","DNA":"","DNAMutations":true,"useQuantumDynamics":false,"useChemicalReactions":false,"useDuration":"codap","requestedDuration":null,"skipPECheckOnAddAtom":false,"viewOptions":{"viewPortWidth":2.5,"viewPortHeight":2.5,"viewPortZoom":1,"viewPortX":0.75,"viewPortY":0,"viewPortDrag":false,"backgroundColor":"#eee","showClock":true,"markColor":"#f8b500","atomRadiusScale":1,"keShading":false,"keShadingMinEnergy":0,"keShadingMaxEnergy":0.2,"chargeShading":false,"aminoAcidColorScheme":"hydrophobicity","aminoAcidLabels":true,"useThreeLetterCode":true,"showChargeSymbols":false,"showVDWLines":false,"VDWLinesCutoff":"medium","showVelocityVectors":false,"showForceVectors":false,"showElectricField":false,"electricFieldDensity":18,"electricFieldColor":"auto","showAtomTrace":false,"images":[],"imageMapping":{},"textBoxes":[],"xlabel":false,"ylabel":false,"xunits":false,"yunits":false,"controlButtons":"play_reset","gridLines":false,"atomNumbers":false,"enableAtomTooltips":false,"enableKeyboardHandlers":true,"atomTraceColor":"#ff0","velocityVectors":{"color":"#000","width":0.01,"length":2},"forceVectors":{"color":"#169C30","width":0.01,"length":2},"forceVectorsDirectionOnly":false,"onAtomDrag":"translate"},"atoms":{"x":[0.8099563132102614,0.866288563283199,1.0679882042194835,2.203053835860769,2.0218640546632596,1.8939614482845915,3.4817675444481377,3.5399317842874503,3.37285532725388,0.18271532600505475,0.36947777815732347,0.3620979529284951,3.3496179844796647,3.188327789742242,3.023070890303779,2.4061367067892228,2.4376930591075414,2.2526648466009487,1.1660466749332243,1.1494061553270236,0.9529250540075703,2.505674088052908,2.3023649156702266,2.246687227977434,2.6325220099953923,2.70954310501036,2.9108543384867174,1.4408480177532592,1.5987541821744304,1.7409083621029464,0.21822754268095643,0.33093026135217374,0.20544355358615018,2.772248192369358,2.826113496222492,3.0280339067149065,2.007333521415837,1.8088627964024742,1.762515417044957,1.318060595055353,1.166454253939379,1.2314011588101783,2.2571224906537655,2.1027425106476314,1.9430996797977038,1.760798728557691,1.95685959168938,2.0956767301043073,0.6501053290007917,0.7578504213740231,0.9540341081893149,2.8193323318804056,3.0058894953580433,3.112282528482095,1.9657253855534824,1.7708852994102438,1.6425622689690933,2.4932275131512016,2.6917169164407073,2.798693193544234,3.8520682112808173,3.6490612083930456,3.5916442535475257,3.0540093468569385,3.2626075689980683,3.3424380944930103,0.618882739325736,0.5130361528169799,0.31984124116434987,0.7069809068100771,0.7560619145917774,0.56844912260278,1.2141958541736906,1.1483060646928023,1.3331429955375476,1.5170657290839598,1.7020174032109576,1.8598093414752785,3.8064026234278305,3.6072640128897375,3.5541340961937355,3.4007914442058933,3.4031279269882475,3.5814994473793718,2.4529145581561096,2.257695756776697,2.172488088655053,3.6856259001115057,3.6074490270470534,3.7648954103811207,0.9199968089018522,0.8645585949605682,1.035852409256358,3.457620807981415,3.286078912735196,3.3156784167987507,2.7303965475961136,2.8522024845962757,3.0330660026989595,0.8933777816082362,0.7104606968564781,0.553611222356562,3.2068072083349226,3.012489585282376,3.000153993157706,3.855209978221106,3.730783276610861,3.850939832928599,0.8702118310646477,1.049116007485829,1.1457942431257724,1.5708856654360295,1.4028655229005451,1.2872141737516134,1.3560647688141805,1.4595106167464547,1.6440307196653117,0.4898653029295683,0.3132971695508943,0.34263582776601226,2.219580691312677,2.2926404231815756,2.4848547168274906],"y":[0.8621147963866019,1.053128998707524,1.044576115092945,1.9072263179263849,1.802155025180114,1.943781881203862,2.0073481702241316,1.8178816222000131,1.71019429030673,1.3580198531377667,1.2621656258231666,1.0607106702212743,2.3286511585663234,2.205239616334422,2.3321481231672903,1.9707810957323482,1.7793685776137989,1.687870673076109,1.9457295532056151,1.7464353885335668,1.6786629992991493,0.9600652609772681,0.9472077563682382,1.1386775920257093,2.001916860025894,2.182977001060835,2.1493017586645946,1.5559913870783821,1.6719846339741338,1.539164656406333,0.8209561332880739,0.6574922105434439,0.4981393919929073,1.640961252500438,1.8326168280029875,1.8322959515932626,2.174936986337764,2.16399563034736,2.360111845389084,1.1727625250617968,1.2872473897683643,1.4732599665836068,1.4604417798909777,1.3331659959776974,1.452067074479968,0.8962601433162363,0.9428481101641737,0.7983592057435022,1.33828716137561,1.5018345420377452,1.4275659709413946,0.7237487301992122,0.7743771952397179,0.6067652961883698,0.5636069205910781,0.505460879173637,0.6580091582412697,1.2279680990982156,1.2735851775186626,1.1106867296291096,0.5350171803435557,0.4977757945028668,0.6788829801773523,1.0208029342236942,1.013363928455822,0.826281254826286,2.328793511356182,2.1573937643101044,2.228787746790943,2.0213636106992365,1.8312420321130338,1.7605353565945803,0.5938942938040132,0.7860968505072927,0.8530172709875802,1.1829838159749158,1.2917842096744183,1.1681838131361761,0.9581013547018855,0.936393249909149,1.1193552742969315,1.2529869838744998,1.455967043943931,1.552534015788265,2.246356698905484,2.191729738106042,2.3671234677940807,2.052326234313225,2.2356002811241673,2.3672448793891174,2.024975372502698,2.2200661683976546,2.3227236073728874,0.23628730677547424,0.3389142360806403,0.5408501308637677,0.19437764601538135,0.3482508531386222,0.2568668189748726,0.5713042831850421,0.4929768222000411,0.6215213190909975,1.2726595829844618,1.2579254681328065,1.4562086158003746,1.1849162979913657,1.3407460975502652,1.4914354427355863,0.317041263001623,0.39767678287824765,0.23464856350161425,0.34230821870174594,0.23075239363741842,0.39345638353790463,1.8924336201862073,2.056779810806253,1.9829148447206888,1.5236727336417693,1.625390382778488,1.8178975879316055,0.3318466182308106,0.5183295227219122,0.46678331723758393],"element":[1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1],"vx":[0.00349297284387081,0.000533288622526935,0.0016107390895933466,-0.0035400246367202222,0.000032075257767035764,-0.0026145186658210755,0.00021205381785626773,-0.0006673280414523081,0.0007100578430995142,-0.0010065100970596665,0.001247071453222425,-0.002468229225349847,-0.0005396723772203044,0.000052191598577675404,-0.004870010690177456,-0.0014426794650815888,0.00015820824456090884,-0.000949505921874509,0.0014760873969116642,-0.0005631563985595997,-0.00380557591267226,-0.000663109352629484,0.00021925187013593602,-0.0029172258235751836,0.0014465957837498677,-0.0007386729010345207,-0.00024853629072332047,0.0004934514370789696,0.0006305249475711698,0.0011905839341110613,0.001669676028575048,-0.000013762479087742605,-0.00002663030040764968,-0.0012118097114340231,0.00015842376412360408,-0.00015115161582315427,-0.0034749284516158896,-0.0002541217135638938,0.0012634443106844596,0.005046205628054673,0.0003557684056308812,-0.00002934305625993173,0.0005347904554219511,0.00017404239418343444,0.0013045608656325508,-0.0009381886494540245,-0.00023627834575440647,0.0018627653223196499,0.003526892467264009,-0.0003014405389589925,0.0010799012376714078,0.0012862517830497806,0.0005870906796883974,-0.0007028166604292118,-0.00036661884805612097,-0.00029943375644288087,0.00004543360321795324,0.001980801500584474,0.00040773400249906577,0.003248071464187317,0.0024818793642445445,-0.00041960364331463415,0.00003960727144952388,-0.0021011336749400633,0.0012402459701616024,-0.0021116702345898054,0.0027006783428590825,-0.00034745353918264277,-0.0036959409081387235,-0.002911496501411904,0.0005883471233434249,-0.0022920013768145562,-0.0001085869686289284,-0.00009915682566241416,0.0013126387015894839,0.0031236018181656756,-0.000052644345699336845,0.001905966231872467,-0.0006730712560022336,-0.0005174056970986464,0.00416746230019888,-0.0013505906791633833,0.00006885388627138003,0.002561925673467744,-0.00013883131849680392,0.001754042745039331,-0.0014823777437672524,0.0013521270207723897,-0.0005465845473390835,0.003221076821861635,-0.0008612834868835448,-0.0005802321053684199,-0.0005391156710864372,-0.0004359298023945493,-0.00018784435550773092,0.003680858619603591,0.0014565914833887031,0.0005876930591444491,0.0015263615538117256,-0.0008701758512285259,0.0004572456443781761,-0.0030053493200316583,-0.0015196820848481288,0.0006952729025063443,0.0000807857488576723,-0.00030254164349973167,-0.00015668031914701806,0.002230453237362843,-0.0006036290801808872,0.000673353937102836,-0.0005493385470482807,0.0010398893646992487,0.0003348752601347557,0.0007973297246342346,0.004044048498431973,-0.00038894200721438315,-0.002491886772018401,-0.0027794867466005412,0.0005390980687638754,-0.0024900766390263084,0.0013862630288516955,0.000493583572563667,-0.00013098209045787632],"vy":[0.0003782871536951012,0.00011280721701499498,-0.0014368997692057561,-0.002636350375246796,0.0008239318613038503,0.0037254591989659934,-0.0004706503842960749,0.00011425989168206356,0.0008299083956066721,-0.0036941124563006004,-0.00027325303677302174,-0.00008704422381505193,-0.0017007701845013017,-0.00016467952420548968,-0.0006604487041165375,-0.002774111810836534,-0.0001775346291354088,-0.00033523065654782555,0.0006706312346943592,0.00023895754044051757,0.0035723148768629946,-0.002069590899853721,-0.00024613485757515137,-0.000682766692764039,-0.0024610214229815754,0.0004541352981598966,-0.00007566654092187214,0.003343844910089502,0.0002476093062678596,-0.0006720370713419446,0.0010146473085228661,0.0001601370793782493,-0.00016955071734900046,-0.001383817444794977,0.00003007437135866536,0.0013618174518087258,0.0024943918984300572,0.0005928736314828785,0.0059359122756021425,-0.0014549216578275655,0.0003010822840334873,-0.0018938711383789239,0.002642685065504714,0.0012415939786808374,-0.0023198432280141013,-0.0018187826161984708,0.0008070726667018728,-0.002382833197415271,0.002367988676967161,-0.000091914819500627,0.0019325450450239756,-0.00025072959966503957,0.00020739565715186922,-0.002848082254457907,0.005238926532185282,-0.0006208350549287644,0.00004509831189398594,-0.00048245525926282834,0.0013054877809038925,-0.002367646035771282,0.0015178617996985163,0.0005707148991994902,0.0019614939950320757,-0.0003829420727569033,0.000011322180367110874,-0.00031483620215923573,0.0001350015146232048,0.0006063597295339933,0.0023748746157639155,0.0014513851981813395,0.000755498388549893,0.0012129172394774736,-0.0014744659669998952,-0.0004404056869165502,-0.0010280684925381642,-0.0034205953720483372,-0.000516341552031188,0.0033209213229396166,0.0004311051121439284,0.00027169724855786,0.0015384781585771634,-0.002212750892308038,-0.00023753644163340465,-0.0008267448050412075,-0.0007905486197203429,-0.00008877145932900207,0.002206700134486123,-0.0029566416497953324,-0.000046091453415755174,0.002447506908836834,-0.0009752511435644453,0.0004941777846857967,0.001065018742978301,0.000242992653339228,-0.00002996450052903426,-0.0002491903522682537,-0.0021081992948950123,0.0004004654750509784,-0.004554859949515826,0.003279123151460347,-0.0006340933631497646,0.0022561154048598058,-0.00044822638731239047,-0.0003998590621789636,0.0009523619030627608,-0.0011076440130551022,-0.00011742719835443875,0.0015406240112220682,0.004385552781835539,-0.00013284372913485753,0.0005323368450636463,0.0005970747762843127,0.00008920862369674513,0.00010654397259366556,0.0013821556122955083,0.000597336202078451,0.0035673986235055266,-0.003442607723327022,-0.00020994304033839097,0.0005955761739448938,0.000276809096339029,-0.0008668230653574359,0.0016033915662537874],"charge":[1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1],"friction":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"pinned":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"radialBonds":{"atom1":[2,0,5,3,8,6,11,9,14,12,17,15,20,18,23,21,26,24,29,27,32,30,35,33,38,36,41,39,44,42,47,45,50,48,53,51,56,54,59,57,62,60,65,63,68,66,71,69,74,72,77,75,80,78,83,81,86,84,89,87,92,90,95,93,98,96,101,99,104,102,107,105,110,108,113,111,116,114,119,117,122,120],"atom2":[1,1,4,4,7,7,10,10,13,13,16,16,19,19,22,22,25,25,28,28,31,31,34,34,37,37,40,40,43,43,46,46,49,49,52,52,55,55,58,58,61,61,64,64,67,67,70,70,73,73,76,76,79,79,82,82,85,85,88,88,91,91,94,94,97,97,100,100,103,103,106,106,109,109,112,112,115,115,118,118,121,121],"length":[0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2],"strength":[2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000],"type":[101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101]},"angularBonds":{"atom1":[2,5,8,11,14,17,20,23,26,29,32,35,38,41,44,47,50,53,56,59,62,65,68,71,74,77,80,83,86,89,92,95,98,101,104,107,110,113,116,119,122],"atom2":[0,3,6,9,12,15,18,21,24,27,30,33,36,39,42,45,48,51,54,57,60,63,66,69,72,75,78,81,84,87,90,93,96,99,102,105,108,111,114,117,120],"atom3":[1,4,7,10,13,16,19,22,25,28,31,34,37,40,43,46,49,52,55,58,61,64,67,70,73,76,79,82,85,88,91,94,97,100,103,106,109,112,115,118,121],"strength":[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],"angle":[1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026]},"elements":{"mass":[1200,1,16,2400,600],"sigma":[0.28,0.2,0.3,0.28,0.3],"epsilon":[-0.1,-0.009999999776482582,-0.03999999910593033,-0.1,-0.1],"color":[-855310,-1,-157070,-2539040,-855310]},"pairwiseLJProperties":[]}
 
 /***/ }),
-/* 818 */
+/* 823 */
 /***/ (function(module, exports) {
 
 	module.exports = {"type":"md2d","imagePath":"","width":3.85,"height":3.3,"unitsScheme":"md2d","lennardJonesForces":true,"coulombForces":true,"temperatureControl":true,"targetTemperature":300,"gravitationalField":false,"timeStep":0.7,"dielectricConstant":1,"realisticDielectricEffect":true,"solventForceFactor":1.25,"solventForceType":0,"additionalSolventForceMult":4,"additionalSolventForceThreshold":10,"polarAAEpsilon":-2,"viscosity":1,"timeStepsPerTick":50,"DNAState":"dna","DNA":"","DNAMutations":true,"useQuantumDynamics":false,"useChemicalReactions":false,"useDuration":"codap","requestedDuration":null,"skipPECheckOnAddAtom":false,"viewOptions":{"viewPortWidth":3.1,"viewPortHeight":3.1,"viewPortZoom":1,"viewPortX":0.375,"viewPortY":0,"viewPortDrag":false,"backgroundColor":"#eee","showClock":true,"markColor":"#ff0","atomRadiusScale":1,"keShading":false,"keShadingMinEnergy":0,"keShadingMaxEnergy":0.2,"chargeShading":false,"aminoAcidColorScheme":"hydrophobicity","aminoAcidLabels":true,"useThreeLetterCode":true,"showChargeSymbols":false,"showVDWLines":false,"VDWLinesCutoff":"short","showVelocityVectors":false,"showForceVectors":false,"showElectricField":false,"electricFieldDensity":18,"electricFieldColor":"auto","showAtomTrace":false,"images":[],"imageMapping":{},"textBoxes":[],"xlabel":false,"ylabel":false,"xunits":false,"yunits":false,"controlButtons":"play_reset","gridLines":false,"atomNumbers":false,"enableAtomTooltips":false,"enableKeyboardHandlers":true,"atomTraceColor":"#f00","velocityVectors":{"color":"#000","width":0.01,"length":2},"forceVectors":{"color":"#169C30","width":0.01,"length":2},"forceVectorsDirectionOnly":false,"onAtomDrag":"translate"},"atoms":{"x":[0.17945102681776826,0.37575119571735627,0.5724889727191632,0.758733136400109,0.9458314431641449,1.1330941441212066,1.3285666317020692,1.5245862216158426,1.713094517623087,1.9089717488467284,2.1015545168491774,2.295039047652729,2.4837792196952004,2.6653877558261225,2.8487484071879705,3.0485469964220835,0.1630357673549281,0.363065146216459,0.5506044801394698,0.7513055649163121,0.944685723531148,1.1404116064686254,1.333654564153978,1.524802728041881,1.7122201873787928,1.9021406251251647,2.096819142342314,2.2905489840006577,2.4823023706068477,2.6813570298932228,2.8777375628718316,3.064963785199192,0.16709100054177964,0.3649009103641212,0.5468008696241206,0.746242894119294,0.9402492313521125,1.1394826479072833,1.3304514790684683,1.5168432416845565,1.7099266652526668,1.9024875321167642,2.0966623386960324,2.288493186432801,2.4843898133277387,2.6744914668340654,2.867600485674291,3.0719330623878505,0.1655471251197802,0.3712492640546362,0.5613156976794885,0.7519795119092271,0.9439620456819914,1.1370745458144016,1.3258752359439103,1.5162348595076676,1.7044410712205338,1.8974588635433105,2.0921790763721675,2.290293683240616,2.489969349356988,2.679488459919647,2.8736039256575454,3.074478060751616,0.17067949418055103,0.36891486440512605,0.5695240197801944,0.7665697569642123,0.9545756595824461,1.1424320319048713,1.339578524920843,1.530314232244584,1.7206070076800069,1.9099198160607784,2.1019252237119743,2.295890866992316,2.486664957045213,2.682743036502355,2.8753800232906572,3.075988586205683,0.19061443110783194,0.37662711907213686,0.5758507403495711,0.7582553131352816,0.950743910462438,1.1432719431631289,1.3380581346784692,1.529555603038066,1.720336643868896,1.912472206900651,2.109804062012967,2.2982607040490826,2.498993377675423,2.694370015648329,2.8840552392086414,3.084234290445798,0.19201162088137266,0.3913923042315781,0.5877074628818914,0.779327221310217,0.966585835539155,1.1518094743583167,1.3357406855282867,1.5295578024912575,1.7293304509702654,1.9241815253056498,2.1202603299095655,2.310010649236009,2.4996768166066308,2.67926110307932,2.879604095149816,3.08356793820629,0.20264131900867136,0.4020702748502731,0.5903375108456379,0.7717559229072809,0.9567284992525095,1.1581427637637463,1.350441016554114,1.5403828588882709,1.7376458946334001,1.9318111339206643,2.1259623208750607,2.3132372296886294,2.5004335599297756,2.6877726608091383,2.8679158664413795,3.0633233656191496],"y":[2.8064738367744217,2.8927252975860545,2.7881648376347363,2.899302324364395,2.783648113839688,2.8976124570590334,2.7957892068316634,2.8920791799068892,2.7958614230788847,2.8905320072643668,2.78688480766037,2.8911485280881246,2.798342608744219,2.9102443471272146,2.8028803817153367,2.8845979750949495,2.4295744805073283,2.5114316775765113,2.4162959342744874,2.4999752686144037,2.414081760214909,2.501939409515463,2.4257395786647113,2.5076822134687204,2.4218535169869866,2.5121016838580754,2.4200224848247722,2.503489419358756,2.4275093067684383,2.504407358745796,2.414973456520819,2.516455967227205,2.044377352079164,2.1353549731003243,2.0468913007933556,2.128354389633426,2.0539707002435326,2.1341599347250284,2.0474579757638782,2.140403636018302,2.0483559607238866,2.1366060732372465,2.0466563557315243,2.1383889168743426,2.0566832660018006,2.1447691468920773,2.0523021140203106,2.1308232297581426,1.673886706501823,1.7519000226910815,1.6755856723541585,1.7656861721593835,1.6796157934031772,1.7694788013060254,1.6717574792063126,1.7655441931154248,1.6702558934038378,1.7636055056706326,1.6853757252465795,1.766338449640618,1.6793508378438564,1.773724168363147,1.680613581853547,1.765648759142255,1.3013037553380322,1.3911978604060538,1.305306410425067,1.387413346830365,1.3089597206219,1.3948115511347623,1.304479665692563,1.3897718662399263,1.3020490070627817,1.397957645163061,1.3134364481987508,1.3977307178718634,1.313667744328861,1.3990954494825145,1.317884289825148,1.4025498377942638,0.9204230510635582,1.0252127333649839,0.929669062729437,1.0241353526079038,0.936866074851385,1.0237282143298612,0.9319333600902467,1.0175746037794522,0.9283069723773413,1.0247488314909017,0.9328107849025166,1.0316522055433384,0.9516840556270103,1.039101412961717,0.9386905244286434,1.024301548491842,0.5537833754720303,0.6415624902233166,0.5642662135503579,0.646385858452933,0.5524574231012017,0.6484419771323988,0.5520253453361957,0.6405851604689969,0.5610424582124415,0.644667009597627,0.5663197202126257,0.6485946114390011,0.5609003856770058,0.6612422890592654,0.5716465904037064,0.6524181483448563,0.19443928036095023,0.27196024452702267,0.16574235465143805,0.2738279533836193,0.16721905527592637,0.263674411246097,0.1641584685840546,0.2728777526950695,0.1846159098493639,0.28717705239614844,0.18295363315547997,0.28028576182707754,0.18867711167270257,0.2801091019341212,0.1763130694600891,0.272473869363226],"element":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],"vx":[0.00019541321352806306,-0.000004297852173547731,0.00009108685852316954,-0.0000696053498790153,-0.00010438566432662752,-0.00016714812486831514,-0.0000666931331828546,-0.0002604205308482336,-0.00011717822635033985,-0.00003694471766915356,0.00013435955517700272,0.00012918771029662868,0.000006491236218562417,0.00010247305851578317,-0.00013588986579519507,0.00009184141722669155,0.00016617659396513267,-0.000019063018381865522,0.0003217633552880569,-0.00001577101463145093,-0.0004278337350620295,0.00009199621870717225,0.000006967864440559683,0.00011549590429741418,0.00038297507169926943,0.000055512752989701814,-0.00016195444255089116,-0.0001970507451274091,-0.00011990231960656341,-0.0002145082259728086,0.0003338280262893767,-0.0004101386358081933,0.00005158805598502564,-0.00007812103292272893,0.00011515467914807994,0.00008474984018410573,-0.0004363789023174889,0.00002006960385526135,0.000045833781858667076,0.000034822671036586174,0.00014116907275951883,-0.000016190441593487552,0.00015251168737936301,-0.00012195358949273628,0.000051519025467906497,0.00013432254595907377,-0.000103071225374181,-0.000021434445597559222,0.00010120121636917301,0.000028751773485174,-0.0004446165373633174,0.000029463794384292578,-0.00043884399674671865,0.0003489695571821399,-0.00016851419781263339,-0.00009543147828386033,-0.00008886344411088593,-0.00024232943064104342,0.00005144323334591412,-0.00009800574753876198,0.0002088455870437041,0.0004858778935290082,-0.00012929566406002686,-0.00003753721586913075,-0.00008357593510925962,-0.0003833034747313349,0.00027996246935381333,-0.000167555935609524,0.0002847039202731466,-0.00007807189060853182,-0.00005891295890352893,0.000467561779298294,-0.00010734936461158789,-0.00020006349582592402,-0.00005030941039235514,0.000050647413779505856,0.00007473040596209026,0.000194782716884435,0.00019912555320030536,-0.00012765004353795806,0.0002127144214752886,0.00010812051243835456,-0.00023201335735779143,0.00047167842259135926,0.000004158788951160539,-0.0001490580822956311,-0.00003303973941739657,-0.00014554668436649824,0.000013019127328733467,-0.00014705733369002957,-0.0002442451623298977,-0.00026322281024516384,0.0002843101169476152,-0.00017970271340104823,0.00029775326625891747,-0.000012634325485516014,0.00006977628412185483,-0.00010609890959189018,0.00033410377548583227,0.00004165049666775123,-0.00015257633498060987,0.0003547333728399526,0.00011885819700290903,-0.00010996175945392027,-0.000014666762165766602,0.00017861335000636324,-0.0001666640452896267,-0.00010473610365664399,0.00027244301911695084,-0.00013600187481479614,0.000132338562994976,-0.000349831543147698,0.00028316754001548623,-0.00003250307274953248,0.00008002091731470793,-0.0001532669982768643,-0.00015267999519615342,-0.00003404568806740998,0.00006793821539437216,0.0002595293177100421,-0.00004843807863246387,0.0000885993211916506,0.0001597274146011037,0.00006423332991052372,0.0003711277834192409,0.00031320196083064143,0.00045134431729241674,0.00021160704200413676],"vy":[-0.00006810080488954082,-0.0004747852362893423,-0.00020949438689988717,-0.0001899870081146486,0.00021510895627062008,0.00010000467553120957,0.00007716052513085754,-0.00039693669851802806,-0.00017928562851194293,-0.00021330102676215304,0.00014434776282391863,-0.00018602937731185048,-0.00009461239040966615,-0.0003391261088094635,0.00018065780031211712,0.0002909480953501897,0.00005453888472070174,-0.000377168004055898,0.00010267029566503371,-0.00021632788375227022,-0.0004185195678236061,0.00035924257098628735,0.00029940513350199736,0.00023873623096904584,0.0001299106249769881,0.000004903210653895242,0.00039697761688782713,-0.00003355325911353204,0.00007664223806575219,0.00006222480254323851,-0.00031010115909965946,0.00009322680493696225,-0.00006887838728437297,-0.0003986098722908663,-0.00017837946282609895,0.00012746871324700228,0.0001800626281736132,-0.00018989634456043005,0.0001483577205169021,0.00008012018860167718,0.00013711297132784023,0.00020020998403533804,-0.00021943417284891548,0.00012210392437151426,5.416862690740991e-7,0.00011708634749129379,0.00012879065089288727,-0.00018448471688369081,0.00014818739316242702,0.00007299114656413368,0.000173827671384786,0.0002490125612839429,-0.0000981143804101374,0.00009319790467540815,-0.000017003221721680986,0.00022788241132867538,-0.00003046387895207648,9.856845382630967e-7,-0.0001516324272049214,-0.0000734468669328149,0.00007741071719510375,0.0001242317646183756,-0.000041071894845238714,0.00020025840820617219,-0.00016551360412617947,-0.00021149370139486823,0.00013862611067867126,0.0002638086292039952,-0.00004186118984330164,0.0004600643172300472,-0.0006100537985706632,0.00008062321046140921,-0.000013335726343908744,0.00020588908917131286,-0.00011325737817172369,-0.000098385580483707,0.00009947280326555864,0.00009709226910155134,0.00028724474703415164,0.00023268550762842424,-0.00008717666130999667,0.00020493167355969803,-0.00010174523374217253,0.00020429697991509695,-0.000015930943005784633,-0.00018545802971413108,0.000022911324053035343,0.000038904599300066244,-0.00011545223157881391,-0.0002786947602812201,0.00005538759491046507,0.00024117329546214595,-0.0001271761399811613,-0.0004617050113021941,0.00005916195744765914,-0.00010231903999144842,-0.0004129411895791743,0.00009377012040794866,-0.000052365048057371814,0.00006284971492458785,-0.000017155904630526024,0.00021750272788048308,0.00011644548701481818,-0.000005440462791810702,-0.0002989148368867744,0.0000012068894651460137,-0.00028305685594453976,0.00011291302891068822,-0.00010145919202366253,0.0000396773583394126,-0.00009825591143572679,-0.0005081365810316794,-0.000021739237719568314,-0.0003548152563956216,0.00015813643546436592,0.00031471022769480816,0.00018677280618031882,-0.00023409657820877992,0.00003935034626870969,-0.000017758518048973435,-0.00007997242609842861,-0.00011520451406473847,-0.00004528454746197012,-0.00021538929467298596,0.0003063188654928059,-0.000254898281255094,-0.0002016900703948426,0.000039694716591312455],"charge":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"friction":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"pinned":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"radialBonds":{"atom1":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127],"atom2":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126],"length":[0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22],"strength":[2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000],"type":[101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101]},"angularBonds":{"atom1":[2,3,4,5,6,7,8,9,10,11,12,13,14,15,18,19,20,21,22,23,24,25,26,27,28,29,30,31,34,35,36,37,38,39,40,41,42,43,44,45,46,47,50,51,52,53,54,55,56,57,58,59,60,61,62,63,66,67,68,69,70,71,72,73,74,75,76,77,78,79,82,83,84,85,86,87,88,89,90,91,92,93,94,95,98,99,100,101,102,103,104,105,106,107,108,109,110,111,114,115,116,117,118,119,120,121,122,123,124,125,126,127],"atom2":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,16,17,18,19,20,21,22,23,24,25,26,27,28,29,32,33,34,35,36,37,38,39,40,41,42,43,44,45,48,49,50,51,52,53,54,55,56,57,58,59,60,61,64,65,66,67,68,69,70,71,72,73,74,75,76,77,80,81,82,83,84,85,86,87,88,89,90,91,92,93,96,97,98,99,100,101,102,103,104,105,106,107,108,109,112,113,114,115,116,117,118,119,120,121,122,123,124,125],"atom3":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,17,18,19,20,21,22,23,24,25,26,27,28,29,30,33,34,35,36,37,38,39,40,41,42,43,44,45,46,49,50,51,52,53,54,55,56,57,58,59,60,61,62,65,66,67,68,69,70,71,72,73,74,75,76,77,78,81,82,83,84,85,86,87,88,89,90,91,92,93,94,97,98,99,100,101,102,103,104,105,106,107,108,109,110,113,114,115,116,117,118,119,120,121,122,123,124,125,126],"strength":[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],"angle":[2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957,2.0943951023931957]},"elements":{"mass":[120,60,360,480,600],"sigma":[0.07,0.32,0.3,0.28,0.3],"epsilon":[-0.1,-0.05,-0.1,-0.1,-0.1],"color":[-855310,-8355712,-6710887,-2539040,-855310]},"pairwiseLJProperties":[]}
 
 /***/ }),
-/* 819 */
+/* 824 */
 /***/ (function(module, exports) {
 
 	module.exports = {"type":"md2d","imagePath":"","width":2.5,"height":2.5,"unitsScheme":"md2d","lennardJonesForces":true,"coulombForces":true,"temperatureControl":true,"gravitationalField":false,"timeStep":0.5,"dielectricConstant":1,"realisticDielectricEffect":true,"solventForceFactor":1.25,"solventForceType":0,"additionalSolventForceMult":4,"additionalSolventForceThreshold":10,"polarAAEpsilon":-2,"viscosity":1,"timeStepsPerTick":35,"DNAState":"dna","DNA":"","DNAMutations":true,"useQuantumDynamics":false,"useChemicalReactions":false,"useDuration":"codap","requestedDuration":null,"skipPECheckOnAddAtom":false,"viewOptions":{"viewPortWidth":2.5,"viewPortHeight":2.5,"viewPortZoom":1,"viewPortX":0,"viewPortY":0,"viewPortDrag":false,"backgroundColor":"#eee","showClock":true,"markColor":"#ff0","atomRadiusScale":1,"keShading":false,"keShadingMinEnergy":0,"keShadingMaxEnergy":0.2,"chargeShading":false,"aminoAcidColorScheme":"hydrophobicity","aminoAcidLabels":true,"useThreeLetterCode":true,"showChargeSymbols":true,"showVDWLines":false,"VDWLinesCutoff":"medium","showVelocityVectors":false,"showForceVectors":false,"showElectricField":false,"electricFieldDensity":18,"electricFieldColor":"auto","showAtomTrace":false,"images":[],"imageMapping":{},"textBoxes":[],"xlabel":false,"ylabel":false,"xunits":false,"yunits":false,"controlButtons":"play_reset","gridLines":false,"atomNumbers":false,"enableAtomTooltips":false,"enableKeyboardHandlers":true,"atomTraceColor":"#ff0","velocityVectors":{"color":"#000","width":0.01,"length":2},"forceVectors":{"color":"#169C30","width":0.01,"length":2},"forceVectorsDirectionOnly":false,"onAtomDrag":"translate"},"atoms":{"x":[2.1,1.8,1.5,1.2,0.9,2.25,1.95,1.65,1.35,1.05,0.75,2.1,1.8,1.5,1.2,0.9],"y":[0.9,0.9,0.9,0.9,0.9,1.2,1.2,1.2,1.2,1.2,1.2,1.5,1.5,1.5,1.5,1.5],"element":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"vx":[0.0004130494070254688,0.00011776351368894916,-0.0002090839883748339,-0.0002653218381197367,-0.0005263877116421397,-0.0006543884783894852,-0.00020913610602975075,0.0008317065447116474,-0.0005324622912918357,-0.0002610821964884297,-0.0010721629877837662,0.000010409151095277342,-0.00003090559636372495,0.0003316464383559914,0.0012571424714915508,-0.00016383286135820475],"vy":[-0.0000199088517908269,0.0010347901410523736,-0.0009026162920589373,-0.0001461760299410712,0.0002558833190405782,0.00030868763528971323,-0.0003502761480274452,-0.00064159191482169,-0.0013184552022669947,0.001546831607211189,0.0009337561641306642,0.0002846828925233498,0.0006198170062793852,-0.00012160919713158889,-0.00036765220012301397,0.0003583724681781249],"charge":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"friction":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"pinned":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"elements":{"mass":[20],"sigma":[0.3],"epsilon":[-0.3],"color":[-13057]},"pairwiseLJProperties":[],"lines":{"x1":[1.57,0.93,0.37,0,0,0.37,0.93,1.57,2.16,2.5,2.5,2.16],"y1":[0,0,0.3,0.93,1.57,2.16,2.45,2.45,2.16,1.57,0.93,0.3],"x2":[0.93,0.37,0,0,0.37,0.93,1.57,2.16,2.5,2.5,2.16,1.57],"y2":[0,0.3,0.93,1.57,2.16,2.45,2.45,2.16,1.57,0.93,0.3,0],"beginStyle":["none","none","none","none","none","none","none","none","none","none","none","none"],"endStyle":["none","none","none","none","none","none","none","none","none","none","none","none"],"fence":[1,1,1,1,1,1,1,1,1,1,1,1],"lineColor":["black","black","black","black","black","black","black","black","black","black","black","black"],"lineWeight":[1,1,1,1,1,1,1,1,1,1,1,1],"lineDashes":["none","none","none","none","none","none","none","none","none","none","none","none"],"layer":[1,1,1,1,1,1,1,1,1,1,1,1],"layerPosition":[1,1,1,1,1,1,1,1,1,1,1,1],"visible":[1,1,1,1,1,1,1,1,1,1,1,1]}}
 
 /***/ }),
-/* 820 */
+/* 825 */
 /***/ (function(module, exports) {
 
 	module.exports = {"type":"md2d","imagePath":"","width":4,"height":2.5,"unitsScheme":"md2d","lennardJonesForces":true,"coulombForces":true,"temperatureControl":true,"gravitationalField":false,"timeStep":1,"dielectricConstant":1,"realisticDielectricEffect":true,"solventForceFactor":1.25,"solventForceType":0,"additionalSolventForceMult":4,"additionalSolventForceThreshold":10,"polarAAEpsilon":-2,"viscosity":1,"timeStepsPerTick":50,"DNAState":"dna","DNA":"","DNAMutations":true,"useQuantumDynamics":false,"useChemicalReactions":false,"useDuration":"codap","requestedDuration":null,"skipPECheckOnAddAtom":false,"viewOptions":{"viewPortWidth":2.5,"viewPortHeight":2.5,"viewPortZoom":1,"viewPortX":0.75,"viewPortY":0,"viewPortDrag":false,"backgroundColor":"#eee","showClock":true,"markColor":"#ff0","atomRadiusScale":1,"keShading":false,"keShadingMinEnergy":0,"keShadingMaxEnergy":0.2,"chargeShading":false,"aminoAcidColorScheme":"hydrophobicity","aminoAcidLabels":true,"useThreeLetterCode":true,"showChargeSymbols":true,"showVDWLines":false,"VDWLinesCutoff":"medium","showVelocityVectors":false,"showForceVectors":false,"showElectricField":false,"electricFieldDensity":18,"electricFieldColor":"auto","showAtomTrace":false,"images":[],"imageMapping":{},"textBoxes":[],"xlabel":false,"ylabel":false,"xunits":false,"yunits":false,"controlButtons":"play_reset","gridLines":false,"atomNumbers":false,"enableAtomTooltips":false,"enableKeyboardHandlers":true,"atomTraceColor":"#ff0","velocityVectors":{"color":"#000","width":0.01,"length":2},"forceVectors":{"color":"#169C30","width":0.01,"length":2},"forceVectorsDirectionOnly":false,"onAtomDrag":"translate"},"atoms":{"x":[1.3939018303156367,0.2945063658025744,2.745168677855617,2.351199970025809,2.3571929118345047,2.55,0.7299801257176624,0.5817378666174658,2.8817214550307972,3.1440877910186726,0.4388322700354014,1.1,1.3697594883078799,1.61,1.1511682708642936,3.48,3.29,1.825520546199643,2.52],"y":[1.852073976928316,1.8044624788170256,2.078307499147936,1.7315628724805237,2.2603456826133,1.09,1.4358448416536356,1.7958504229304237,2.2893265027933962,1.437698966130608,0.9955355877882874,0.42,2.337263077144864,1.05,1.444565630161361,0.34,0.93,1.6300285189767618,0.53],"element":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"vx":[0.001046653920455706,-0.0006907315777099916,0.0005861094040131489,-0.00012805639539792621,-0.00006053055847728456,-0.000724283646585693,0.00012286129077253142,-0.0007968407871324333,-0.001310099816377784,-0.0010137935139927067,0.0023731131968944994,0.00027268127308844616,-0.0000932477637017198,-0.00010343540538717825,-0.0002090038519112623,0.0009240649223631547,-0.0006497562230197251,-0.000029977665154621094,-0.0009278891344108284],"vy":[-0.001071258013929987,-0.0009201730277321494,0.0009621080956095185,-0.0002945895392753749,0.0013769141830991746,0.0005895599519093366,0.0011360423396582738,0.0003702538558061598,-0.0006853974936849647,-0.0010199624165568768,0.001111448539748007,-0.0006005970581497491,0.0009315500471589078,0.00028766999825920224,0.000003761608349364352,-0.000641323883756177,-0.00019476818277450192,-0.0007416177197934516,-0.002098419264121062],"charge":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"friction":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"pinned":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"elements":{"mass":[20,40,60,80,600],"sigma":[0.26875446319580076,0.14,0.21,0.28,0.3],"epsilon":[-0.01785714365541935,-0.1,-0.1,-0.1,-0.1],"color":[-2236963,-3881788,-4539718,-6579301,-8092540]},"pairwiseLJProperties":[]}
 
 /***/ }),
-/* 821 */
+/* 826 */
 /***/ (function(module, exports) {
 
 	module.exports = {"type":"md2d","imagePath":"","width":4,"height":2.5,"unitsScheme":"md2d","lennardJonesForces":true,"coulombForces":true,"temperatureControl":true,"targetTemperature":5000,"gravitationalField":false,"timeStep":0.25,"dielectricConstant":11,"realisticDielectricEffect":true,"solventForceFactor":1.25,"solventForceType":0,"additionalSolventForceMult":4,"additionalSolventForceThreshold":10,"polarAAEpsilon":-2,"viscosity":1,"timeStepsPerTick":50,"DNAState":"dna","DNA":"","DNAMutations":true,"useQuantumDynamics":false,"useChemicalReactions":false,"useDuration":"codap","requestedDuration":null,"skipPECheckOnAddAtom":false,"viewOptions":{"viewPortWidth":2.5,"viewPortHeight":2.5,"viewPortZoom":1,"viewPortX":0.75,"viewPortY":0,"viewPortDrag":false,"backgroundColor":"#eee","showClock":true,"markColor":"#ff0","atomRadiusScale":1,"keShading":false,"keShadingMinEnergy":0,"keShadingMaxEnergy":0.2,"chargeShading":false,"aminoAcidColorScheme":"hydrophobicity","aminoAcidLabels":true,"useThreeLetterCode":true,"showChargeSymbols":false,"showVDWLines":false,"VDWLinesCutoff":"medium","showVelocityVectors":false,"showForceVectors":false,"showElectricField":false,"electricFieldDensity":18,"electricFieldColor":"auto","showAtomTrace":false,"images":[],"imageMapping":{},"textBoxes":[],"xlabel":false,"ylabel":false,"xunits":false,"yunits":false,"controlButtons":"play_reset","gridLines":false,"atomNumbers":false,"enableAtomTooltips":false,"enableKeyboardHandlers":true,"atomTraceColor":"#ff0","velocityVectors":{"color":"#000","width":0.01,"length":2},"forceVectors":{"color":"#169C30","width":0.01,"length":2},"forceVectorsDirectionOnly":false,"onAtomDrag":"translate"},"atoms":{"x":[1.8029966754766271,1.877539094266169,1.810418463455369,3.2685318434218193,3.0615652521105035,2.941589228221178,1.6493476983444306,1.4434240656196777,1.4226327445077462,1.9013020075134137,2.0363611914150153,1.9867105725242953,0.7154549171602812,0.5314024028376474,0.37357762647849047,1.8618437008715822,1.8806563900998734,2.0750490400207733,3.6192260271267545,3.443876394052049,3.330577649685168,3.23328760805118,3.4590162717398676,3.585532905003946,1.4091137919316334,1.3259932751637278,1.1263600431538194,2.809994836574962,2.84667737387318,2.989219909051833,0.26208960954456473,0.3454878554763014,0.2917309492109211,3.19510717126941,3.3729456052013433,3.364989727716359,0.7538001077455998,0.931638145519634,1.1189034951748769,1.5732675068542028,1.625773625650251,1.445436881190465],"y":[1.56178008533741,1.3663064881845082,1.1966009012337615,0.8329785735503391,0.7915549943839418,0.6572136795446775,1.9924840823432495,1.9667924502377676,2.176321496600814,1.8878516761793132,1.7284999153583336,1.5397744257448307,0.47237249633018796,0.3432888839342657,0.19409806965093762,2.27659974919591,2.0940730781265127,2.0493262320642853,1.924124108818492,1.917968408595939,1.7615530178335093,0.47509454333298085,0.4347908259671127,0.306086495777881,0.616349364203725,0.783038553258811,0.7620812095637922,1.9237598262595086,2.1070009154678746,2.2530115696901545,1.006056530849731,1.194289874464781,1.388280411033663,0.9964743661333227,1.1196198130145179,1.333671804136776,0.3008769411781743,0.41270921485420314,0.3089846360597592,1.3174495584247357,1.129510187520463,1.0147688351034796],"element":[1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1],"vx":[-0.00573861128064105,0.0001409108873994968,-0.0007048284420505836,-0.011430404662972805,0.000056999192428721524,0.011470733519715944,0.00016190671377736042,0.00020502957154682803,-0.008928325031288521,0.0007363936115571249,0.0016360872440862233,0.006119599245069982,0.008764933536166818,0.0033402728560144855,-0.006872754525480759,0.0028487680555249664,-0.0015719484061424986,-0.0051066141035056405,0.0030435436953797196,0.0018652355344744435,-0.0010941206861028632,0.008376910491767696,0.0009611486891773127,-0.015545612906554962,0.0024091292136149962,-0.0012303331431869615,-0.006429118880747672,0.005085890275204009,0.00044211638792060503,0.0027761649991572316,-0.001202018836968121,0.0014416222547010394,0.0031515816203552946,0.0011202716563945092,-0.00045809823442559866,-0.0004754833285761641,-0.004205191195498898,-0.0001893218565054326,-0.003353884972911618,-0.0023665445261542174,-0.0013193999111607297,0.003049424140682663],"vy":[0.0036678056010291584,0.0020283258334920784,-0.010832149845811179,0.006228118096621984,0.0011503479023424724,-0.0032378838723643734,0.011335721306112044,-0.0027842377481006922,-0.0014871353186064302,0.0023827263315449668,0.002443673335232564,0.004980082139162873,-0.003624829038885565,0.000027254865030698957,0.0061581077674478695,0.003189506696911413,0.001515732609780626,-0.0013366914023325478,0.007520187087375276,-0.0007805106324972848,0.003166617243230367,-0.013265200502653136,0.000556227487462237,-0.004790825463681297,-0.008787197700531324,0.0026908741715043526,-0.002119931130074214,0.003257228485181983,-0.0018069739830328542,-0.0018932923652028812,-0.004054295072978219,-0.0005075446520276399,-0.002338921768780076,-0.001505453897469696,0.002793899161042725,-0.007246309535865562,0.016224349908196194,-0.00010165804451276309,0.009043991208725783,-0.0022699365641645187,0.003287956369289177,0.0038951093734660917],"charge":[1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1,1,-2,1],"friction":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"pinned":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"radialBonds":{"atom1":[2,0,5,3,8,6,11,9,14,12,17,15,20,18,23,21,26,24,29,27,32,30,35,33,38,36,41,39],"atom2":[1,1,4,4,7,7,10,10,13,13,16,16,19,19,22,22,25,25,28,28,31,31,34,34,37,37,40,40],"length":[0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2],"strength":[2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000],"type":[101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101,101]},"angularBonds":{"atom1":[2,5,8,11,14,17,20,23,26,29,32,35,38,41],"atom2":[0,3,6,9,12,15,18,21,24,27,30,33,36,39],"atom3":[1,4,7,10,13,16,19,22,25,28,31,34,37,40],"strength":[2,2,2,2,2,2,2,2,2,2,2,2,2,2],"angle":[1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026,1.8151424220741026]},"elements":{"mass":[1200,1,16,2400,600],"sigma":[0.28,0.2,0.3,0.28,0.3],"epsilon":[-0.1,-0.009999999776482582,-0.03999999910593033,-0.1,-0.1],"color":[-855310,-1,-157070,-2539040,-855310]},"pairwiseLJProperties":[]}
 
 /***/ }),
-/* 822 */
+/* 827 */
 /***/ (function(module, exports) {
 
 	module.exports = {"type":"md2d","imagePath":"","width":2.5,"height":2.5,"unitsScheme":"md2d","lennardJonesForces":true,"coulombForces":true,"temperatureControl":true,"gravitationalField":false,"timeStep":1,"dielectricConstant":1,"realisticDielectricEffect":true,"solventForceFactor":1.25,"solventForceType":0,"additionalSolventForceMult":4,"additionalSolventForceThreshold":10,"polarAAEpsilon":-2,"viscosity":1,"timeStepsPerTick":50,"DNAState":"dna","DNA":"","DNAMutations":true,"useQuantumDynamics":false,"useChemicalReactions":false,"useDuration":"codap","requestedDuration":null,"skipPECheckOnAddAtom":false,"viewOptions":{"viewPortWidth":2.5,"viewPortHeight":2.5,"viewPortZoom":1,"viewPortX":0,"viewPortY":0,"viewPortDrag":false,"backgroundColor":"#eee","showClock":true,"markColor":"#ff0","atomRadiusScale":1,"keShading":false,"keShadingMinEnergy":0,"keShadingMaxEnergy":0.2,"chargeShading":false,"aminoAcidColorScheme":"hydrophobicity","aminoAcidLabels":true,"useThreeLetterCode":true,"showChargeSymbols":true,"showVDWLines":false,"VDWLinesCutoff":"medium","showVelocityVectors":false,"showForceVectors":false,"showElectricField":false,"electricFieldDensity":18,"electricFieldColor":"auto","showAtomTrace":false,"images":[],"imageMapping":{},"textBoxes":[],"xlabel":false,"ylabel":false,"xunits":false,"yunits":false,"controlButtons":"play_reset","gridLines":false,"atomNumbers":false,"enableAtomTooltips":false,"enableKeyboardHandlers":true,"atomTraceColor":"#ff0","velocityVectors":{"color":"#000","width":0.01,"length":2},"forceVectors":{"color":"#169C30","width":0.01,"length":2},"forceVectorsDirectionOnly":false,"onAtomDrag":"translate"},"atoms":{"x":[2.1,1.8,1.5,1.2,0.9,2.25,1.95,1.65,1.35,1.05,0.75,2.1,1.8,1.5,1.2,0.9],"y":[0.9,0.9,0.9,0.9,0.9,1.2,1.2,1.2,1.2,1.2,1.2,1.5,1.5,1.5,1.5,1.5],"element":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"vx":[0.001046653920455706,-0.0006907315777099916,0.0005861094040131489,-0.00012805639539792621,-0.00006053055847728456,-0.000724283646585693,0.00012286129077253142,-0.0007968407871324333,-0.001310099816377784,-0.0010137935139927067,0.0023731131968944994,0.00027268127308844616,-0.0000932477637017198,-0.00010343540538717825,-0.0002090038519112623,0.0009240649223631547,-0.0006497562230197251,-0.000029977665154621094,-0.0009278891344108284],"vy":[-0.001071258013929987,-0.0009201730277321494,0.0009621080956095185,-0.0002945895392753749,0.0013769141830991746,0.0005895599519093366,0.0011360423396582738,0.0003702538558061598,-0.0006853974936849647,-0.0010199624165568768,0.001111448539748007,-0.0006005970581497491,0.0009315500471589078,0.00028766999825920224,0.000003761608349364352,-0.000641323883756177,-0.00019476818277450192,-0.0007416177197934516,-0.002098419264121062],"charge":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"friction":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"pinned":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"elements":{"mass":[20],"sigma":[0.3],"epsilon":[-0.05],"color":[-13057]},"pairwiseLJProperties":[],"lines":{"x1":[1.57,0.93,0.37,0,0,0.37,0.93,1.57,2.16,2.5,2.5,2.16],"y1":[0,0,0.3,0.93,1.57,2.16,2.45,2.45,2.16,1.57,0.93,0.3],"x2":[0.93,0.37,0,0,0.37,0.93,1.57,2.16,2.5,2.5,2.16,1.57],"y2":[0,0.3,0.93,1.57,2.16,2.45,2.45,2.16,1.57,0.93,0.3,0],"beginStyle":["none","none","none","none","none","none","none","none","none","none","none","none"],"endStyle":["none","none","none","none","none","none","none","none","none","none","none","none"],"fence":[1,1,1,1,1,1,1,1,1,1,1,1],"lineColor":["black","black","black","black","black","black","black","black","black","black","black","black"],"lineWeight":[1,1,1,1,1,1,1,1,1,1,1,1],"lineDashes":["none","none","none","none","none","none","none","none","none","none","none","none"],"layer":[1,1,1,1,1,1,1,1,1,1,1,1],"layerPosition":[1,1,1,1,1,1,1,1,1,1,1,1],"visible":[1,1,1,1,1,1,1,1,1,1,1,1]}}
 
 /***/ }),
-/* 823 */
+/* 828 */
 /***/ (function(module, exports) {
 
 	module.exports = {"type":"md2d","imagePath":"","width":2.6,"height":8,"unitsScheme":"md2d","lennardJonesForces":true,"coulombForces":true,"temperatureControl":true,"gravitationalField":0.000004,"timeStep":1,"dielectricConstant":1,"realisticDielectricEffect":true,"solventForceFactor":1.25,"solventForceType":0,"additionalSolventForceMult":4,"additionalSolventForceThreshold":10,"polarAAEpsilon":-2,"viscosity":1,"timeStepsPerTick":50,"DNAState":"dna","DNA":"","DNAMutations":true,"useQuantumDynamics":false,"useChemicalReactions":false,"useDuration":"codap","requestedDuration":null,"skipPECheckOnAddAtom":false,"viewOptions":{"viewPortWidth":2.5,"viewPortHeight":2.5,"viewPortZoom":1,"viewPortX":0.05,"viewPortY":0,"viewPortDrag":false,"backgroundColor":"#eee","showClock":false,"markColor":"#f8b500","atomRadiusScale":1,"keShading":false,"keShadingMinEnergy":0,"keShadingMaxEnergy":0.2,"chargeShading":false,"aminoAcidColorScheme":"hydrophobicity","aminoAcidLabels":true,"useThreeLetterCode":true,"showChargeSymbols":false,"showVDWLines":false,"VDWLinesCutoff":"medium","showVelocityVectors":false,"showForceVectors":false,"showElectricField":false,"electricFieldDensity":18,"electricFieldColor":"auto","showAtomTrace":false,"images":[],"imageMapping":{},"textBoxes":[],"xlabel":false,"ylabel":false,"xunits":false,"yunits":false,"controlButtons":"play_reset","gridLines":false,"atomNumbers":false,"enableAtomTooltips":false,"enableKeyboardHandlers":true,"atomTraceColor":"#6913c5","velocityVectors":{"color":"#000","width":0.01,"length":2},"forceVectors":{"color":"#169C30","width":0.01,"length":2},"forceVectorsDirectionOnly":false,"onAtomDrag":"translate"},"atoms":{"x":[2.2593157230694683,1.959442753470773,1.972728375625846,1.3861438306706004,0.7921535139683007,1.087334968194759,1.6675780843574954,1.6671159902615829,1.958511313663236,2.2558155818755004,2.557583113299741,2.2668000354574405,2.551319780769505,1.677025447906193,0.48840459353004473,0.5049060469239146,0.7908401466209649,1.3732450886468683,1.0782805516372334,1.3641975769722232,2.2577365748153486,2.5648981679649503,2.2734744036068006,1.6804832266552574,1.9870914150959487,0.7920080158509597,1.0733863466351647,1.6684934474764952,1.3803648727564086,2.2827733132174584,1.9633139896708354,2.2500311967906086,1.9637747628317483,1.3718871343298247,1.650312510701168,1.6682219236901945,0.7809936418886816,0.49815319456492557,1.964313659673179,0.5039022988754345,1.0846990469714215,0.8016208333191714,1.3879113374837675,2.573059509819279,1.0914855365972966,0.7706047965289065,0.18758527257652233,0.21417929722139437,1.0665396521482635,2.552146122165523,0.4669414230060067,2.554807941153877,1.0482495153739035,0.20768862106388994,0.4839233833375334,1.3606348658318717,0.758707991523798,0.4486644718834474,0.19452499265412823,0.16777881741842368,0.19318153403986202],"y":[1.0306888607632274,1.1760212869822024,0.5163808061511307,0.5076389813640515,1.1547935020869695,0.6813720867370401,1.3501500445042822,2.007437694525442,1.8337985698984736,1.3558154958775321,0.5279092465054629,0.7011425053211653,1.1778977700784037,0.6974289917026283,1.3387176880981266,0.6788190901802174,0.4961669580769805,1.1723934166132344,1.3435273054085388,1.8246436893206626,2.006356511628929,0.8550276655764654,0.373045707720151,0.36908692861982845,0.18744141187549984,0.8268269845244799,1.6696703148156604,1.6765249738721217,0.8396431262756235,2.3308200318635737,2.1606119640077246,1.6828357818077508,1.5038556637221776,1.4957998807549087,2.335724625383672,1.0250060002763735,1.487993917656424,1.0103969118230187,0.8461331075740433,0.343314727198111,1.0111332863029971,0.17177550071204933,0.17982145051975124,2.1508561121818524,0.3552563779309764,1.8176733906713485,1.805071010397386,0.5036792707831327,1.9982964211981404,1.831253703916032,1.9931722571253812,1.502460539881153,2.330584810407891,0.8299195850437826,1.6620516313775189,2.1489596816489795,2.1418491941562747,2.321035300788749,1.4803696198031553,2.131444247671352,1.1547583124390186],"element":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"vx":[-0.000028007452222460638,-0.00003206913008245524,0.00012084156887449255,-0.00004853592382567735,-0.00017412497616838308,-0.0000827304791703167,0.000011510951268325878,0.00004247967231539358,0.000004969725295511981,-0.000037951380570436286,-0.000007937539891841839,0.000022677587704472138,-0.000101507030306633,0.000028180705931474163,-0.00007648673267803971,0.00010109135369761456,0.000012767077326473758,-0.00008352685471913607,0.0000252531315628611,0.0000293373033418745,0.000017048452539080848,-0.00000742380244821206,-0.000030390876953925264,-0.000023288598960864855,-0.0000015480380884153277,-0.000006728714704395285,0.000016461862176093107,-0.00009532743819861073,-0.00007801676989071682,0.000007739908923427654,-0.000018274780222746197,0.000005111774575502011,0.00010976581203692649,-0.00014962311459108184,0.0001355492941955095,-0.000045301156309303126,-0.00009618549072676367,0.0001080373583170587,-0.00001746125846716357,0.00012183426997859039,0.0001444000369683278,0.00014304040058747095,0.00003697543996077801,0.000025570453606534154,-0.00009837310619249774,-0.000026640405567670216,-0.00001278119481433525,0.00014718734912945317,-0.00010531288381141591,-0.00004197094780195177,0.000036661484606356264,-0.00006363104330212285,0.00009057459409344319,0.00016271224838986203,-0.00008276433953268719,-0.000030396204258015675,0.00013553983817500066,-0.00008284389703343686,-0.0000026045862258220962,-0.00007547883594918376,0.00012343574473343725],"vy":[-0.0000752356182071923,0.00004314283156650063,0.0000729223259884432,-0.0001551934149040607,0.0000044793289942052145,0.00009504890837528209,0.000009558677305693073,-0.00009355924915798906,-0.000013147343685372792,0.00013297934962788527,0.00009996426961428869,-0.00005155610676825053,-0.000027041520233537605,0.00007274138118654512,-0.000079968675862214,0.00004120177990796731,0.0001104334021351443,0.000013636216273066057,-0.00007337558793821545,-0.00018747589604612943,0.000021513005725330155,-0.00007109688473775657,0.00006420834533940831,-0.00007786615247161001,0.00005429217124978322,-0.00010398234663528174,0.0000821663169064222,0.00023405038246284465,0.000046779092093418226,-0.0000067691161876593775,-0.00005583252580300058,0.00005382629137797028,0.00002091469582157531,-0.00003536705657981025,-0.00007250278399736718,0.000027332391886985616,-0.00007820467519970063,0.000037699582642930904,0.000007613715552273089,-0.000006990673485441996,0.00007003403118030968,-0.0000438014958685538,-1.6155675651810402e-7,-0.00005862862786024413,0.00006915047195084291,-0.00011126228682257286,-0.00008875777985089495,-0.00009613138400172092,-0.00009223356717522547,0.000031725027751461684,-0.00003507192419898774,0.00004832080515834101,-0.000034188409941446205,-0.00002244910585353404,-0.00009645322755329319,-0.00000531355378982973,-0.000054269241273297977,0.000032511168054167256,0.000030903715242806095,-0.000015981576852440908,-0.0000517691865628003],"charge":[-1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,-1,-1,-1,1,-1,1,-1,-1,1,1,1,1,1,1,-1,-1,-1,1,1,1,1,1,1,1],"friction":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"pinned":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"elements":{"mass":[120,240,360,480,600],"sigma":[0.3,0.18,0.25,0.28,0.3],"epsilon":[-0.2,-0.1,-0.1,-0.1,-0.1],"color":[-13057,-3381505,-16711936,-2539040,-855310]},"pairwiseLJProperties":[]}
 
 /***/ }),
-/* 824 */
+/* 829 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -52488,7 +52493,7 @@
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _reactMotion = __webpack_require__(825);
+	var _reactMotion = __webpack_require__(830);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -52599,7 +52604,7 @@
 	};
 
 /***/ }),
-/* 825 */
+/* 830 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -52608,38 +52613,38 @@
 
 	function _interopRequire(obj) { return obj && obj.__esModule ? obj['default'] : obj; }
 
-	var _Motion = __webpack_require__(826);
+	var _Motion = __webpack_require__(831);
 
 	exports.Motion = _interopRequire(_Motion);
 
-	var _StaggeredMotion = __webpack_require__(834);
+	var _StaggeredMotion = __webpack_require__(839);
 
 	exports.StaggeredMotion = _interopRequire(_StaggeredMotion);
 
-	var _TransitionMotion = __webpack_require__(835);
+	var _TransitionMotion = __webpack_require__(840);
 
 	exports.TransitionMotion = _interopRequire(_TransitionMotion);
 
-	var _spring = __webpack_require__(837);
+	var _spring = __webpack_require__(842);
 
 	exports.spring = _interopRequire(_spring);
 
-	var _presets = __webpack_require__(838);
+	var _presets = __webpack_require__(843);
 
 	exports.presets = _interopRequire(_presets);
 
-	var _stripStyle = __webpack_require__(828);
+	var _stripStyle = __webpack_require__(833);
 
 	exports.stripStyle = _interopRequire(_stripStyle);
 
 	// deprecated, dummy warning function
 
-	var _reorderKeys = __webpack_require__(839);
+	var _reorderKeys = __webpack_require__(844);
 
 	exports.reorderKeys = _interopRequire(_reorderKeys);
 
 /***/ }),
-/* 826 */
+/* 831 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -52656,27 +52661,27 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var _mapToZero = __webpack_require__(827);
+	var _mapToZero = __webpack_require__(832);
 
 	var _mapToZero2 = _interopRequireDefault(_mapToZero);
 
-	var _stripStyle = __webpack_require__(828);
+	var _stripStyle = __webpack_require__(833);
 
 	var _stripStyle2 = _interopRequireDefault(_stripStyle);
 
-	var _stepper3 = __webpack_require__(829);
+	var _stepper3 = __webpack_require__(834);
 
 	var _stepper4 = _interopRequireDefault(_stepper3);
 
-	var _performanceNow = __webpack_require__(830);
+	var _performanceNow = __webpack_require__(835);
 
 	var _performanceNow2 = _interopRequireDefault(_performanceNow);
 
-	var _raf = __webpack_require__(831);
+	var _raf = __webpack_require__(836);
 
 	var _raf2 = _interopRequireDefault(_raf);
 
-	var _shouldStopAnimation = __webpack_require__(833);
+	var _shouldStopAnimation = __webpack_require__(838);
 
 	var _shouldStopAnimation2 = _interopRequireDefault(_shouldStopAnimation);
 
@@ -52911,7 +52916,7 @@
 	// config)
 
 /***/ }),
-/* 827 */
+/* 832 */
 /***/ (function(module, exports) {
 
 	
@@ -52935,7 +52940,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 828 */
+/* 833 */
 /***/ (function(module, exports) {
 
 	
@@ -52961,7 +52966,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 829 */
+/* 834 */
 /***/ (function(module, exports) {
 
 	
@@ -53009,7 +53014,7 @@
 	// array reference around.
 
 /***/ }),
-/* 830 */
+/* 835 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {// Generated by CoffeeScript 1.7.1
@@ -53048,10 +53053,10 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(328)))
 
 /***/ }),
-/* 831 */
+/* 836 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {var now = __webpack_require__(832)
+	/* WEBPACK VAR INJECTION */(function(global) {var now = __webpack_require__(837)
 	  , root = typeof window === 'undefined' ? global : window
 	  , vendors = ['moz', 'webkit']
 	  , suffix = 'AnimationFrame'
@@ -53130,7 +53135,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 832 */
+/* 837 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {// Generated by CoffeeScript 1.12.2
@@ -53173,7 +53178,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(328)))
 
 /***/ }),
-/* 833 */
+/* 838 */
 /***/ (function(module, exports) {
 
 	
@@ -53209,7 +53214,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 834 */
+/* 839 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53226,27 +53231,27 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var _mapToZero = __webpack_require__(827);
+	var _mapToZero = __webpack_require__(832);
 
 	var _mapToZero2 = _interopRequireDefault(_mapToZero);
 
-	var _stripStyle = __webpack_require__(828);
+	var _stripStyle = __webpack_require__(833);
 
 	var _stripStyle2 = _interopRequireDefault(_stripStyle);
 
-	var _stepper3 = __webpack_require__(829);
+	var _stepper3 = __webpack_require__(834);
 
 	var _stepper4 = _interopRequireDefault(_stepper3);
 
-	var _performanceNow = __webpack_require__(830);
+	var _performanceNow = __webpack_require__(835);
 
 	var _performanceNow2 = _interopRequireDefault(_performanceNow);
 
-	var _raf = __webpack_require__(831);
+	var _raf = __webpack_require__(836);
 
 	var _raf2 = _interopRequireDefault(_raf);
 
-	var _shouldStopAnimation = __webpack_require__(833);
+	var _shouldStopAnimation = __webpack_require__(838);
 
 	var _shouldStopAnimation2 = _interopRequireDefault(_shouldStopAnimation);
 
@@ -53502,7 +53507,7 @@
 	// config)
 
 /***/ }),
-/* 835 */
+/* 840 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53519,31 +53524,31 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var _mapToZero = __webpack_require__(827);
+	var _mapToZero = __webpack_require__(832);
 
 	var _mapToZero2 = _interopRequireDefault(_mapToZero);
 
-	var _stripStyle = __webpack_require__(828);
+	var _stripStyle = __webpack_require__(833);
 
 	var _stripStyle2 = _interopRequireDefault(_stripStyle);
 
-	var _stepper3 = __webpack_require__(829);
+	var _stepper3 = __webpack_require__(834);
 
 	var _stepper4 = _interopRequireDefault(_stepper3);
 
-	var _mergeDiff = __webpack_require__(836);
+	var _mergeDiff = __webpack_require__(841);
 
 	var _mergeDiff2 = _interopRequireDefault(_mergeDiff);
 
-	var _performanceNow = __webpack_require__(830);
+	var _performanceNow = __webpack_require__(835);
 
 	var _performanceNow2 = _interopRequireDefault(_performanceNow);
 
-	var _raf = __webpack_require__(831);
+	var _raf = __webpack_require__(836);
 
 	var _raf2 = _interopRequireDefault(_raf);
 
-	var _shouldStopAnimation = __webpack_require__(833);
+	var _shouldStopAnimation = __webpack_require__(838);
 
 	var _shouldStopAnimation2 = _interopRequireDefault(_shouldStopAnimation);
 
@@ -54029,7 +54034,7 @@
 	// In reality currentStyle should be 400
 
 /***/ }),
-/* 836 */
+/* 841 */
 /***/ (function(module, exports) {
 
 	
@@ -54142,7 +54147,7 @@
 	// to loop through and find a key's index each time), but I no longer care
 
 /***/ }),
-/* 837 */
+/* 842 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54155,7 +54160,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _presets = __webpack_require__(838);
+	var _presets = __webpack_require__(843);
 
 	var _presets2 = _interopRequireDefault(_presets);
 
@@ -54170,7 +54175,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 838 */
+/* 843 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -54185,7 +54190,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 839 */
+/* 844 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -54208,13 +54213,13 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(328)))
 
 /***/ }),
-/* 840 */
+/* 845 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(841);
+	var content = __webpack_require__(846);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(661)(content, {});
@@ -54234,7 +54239,7 @@
 	}
 
 /***/ }),
-/* 841 */
+/* 846 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(656)();
@@ -54248,13 +54253,13 @@
 
 
 /***/ }),
-/* 842 */
+/* 847 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(843);
+	var content = __webpack_require__(848);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(661)(content, {});
@@ -54274,7 +54279,7 @@
 	}
 
 /***/ }),
-/* 843 */
+/* 848 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(656)();
