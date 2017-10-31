@@ -106,8 +106,9 @@
 
 	var icons = ['🐞', '🦋', '🍎', '🍄', '🌈', '⭐', '🚜', '✈', '⚽', '🍒', '🐟', '🐢', '🚀', '🐿', '🐌', '🌼', '🐙', '🌵', '🦀', '🚁', '⛄', '🐝', '🔑', '💡', '🐍', 'A'];
 
-	var nameServiceAddr = 0x1234;
-	var nameCharacteristicAddr = 0x2345;
+	var infoServiceAddr = 0x1234;
+	var nameCharacteristicAddr = '00002345-0000-1000-8000-00805f9b34fb';
+	var versionCharacteristicAddr = '00006789-0000-1000-8000-00805f9b34fb';
 
 	var instr_start = 'Click "Connect" and select a Thermoscope to set its icon';
 	var instr_connected = 'Select a new icon for the Thermoscope and click "Set Icon"';
@@ -126,9 +127,11 @@
 	      iconChanged: false,
 	      status: "not connected",
 	      currentIcon: '',
-	      selectedIcon: ''
+	      selectedIcon: '',
+	      sensorVersion: ''
 	    };
 
+	    _this.infoService = null;
 	    _this.iconCharacteristic = null;
 
 	    _this.decoder = new TextDecoder('utf-8');
@@ -142,12 +145,20 @@
 	  }
 
 	  _createClass(IconSetter, [{
+	    key: 'logError',
+	    value: function logError(msg, error) {
+	      console.log(msg + ":" + error);
+	      this.setState({
+	        status: msg
+	      });
+	    }
+	  }, {
 	    key: 'connect',
 	    value: function connect() {
 	      console.log("connect");
 	      var request = navigator.bluetooth.requestDevice({
 	        filters: [{ namePrefix: "Thermoscope" }],
-	        optionalServices: [nameServiceAddr]
+	        optionalServices: [infoServiceAddr]
 	      });
 
 	      var component = this;
@@ -159,22 +170,65 @@
 	        });
 	        return device.gatt.connect();
 	      })
-	      // Step 3: Get the icon service
+	      // Step 3: Get the info service (icon + version)
 	      .then(function (server) {
 	        component.setState({
-	          status: "getting icon service"
+	          status: "getting info service"
 	        });
 	        window.server = server;
-	        return server.getPrimaryService(nameServiceAddr);
-	      }).then(function (service) {
+	        return server.getPrimaryService(infoServiceAddr);
+	      })
+	      // Step 4: Get the list of characteristics
+	      .then(function (service) {
+	        component.infoService = service;
 	        component.setState({
-	          status: "getting characteristic"
+	          status: "getting characteristics"
 	        });
-	        return service.getCharacteristic(nameCharacteristicAddr);
-	      }).then(function (characteristic) {
+	        return service.getCharacteristics();
+	      }).catch(function (error) {
+	        console.error("connection failed: " + error);
+	        component.setState({
+	          status: "connection failed"
+	        });
+	      })
+	      // Check if the version characteristic exists
+	      .then(function (characteristics) {
+	        var uuids = [];
+	        characteristics.forEach(function (char) {
+	          uuids.push(char.uuid);
+	        });
+	        component.setState({
+	          status: "getting sensor version characteristic"
+	        });
+
+	        if (uuids.indexOf(versionCharacteristicAddr != -1))
+	          // If it does, get it
+	          component.infoService.getCharacteristic(versionCharacteristicAddr).then(function (characteristic) {
+	            if (characteristic && characteristic.readValue) {
+	              component.setState({
+	                status: "getting sensor version value"
+	              });
+	              return characteristic.readValue();
+	            }
+	          }).then(function (value) {
+	            var state = {};
+	            component.setState({
+	              sensorVersion: component.decoder.decode(value)
+	            });
+	          }).catch(function (error) {
+	            console.log("failed to get sensor version: " + error);
+	            component.setState({
+	              sensorVersion: "unknown"
+	            });
+	          });
+
+	        return component.infoService.getCharacteristic(nameCharacteristicAddr);
+	      })
+	      // Get the icon characteristic
+	      .then(function (characteristic) {
 	        component.iconCharacteristic = characteristic;
 	        component.setState({
-	          status: "reading characteristic"
+	          status: "reading icon characteristic"
 	        });
 	        return characteristic.readValue();
 	      }).then(function (value) {
@@ -186,9 +240,9 @@
 	          selectedIcon: iconVal
 	        });
 	      }).catch(function (error) {
-	        console.error('Connection failed!', error);
+	        console.log("failed to get sensor icon: " + error);
 	        component.setState({
-	          status: "connection failed"
+	          sensorVersion: "failed to get sensor icon"
 	        });
 	      });
 	    }
@@ -199,7 +253,10 @@
 
 	      this.setState({
 	        connected: false,
-	        status: "disconnected"
+	        status: "not connected",
+	        currentIcon: '',
+	        selectedIcon: '',
+	        sensorVersion: ''
 	      });
 	    }
 	  }, {
@@ -299,6 +356,11 @@
 	            'div',
 	            { id: 'status', className: 'message' },
 	            this.state.status
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'message' },
+	            this.state.sensorVersion ? 'sensor version: ' + this.state.sensorVersion : ' '
 	          ),
 	          _react2.default.createElement(
 	            'div',
