@@ -62,27 +62,27 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _reactLab = __webpack_require__(736);
+	var _reactLab = __webpack_require__(744);
 
 	var _reactLab2 = _interopRequireDefault(_reactLab);
 
-	var _newAtomBin = __webpack_require__(737);
+	var _newAtomBin = __webpack_require__(745);
 
 	var _newAtomBin2 = _interopRequireDefault(_newAtomBin);
 
-	var _authoring = __webpack_require__(738);
+	var _authoring = __webpack_require__(746);
 
 	var _authoring2 = _interopRequireDefault(_authoring);
 
-	var _simulationControls = __webpack_require__(742);
+	var _simulationControls = __webpack_require__(750);
 
 	var _simulationControls2 = _interopRequireDefault(_simulationControls);
 
-	var _models = __webpack_require__(745);
+	var _models = __webpack_require__(753);
 
 	var _models2 = _interopRequireDefault(_models);
 
-	var _authorableProps = __webpack_require__(749);
+	var _authorableProps = __webpack_require__(757);
 
 	var _authorableProps2 = _interopRequireDefault(_authorableProps);
 
@@ -96,7 +96,7 @@
 
 	var _IconButton2 = _interopRequireDefault(_IconButton);
 
-	var _deleteForever = __webpack_require__(750);
+	var _deleteForever = __webpack_require__(758);
 
 	var _deleteForever2 = _interopRequireDefault(_deleteForever);
 
@@ -108,15 +108,15 @@
 
 	var _reactTapEventPlugin2 = _interopRequireDefault(_reactTapEventPlugin);
 
-	var _userNameGenerator = __webpack_require__(751);
+	var _userNameGenerator = __webpack_require__(759);
 
 	var _userNameGenerator2 = _interopRequireDefault(_userNameGenerator);
 
 	__webpack_require__(654);
 
-	__webpack_require__(752);
+	__webpack_require__(760);
 
-	var _reBase = __webpack_require__(754);
+	var _reBase = __webpack_require__(766);
 
 	var _reBase2 = _interopRequireDefault(_reBase);
 
@@ -161,7 +161,8 @@
 	var leftPos = 1.25;
 	var rightPos = 3.25;
 	var baseColor = "rgba(128,96,96,0)";
-	var wallColor = "rgba(0,128,0,0)";
+	var hiddenWallColor = "rgba(0,128,0,0)";
+	var wallColor = "rgba(0,0,0,1)";
 	var lidColor = "rgba(0,0,0,1)";
 
 	var containerWidth = rightPos - leftPos;
@@ -223,7 +224,7 @@
 	    _this.getCurrentModelLink = _this.getCurrentModelLink.bind(_this);
 	    _this.updateDiff = _this.updateDiff.bind(_this);
 	    _this.toggleContainerVisibility = _this.updateContainerVisibility.bind(_this);
-	    _this.toggleContainerLid = _this.toggleContainerLid.bind(_this);
+	    _this.updateContainerLid = _this.updateContainerLid.bind(_this);
 	    return _this;
 	  }
 
@@ -372,7 +373,7 @@
 	      this.addPinnedParticleText();
 	      if (this.state.container) {
 	        this.updateContainerVisibility(this.state.container.value);
-	        this.toggleContainerLid(this.state.containerLid.value);
+	        this.updateContainerLid(this.state.containerLid.value);
 	      }
 	      api.onDrag('atom', function (x, y, d, i) {
 	        if (d.pinned === 1) {
@@ -544,15 +545,29 @@
 	        this.changeElementCount(value);
 	      }
 	      if (prop === "container") {
-	        this.updateContainerVisibility(value);
+	        try {
+	          this.updateContainerVisibility(value);
+	        } catch (ex) {
+	          console.log("ERROR: ", ex);
+	          newState[prop].value = this.state[prop].value;
+	        }
 	      }
 	      if (prop === "containerHeight") {
 	        var h = value;
-
-	        this.updateContainerVisibility(this.state.container.value, h);
+	        try {
+	          this.updateContainerVisibility(this.state.container.value, h);
+	        } catch (ex) {
+	          console.log("ERROR: ", ex);
+	          newState[prop].value = this.state[prop].value;
+	        }
 	      }
 	      if (prop === "containerLid") {
-	        this.toggleContainerLid(value);
+	        try {
+	          newState[prop].value = this.updateContainerLid(value); // container lid dependent on container visibility
+	        } catch (ex) {
+	          console.log("ERROR: ", ex);
+	          newState[prop].value = this.state[prop].value;
+	        }
 	      }
 	      newState.nextUpdate = Date.now();
 	      newState.atoms = this.getAtomsWithoutPlaceholders();
@@ -562,21 +577,23 @@
 	  }, {
 	    key: 'updateContainerVisibility',
 	    value: function updateContainerVisibility(visible, height) {
-	      var containerHeight = this.state.containerHeight;
+	      var _state2 = this.state,
+	          container = _state2.container,
+	          containerHeight = _state2.containerHeight,
+	          containerLid = _state2.containerLid;
 
 	      var h = height ? height : containerHeight ? containerHeight.value : 2.25;
-
 	      var currentlyVisible = api.getNumberOfObstacles() > 0;
+
 	      if (currentlyVisible) {
 	        if (!visible) {
 	          // remove old obstacles
 	          for (var i = api.getNumberOfObstacles() - 1; i > -1; i--) {
 	            api.removeObstacle(i);
 	          }
-	          // since removing all obstacles will remove the lid also, remove reference to lid from state
+	          // since removing all obstacles will remove the lid also, update lid
 	          var lid = this.state.containerLid;
 	          lid.value = false;
-	          lid.lidObstacle = {};
 	          this.setState({ containerLid: lid });
 
 	          var atomsToDelete = [];
@@ -607,12 +624,14 @@
 
 	          api.setImageProperties(0, { visible: false });
 	        } else {
-	          // adjust height - not currently implemented
-	          // api.removeObstacle(4);
-	          // api.removeObstacle(3);
-	          // api.addObstacle({ x: leftPos, y: basePos + baseThickness, width: wallThickness, height: h, color: wallColor }); // left
-	          // api.addObstacle({ x: rightPos - wallThickness, y: basePos + baseThickness, width: wallThickness, height: h, color: wallColor }); // right
-	          // api.setObstacleProperties?
+	          // adjust height - if the container is on screen, wall indices will be 3 and 4
+	          api.setObstacleProperties(3, { height: h }); // left
+	          api.setObstacleProperties(4, { height: h }); // right
+	          if (containerLid.value) {
+	            // adjusting height should reposition lid
+	            var lidObstacleIndex = api.getNumberOfObstacles() - 1;
+	            api.setObstacleProperties(lidObstacleIndex, { y: h - wallThickness });
+	          }
 	        }
 	      }
 	      if (!currentlyVisible && visible) {
@@ -622,22 +641,6 @@
 
 	        api.addObstacle({ x: leftPos, y: basePos + baseThickness, width: wallThickness, height: h, color: wallColor }); // left
 	        api.addObstacle({ x: rightPos - wallThickness, y: basePos + baseThickness, width: wallThickness, height: h, color: wallColor }); // right
-
-	        // left lip - a couple of angled lines and some simple obstacles
-	        var wallTop = basePos + baseThickness + h;
-	        var leftInsideEdge = leftPos + wallThickness;
-
-	        var w = 3; // line weight, hopefully adding to solidity
-
-	        api.addLine({ x1: leftInsideEdge - 0.01, y1: wallTop, x2: leftInsideEdge - 0.05, y2: wallTop + 0.04, fence: true, lineWeight: w, lineColor: wallColor });
-	        api.addObstacle({ x: leftInsideEdge - 0.15, y: wallTop, width: 0.1, height: 0.05, color: wallColor });
-	        api.addLine({ x1: leftInsideEdge - 0.15, y1: wallTop + 0.04, x2: leftInsideEdge - 0.3, y2: wallTop - 0.1, fence: true, lineWeight: w, lineColor: wallColor });
-	        api.addObstacle({ x: leftInsideEdge - 0.3, y: wallTop - 0.19, width: 0.19, height: 0.1, color: wallColor });
-
-	        // and right edge lip
-	        api.addShape({
-	          x: rightPos - wallThickness / 2, y: wallTop, type: "ellipse", width: 0.05, height: 0.05, fence: true, lineWeight: 8, lineColor: wallColor
-	        });
 
 	        // add base layer atoms
 	        var spacing = 0.2;
@@ -650,39 +653,44 @@
 	      }
 	    }
 	  }, {
-	    key: 'toggleContainerLid',
-	    value: function toggleContainerLid(lidVisible) {
-	      var _state2 = this.state,
-	          container = _state2.container,
-	          containerHeight = _state2.containerHeight,
-	          containerLid = _state2.containerLid;
+	    key: 'updateContainerLid',
+	    value: function updateContainerLid(lidVisible, updateState) {
+	      var _state3 = this.state,
+	          container = _state3.container,
+	          containerHeight = _state3.containerHeight,
+	          containerLid = _state3.containerLid;
 
 	      var containerVisible = container.value;
 	      var h = containerHeight ? containerHeight.value : 2.25;
 	      var lid = containerLid;
 
-	      var lidObstacle = containerLid.lidObstacle;
+	      var lidObstacleIndex = lid.value ? api.getNumberOfObstacles() - 1 : -1;
 	      if (containerVisible) {
 	        if (lidVisible) {
-	          lidObstacle = api.addObstacle({ x: leftPos + wallThickness, y: h - wallThickness, width: containerWidth - wallThickness * 2.01, height: wallThickness, color: lidColor });
-	        } else if (lidObstacle != {}) {
-	          api.removeObstacle(lidObstacle);
-	          lidObstacle = {};
+	          api.addObstacle({ x: leftPos + wallThickness, y: h - wallThickness, width: containerWidth - wallThickness * 2.01, height: wallThickness, color: lidColor });
+	          lidObstacleIndex = api.getNumberOfObstacles() - 1;
+	        } else if (lidObstacleIndex > -1) {
+	          api.removeObstacle(lidObstacleIndex);
+	          lidObstacleIndex = -1;
 	        }
 	      } else {
 	        // container is not visible, attempting to show a lid in this state is invalid
 	        if (lidVisible) {
 	          // nope
-	          lid.value = false;
+	          lidObstacleIndex = -1;
 	        } else {
-	          if (lidObstacle != {}) {
-	            api.removeObstacle(lidObstacle);
-	            lidObstacle = {};
+	          if (api.getNumberOfObstacles() > 0 && lidObstacleIndex > -1) {
+	            api.removeObstacle(lidObstacleIndex);
+	            lidObstacleIndex = -1;
 	          }
 	        }
 	      }
-	      lid.lidObstacle = lidObstacle;
-	      this.setState({ containerLid: lid });
+	      if (updateState) {
+	        lid.value = lidVisible;
+	        this.setState({ containerLid: lid });
+	        this.forceUpdate();
+	      }
+	      return lidObstacleIndex > -1;
 	    }
 	  }, {
 	    key: 'changeElementCount',
@@ -734,10 +742,13 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _state3 = this.state,
-	          authoring = _state3.authoring,
-	          showFreezeButton = _state3.showFreezeButton,
-	          showRestart = _state3.showRestart;
+	      var _this5 = this;
+
+	      var _state4 = this.state,
+	          authoring = _state4.authoring,
+	          showFreezeButton = _state4.showFreezeButton,
+	          showRestart = _state4.showRestart,
+	          containerLid = _state4.containerLid;
 
 	      var appClass = "app";
 	      if (authoring) {
@@ -798,7 +809,9 @@
 	              )
 	            )
 	          ),
-	          _react2.default.createElement(_simulationControls2.default, _extends({}, this.state, { onChange: this.handleSimulationChange })),
+	          _react2.default.createElement(_simulationControls2.default, _extends({}, this.state, { onChange: this.handleSimulationChange, onContainerLid: function onContainerLid() {
+	              return _this5.updateContainerLid(!containerLid.value, true);
+	            } })),
 	          _react2.default.createElement(_logoMenu2.default, { scale: 'logo-menu small', navPath: '../index.html' })
 	        )
 	      );
@@ -30205,7 +30218,7 @@
 
 
 	// module
-	exports.push([module.id, ".app {\n  height: 100%;\n  background: #333;\n  color: #ccc;\n  -ms-touch-action: none;\n  touch-action: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.app .main-menu-button {\n  position: fixed;\n  right: 140px;\n  top: 4px;\n}\n.app .main-menu-button:hover {\n  cursor: pointer;\n}\n.app .main-menu-button > div {\n  float: right;\n  padding-right: 10px;\n}\n.app .main-menu-button a {\n  color: #aaa;\n}\n.app .main-menu-button a:hover {\n  color: #888;\n}\n.app .main-menu-button a:active {\n  color: #888;\n}\n.app .main-menu-button i {\n  font-size: 32px;\n}\n.app .logo-menu {\n  width: 250px;\n  height: 125px;\n  position: fixed;\n  right: 0px;\n  top: -80px;\n  padding-top: 60px;\n  background-image: url(" + __webpack_require__(657) + ");\n  background-position: right top;\n  background-size: 250px;\n  background-repeat: no-repeat;\n}\n.app .logo-menu .menu {\n  position: fixed;\n  right: 120px;\n  width: 110px;\n  top: 5px;\n}\n.app .logo-menu .cc-logo {\n  position: relative;\n  float: right;\n  right: 0px;\n  top: 0px;\n  width: 100%;\n  height: 100%;\n  background-image: url(" + __webpack_require__(658) + ");\n  background-size: contain;\n  background-repeat: no-repeat;\n}\n.app .logo-menu.small {\n  height: 67px;\n  width: 125px;\n  background-size: 125px;\n  top: -40px;\n  padding-top: 30px;\n}\n.app .app-container {\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-pack: distribute;\n  justify-content: space-around;\n  -webkit-box-align: center;\n  -ms-flex-align: center;\n  align-items: center;\n}\n.app .label {\n  font-size: 16px;\n  text-align: center;\n}\n.app.authoring {\n  background: white;\n}\n.app h1 {\n  padding: 10px;\n}\n.app .demo-links {\n  height: 100%;\n  padding-top: 150px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: left;\n  -ms-flex-align: left;\n  align-items: left;\n}\n.app .demo-links li {\n  padding: 20px;\n  color: #aaa;\n}\n.lab-wrapper {\n  border-radius: 40px;\n  width: 543px;\n  height: 361px;\n  overflow: hidden;\n  z-index: 1;\n  padding: 0px;\n}\n.lab-wrapper iframe {\n  margin: 0;\n  padding: 0;\n  position: relative;\n  top: -7px;\n  left: -7px;\n  -ms-touch-action: none;\n  touch-action: none;\n}\n.main-menu {\n  width: 800px;\n  height: 300px;\n  margin-top: 100px;\n  margin-left: auto;\n  margin-right: auto;\n}\n.main-menu a div {\n  width: 200px;\n  height: 200px;\n  margin: 50px;\n  float: left;\n  background: #666;\n  border-radius: 10px;\n}\n.main-menu .thermoscope-link {\n  background-image: url(" + __webpack_require__(659) + ");\n  background-size: 90% 90%;\n  background-position: center center;\n  background-repeat: no-repeat;\n}\n.main-menu .particle-modeler-link {\n  background-image: url(" + __webpack_require__(660) + ");\n  background-size: 90% 90%;\n  background-position: center center;\n  background-repeat: no-repeat;\n}\n.settings-link {\n  color: white;\n  position: fixed;\n  bottom: 16px;\n  left: 10px;\n}\n.settings-link:hover {\n  cursor: pointer;\n  color: orange;\n}\n.version-identifier {\n  font-size: 0.8em;\n  color: #111;\n  position: fixed;\n  bottom: 16px;\n  right: 30px;\n}\n.list-section {\n  left: 5px;\n  margin-top: 10px;\n  font-size: 1.3em;\n  border: 2px solid #292929;\n}\n.list-section h1 {\n  font-size: 1em;\n  background: #292929;\n}\n", ""]);
+	exports.push([module.id, ".app {\n  height: 100%;\n  background: #333;\n  color: #ccc;\n  -ms-touch-action: none;\n  touch-action: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.app .main-menu-button {\n  position: fixed;\n  right: 140px;\n  top: 4px;\n}\n.app .main-menu-button:hover {\n  cursor: pointer;\n}\n.app .main-menu-button > div {\n  float: right;\n  padding-right: 10px;\n}\n.app .main-menu-button a {\n  color: #aaa;\n}\n.app .main-menu-button a:hover {\n  color: #888;\n}\n.app .main-menu-button a:active {\n  color: #888;\n}\n.app .main-menu-button i {\n  font-size: 32px;\n}\n.app .logo-menu {\n  width: 250px;\n  height: 125px;\n  position: fixed;\n  right: 0px;\n  top: -80px;\n  padding-top: 60px;\n  background-image: url(" + __webpack_require__(657) + ");\n  background-position: right top;\n  background-size: 250px;\n  background-repeat: no-repeat;\n}\n.app .logo-menu .menu {\n  position: fixed;\n  right: 120px;\n  width: 110px;\n  top: 5px;\n}\n.app .logo-menu .cc-logo {\n  position: relative;\n  float: right;\n  right: 0px;\n  top: 0px;\n  width: 100%;\n  height: 100%;\n  background-image: url(" + __webpack_require__(658) + ");\n  background-size: contain;\n  background-repeat: no-repeat;\n}\n.app .logo-menu.small {\n  height: 67px;\n  width: 125px;\n  background-size: 125px;\n  top: -40px;\n  padding-top: 30px;\n}\n.app .app-container {\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-pack: distribute;\n  justify-content: space-around;\n  -webkit-box-align: center;\n  -ms-flex-align: center;\n  align-items: center;\n}\n.app .label {\n  font-size: 16px;\n  text-align: center;\n}\n.app.authoring {\n  background: white;\n}\n.app h1 {\n  padding: 10px;\n}\n.app .demo-links {\n  height: 100%;\n  padding-top: 150px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: left;\n  -ms-flex-align: left;\n  align-items: left;\n}\n.app .demo-links li {\n  padding: 20px;\n  color: #aaa;\n}\n.lab-wrapper {\n  border-radius: 40px;\n  width: 543px;\n  height: 361px;\n  overflow: hidden;\n  z-index: 1;\n  padding: 0px;\n}\n.lab-wrapper iframe {\n  margin: 0;\n  padding: 0;\n  position: relative;\n  top: -7px;\n  left: -7px;\n  -ms-touch-action: none;\n  touch-action: none;\n}\n.main-menu {\n  width: 800px;\n  height: 300px;\n  margin-top: 100px;\n  margin-left: auto;\n  margin-right: auto;\n}\n.main-menu a div {\n  width: 200px;\n  height: 200px;\n  margin: 50px;\n  float: left;\n  background: #666;\n  border-radius: 10px;\n}\n.main-menu .thermoscope-link {\n  background-image: url(" + __webpack_require__(659) + ");\n  background-size: 90% 90%;\n  background-position: center center;\n  background-repeat: no-repeat;\n}\n.main-menu .particle-modeler-link {\n  background-image: url(" + __webpack_require__(660) + ");\n  background-size: 90% 90%;\n  background-position: center center;\n  background-repeat: no-repeat;\n}\n.settings-link {\n  color: white;\n  position: fixed;\n  bottom: 16px;\n  left: 10px;\n}\n.settings-link:hover {\n  cursor: pointer;\n  color: orange;\n}\n.version-identifier {\n  font-size: 0.8em;\n  color: #111;\n  position: fixed;\n  bottom: 16px;\n  right: 30px;\n}\n.list-section {\n  left: 5px;\n  margin-top: 10px;\n  font-size: 1.3em;\n  border: 2px solid #292929;\n}\n.list-section h1 {\n  font-size: 1em;\n  background: #292929;\n}\n.dialog {\n  text-align: center;\n}\n.dialog button {\n  background-color: #ccc !important;\n}\n.dialog .dialog-msg {\n  width: 100%;\n  text-align: center;\n  margin-bottom: 20px;\n}\n", ""]);
 
 	// exports
 
@@ -35841,7 +35854,15 @@
 /* 733 */,
 /* 734 */,
 /* 735 */,
-/* 736 */
+/* 736 */,
+/* 737 */,
+/* 738 */,
+/* 739 */,
+/* 740 */,
+/* 741 */,
+/* 742 */,
+/* 743 */,
+/* 744 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	(function webpackUniversalModuleDefinition(root, factory) {
@@ -37628,7 +37649,7 @@
 	;
 
 /***/ }),
-/* 737 */
+/* 745 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -37671,7 +37692,7 @@
 	exports.default = NewAtomBin;
 
 /***/ }),
-/* 738 */
+/* 746 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37684,7 +37705,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Slider = __webpack_require__(739);
+	var _Slider = __webpack_require__(747);
 
 	var _Slider2 = _interopRequireDefault(_Slider);
 
@@ -37922,7 +37943,7 @@
 	exports.default = Authoring;
 
 /***/ }),
-/* 739 */
+/* 747 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37932,7 +37953,7 @@
 	});
 	exports.default = undefined;
 
-	var _Slider = __webpack_require__(740);
+	var _Slider = __webpack_require__(748);
 
 	var _Slider2 = _interopRequireDefault(_Slider);
 
@@ -37941,7 +37962,7 @@
 	exports.default = _Slider2.default;
 
 /***/ }),
-/* 740 */
+/* 748 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -38006,7 +38027,7 @@
 
 	var _FocusRipple2 = _interopRequireDefault(_FocusRipple);
 
-	var _deprecatedPropType = __webpack_require__(741);
+	var _deprecatedPropType = __webpack_require__(749);
 
 	var _deprecatedPropType2 = _interopRequireDefault(_deprecatedPropType);
 
@@ -38795,7 +38816,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(328)))
 
 /***/ }),
-/* 741 */
+/* 749 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -38839,7 +38860,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(328)))
 
 /***/ }),
-/* 742 */
+/* 750 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -38862,7 +38883,11 @@
 
 	var _IconButton2 = _interopRequireDefault(_IconButton);
 
-	var _CircularProgress = __webpack_require__(743);
+	var _SvgIcon = __webpack_require__(720);
+
+	var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
+
+	var _CircularProgress = __webpack_require__(751);
 
 	var _CircularProgress2 = _interopRequireDefault(_CircularProgress);
 
@@ -38889,6 +38914,7 @@
 	    _this.freeze = _this.freeze.bind(_this);
 	    _this.slow = _this.slow.bind(_this);
 	    _this.restart = _this.restart.bind(_this);
+	    _this.toggleLid = _this.toggleLid.bind(_this);
 	    return _this;
 	  }
 
@@ -38946,14 +38972,30 @@
 	      }
 	    }
 	  }, {
+	    key: 'toggleLid',
+	    value: function toggleLid() {
+	      var onContainerLid = this.props.onContainerLid;
+
+	      onContainerLid();
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _state = this.state,
 	          isSlowed = _state.isSlowed,
 	          isFrozen = _state.isFrozen,
 	          completed = _state.completed;
-	      var showFreezeButton = this.props.showFreezeButton;
+	      var _props = this.props,
+	          showFreezeButton = _props.showFreezeButton,
+	          container = _props.container,
+	          containerLid = _props.containerLid,
+	          authoring = _props.authoring;
 
+	      var containerVisible = container.value;
+	      var lidVisible = containerLid.value;
+	      var beakerIconStyle = "beaker";
+	      if (!authoring === true) beakerIconStyle += "light";
+	      if (!lidVisible) beakerIconStyle += " closed";
 
 	      return _react2.default.createElement(
 	        'div',
@@ -38994,6 +39036,15 @@
 	            value: completed,
 	            className: 'progress'
 	          })
+	        ),
+	        containerVisible && _react2.default.createElement(
+	          'div',
+	          { className: 'button-layout' },
+	          _react2.default.createElement(
+	            _IconButton2.default,
+	            { className: 'container-button', onClick: this.toggleLid, tooltip: 'container' },
+	            _react2.default.createElement('div', { className: beakerIconStyle })
+	          )
 	        )
 	      );
 	    }
@@ -39005,7 +39056,7 @@
 	exports.default = SimulationControls;
 
 /***/ }),
-/* 743 */
+/* 751 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39015,7 +39066,7 @@
 	});
 	exports.default = undefined;
 
-	var _CircularProgress = __webpack_require__(744);
+	var _CircularProgress = __webpack_require__(752);
 
 	var _CircularProgress2 = _interopRequireDefault(_CircularProgress);
 
@@ -39024,7 +39075,7 @@
 	exports.default = _CircularProgress2.default;
 
 /***/ }),
-/* 744 */
+/* 752 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -39297,7 +39348,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(328)))
 
 /***/ }),
-/* 745 */
+/* 753 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39306,15 +39357,15 @@
 	  value: true
 	});
 
-	var _interactive = __webpack_require__(746);
+	var _interactive = __webpack_require__(754);
 
 	var _interactive2 = _interopRequireDefault(_interactive);
 
-	var _model = __webpack_require__(747);
+	var _model = __webpack_require__(755);
 
 	var _model2 = _interopRequireDefault(_model);
 
-	var _emptyModel = __webpack_require__(748);
+	var _emptyModel = __webpack_require__(756);
 
 	var _emptyModel2 = _interopRequireDefault(_emptyModel);
 
@@ -39327,25 +39378,25 @@
 	};
 
 /***/ }),
-/* 746 */
+/* 754 */
 /***/ (function(module, exports) {
 
 	module.exports = {"title":"Lab Interactive","aspectRatio":1,"theme":"no-framing","showTopBar":false,"showBottomBar":false,"models":[{"type":"md2d","id":"model"}]}
 
 /***/ }),
-/* 747 */
+/* 755 */
 /***/ (function(module, exports) {
 
 	module.exports = {"type":"md2d","imagePath":"","width":4.5,"height":3,"unitsScheme":"md2d","lennardJonesForces":true,"coulombForces":true,"temperatureControl":false,"targetTemperature":0,"gravitationalField":false,"timeStep":1,"dielectricConstant":1,"realisticDielectricEffect":true,"solventForceFactor":1.25,"solventForceType":0,"additionalSolventForceMult":4,"additionalSolventForceThreshold":10,"polarAAEpsilon":-2,"viscosity":1,"timeStepsPerTick":50,"DNAState":"dna","DNA":"","DNAMutations":true,"useQuantumDynamics":false,"useChemicalReactions":false,"viewOptions":{"viewPortWidth":4.5,"viewPortHeight":3,"viewPortZoom":1,"viewPortX":0,"viewPortY":0,"viewPortDrag":false,"backgroundColor":"#eeeeee","showClock":false,"markColor":"#f8b500","keShading":false,"chargeShading":false,"useThreeLetterCode":true,"aminoAcidColorScheme":"hydrophobicity","aminoAcidLabels":false,"showChargeSymbols":true,"showVDWLines":false,"VDWLinesCutoff":"medium","showVelocityVectors":false,"showForceVectors":false,"showElectricField":false,"electricFieldDensity":18,"electricFieldColor":"auto","showAtomTrace":false,"images":[],"imageMapping":{},"textBoxes":[],"xlabel":false,"ylabel":false,"xunits":false,"yunits":false,"controlButtons":"play","gridLines":false,"atomNumbers":false,"enableAtomTooltips":false,"enableKeyboardHandlers":true,"atomTraceColor":"#6913c5","velocityVectors":{"color":"#000","width":0.01,"length":2},"forceVectors":{"color":"#169C30","width":0.01,"length":2},"forceVectorsDirectionOnly":false},"pairwiseLJProperties":[{"sigma":0.3,"epsilon":0,"element1":0,"element2":3},{"sigma":0.3,"epsilon":0,"element1":0,"element2":4},{"sigma":0.3,"epsilon":0,"element1":0,"element2":5},{"sigma":0.3,"epsilon":0,"element1":1,"element2":3},{"sigma":0.3,"epsilon":0,"element1":1,"element2":4},{"sigma":0.3,"epsilon":0,"element1":1,"element2":5},{"sigma":0.3,"epsilon":0,"element1":2,"element2":3},{"sigma":0.3,"epsilon":0,"element1":2,"element2":4},{"sigma":0.3,"epsilon":0,"element1":2,"element2":5}],"elements":{"mass":[20,100,30,20,100,30],"sigma":[0.19149999618530272,0.19149999618530272,0.19149999618530272,0.19149999618530272,0.19149999618530272,0.19149999618530272],"epsilon":[-0.05,-0.1,-0.000001,0,0,0],"color":[-855310,-9066941,-13159,-855310,-9066941,-13159]},"atoms":{"x":[1.9387574672895096,1.6031029030961708,1.632623318315442,1.4631399105450587,1.4140489251651494,2.8430177214860044,1.506229397314764],"y":[0.20532896150132046,1.3556470752596637,1.7309677298414223,2.4509323794841062,2.649559715692863,2.0068852294301034,1.569186969543926],"vx":[-0.00011036900127019925,0.00014946047460790478,-0.00023940578015734266,0.0002953883014108157,0.00024142163502047595,0.000042655137781303914,0.0001820295091808977],"vy":[-0.00010523978493433866,-0.00013829468934910686,-0.00030301379459964545,0.0005630386622460662,0.00015856489699153347,0.00030801239441768306,-0.0003328395247646734],"charge":[0,0,0,0,0,0,0],"friction":[0.002,0.002,0.002,0.002,0.002,0.002,0.002],"element":[0,1,2,0,1,2,2],"pinned":[0,0,0,0,0,0,0],"draggable":[1,1,1,1,1,1,1]}}
 
 /***/ }),
-/* 748 */
+/* 756 */
 /***/ (function(module, exports) {
 
-	module.exports = {"type":"md2d","imagePath":"../","width":4.5,"height":3,"unitsScheme":"md2d","lennardJonesForces":true,"coulombForces":true,"temperatureControl":false,"targetTemperature":0,"gravitationalField":false,"timeStep":1,"dielectricConstant":1,"realisticDielectricEffect":true,"solventForceFactor":1.25,"solventForceType":0,"additionalSolventForceMult":4,"additionalSolventForceThreshold":10,"polarAAEpsilon":-2,"viscosity":1,"timeStepsPerTick":50,"DNAState":"dna","DNA":"","DNAMutations":true,"useQuantumDynamics":false,"useChemicalReactions":false,"viewOptions":{"viewPortWidth":4.5,"viewPortHeight":3,"viewPortZoom":1,"viewPortX":0,"viewPortY":0,"viewPortDrag":false,"backgroundColor":"#eeeeee","showClock":false,"markColor":"#f8b500","keShading":false,"chargeShading":false,"useThreeLetterCode":true,"aminoAcidColorScheme":"hydrophobicity","aminoAcidLabels":false,"showChargeSymbols":true,"showVDWLines":false,"VDWLinesCutoff":"medium","showVelocityVectors":false,"showForceVectors":false,"showElectricField":false,"electricFieldDensity":18,"electricFieldColor":"auto","showAtomTrace":false,"images":[{"imageUri":"beaker.svg","imageX":0.9,"imageY":2.76,"imageHostType":"","imageHostIndex":0,"imageLayer":2,"imageLayerPosition":1,"visible":false,"opacity":1,"scale":0.5}],"imageMapping":{},"textBoxes":[],"xlabel":false,"ylabel":false,"xunits":false,"yunits":false,"controlButtons":"play","gridLines":false,"atomNumbers":false,"enableAtomTooltips":false,"enableKeyboardHandlers":true,"atomTraceColor":"#6913c5","velocityVectors":{"color":"#000","width":0.01,"length":2},"forceVectors":{"color":"#169C30","width":0.01,"length":2},"forceVectorsDirectionOnly":false},"pairwiseLJProperties":[{"sigma":0.3,"epsilon":0,"element1":0,"element2":3},{"sigma":0.3,"epsilon":0,"element1":0,"element2":4},{"sigma":0.3,"epsilon":0,"element1":0,"element2":5},{"sigma":0.3,"epsilon":0,"element1":1,"element2":3},{"sigma":0.3,"epsilon":0,"element1":1,"element2":4},{"sigma":0.3,"epsilon":0,"element1":1,"element2":5},{"sigma":0.3,"epsilon":0,"element1":2,"element2":3},{"sigma":0.3,"epsilon":0,"element1":2,"element2":4},{"sigma":0.3,"epsilon":0,"element1":2,"element2":5},{"sigma":0.186,"epsilon":-0.5,"element1":0,"element2":2}],"elements":{"mass":[20,100,30,20,100,30],"sigma":[0.3,0.19149999618530272,0.15,0.2,0.19149999618530272,0.15],"epsilon":[-0.05,-0.1,-0.000001,0,0,0],"color":[-855310,-9066941,-13159,-855310,-9066941,-13159]},"atoms":{"x":[],"y":[],"vx":[],"vy":[],"charge":[],"friction":[],"element":[],"pinned":[],"draggable":[]}}
+	module.exports = {"type":"md2d","imagePath":"../","width":4.5,"height":3,"unitsScheme":"md2d","lennardJonesForces":true,"coulombForces":true,"temperatureControl":false,"targetTemperature":0,"gravitationalField":false,"timeStep":1,"dielectricConstant":1,"realisticDielectricEffect":true,"solventForceFactor":1.25,"solventForceType":0,"additionalSolventForceMult":4,"additionalSolventForceThreshold":10,"polarAAEpsilon":-2,"viscosity":1,"timeStepsPerTick":50,"DNAState":"dna","DNA":"","DNAMutations":true,"useQuantumDynamics":false,"useChemicalReactions":false,"viewOptions":{"viewPortWidth":4.5,"viewPortHeight":3,"viewPortZoom":1,"viewPortX":0,"viewPortY":0,"viewPortDrag":false,"backgroundColor":"#eeeeee","showClock":false,"markColor":"#f8b500","keShading":false,"chargeShading":false,"useThreeLetterCode":true,"aminoAcidColorScheme":"hydrophobicity","aminoAcidLabels":false,"showChargeSymbols":true,"showVDWLines":false,"VDWLinesCutoff":"medium","showVelocityVectors":false,"showForceVectors":false,"showElectricField":false,"electricFieldDensity":18,"electricFieldColor":"auto","showAtomTrace":false,"images":[{"imageUri":"beaker_base.svg","imageX":0.9,"imageY":2.76,"imageHostType":"","imageHostIndex":0,"imageLayer":2,"imageLayerPosition":1,"visible":false,"opacity":1,"scale":0.5}],"imageMapping":{},"textBoxes":[],"xlabel":false,"ylabel":false,"xunits":false,"yunits":false,"controlButtons":"play","gridLines":false,"atomNumbers":false,"enableAtomTooltips":false,"enableKeyboardHandlers":true,"atomTraceColor":"#6913c5","velocityVectors":{"color":"#000","width":0.01,"length":2},"forceVectors":{"color":"#169C30","width":0.01,"length":2},"forceVectorsDirectionOnly":false},"pairwiseLJProperties":[{"sigma":0.3,"epsilon":0,"element1":0,"element2":3},{"sigma":0.3,"epsilon":0,"element1":0,"element2":4},{"sigma":0.3,"epsilon":0,"element1":0,"element2":5},{"sigma":0.3,"epsilon":0,"element1":1,"element2":3},{"sigma":0.3,"epsilon":0,"element1":1,"element2":4},{"sigma":0.3,"epsilon":0,"element1":1,"element2":5},{"sigma":0.3,"epsilon":0,"element1":2,"element2":3},{"sigma":0.3,"epsilon":0,"element1":2,"element2":4},{"sigma":0.3,"epsilon":0,"element1":2,"element2":5},{"sigma":0.186,"epsilon":-0.5,"element1":0,"element2":2}],"elements":{"mass":[20,100,30,20,100,30],"sigma":[0.3,0.19149999618530272,0.15,0.2,0.19149999618530272,0.15],"epsilon":[-0.05,-0.1,-0.000001,0,0,0],"color":[-855310,-9066941,-13159,-855310,-9066941,-13159]},"atoms":{"x":[],"y":[],"vx":[],"vy":[],"charge":[],"friction":[],"element":[],"pinned":[],"draggable":[]}}
 
 /***/ }),
-/* 749 */
+/* 757 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -39390,8 +39441,14 @@
 	  },
 	  containerLid: {
 	    label: "Seal Container",
-	    value: false,
-	    lid: {}
+	    value: false
+	  },
+	  containerHeight: {
+	    label: "Container Height",
+	    value: 2.25,
+	    min: 0.25,
+	    max: 2.5,
+	    step: 0.25
 	  },
 	  elements: {
 	    label: "Number of unique elements",
@@ -39615,7 +39672,7 @@
 	};
 
 /***/ }),
-/* 750 */
+/* 758 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39652,7 +39709,7 @@
 	exports.default = ActionDeleteForever;
 
 /***/ }),
-/* 751 */
+/* 759 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -39707,13 +39764,13 @@
 	};
 
 /***/ }),
-/* 752 */
+/* 760 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(753);
+	var content = __webpack_require__(761);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(661)(content, {});
@@ -39733,7 +39790,7 @@
 	}
 
 /***/ }),
-/* 753 */
+/* 761 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(656)();
@@ -39741,26 +39798,50 @@
 
 
 	// module
-	exports.push([module.id, ".authoring-form {\n  position: absolute;\n  left: calc(50% + 300px);\n  top: 0px;\n  color: #444;\n  width: 450px;\n  max-height: 650px;\n  border: 2px solid silver;\n  border-radius: 8px;\n  overflow-y: scroll;\n  padding: 10px;\n  -ms-touch-action: none;\n  touch-action: none;\n}\n.authoring-form h3 {\n  padding: 4px 0 4px 0;\n  margin: 10px 0 5px 0;\n  width: 100%;\n  background-color: #f8f8f8;\n}\n.authoring-form h3 input {\n  height: 15px;\n  width: 15px;\n}\n.authoring-form h3 span {\n  padding-left: 5px;\n}\n.app.authoring {\n  background: white;\n  overflow: hidden;\n}\n.app.authoring .app-container {\n  position: absolute;\n  display: block;\n  top: 50px;\n  left: 20px;\n  max-height: 650px;\n}\n.app.authoring .value-block {\n  margin-left: 15px;\n}\n.app.authoring .authoring-header {\n  position: fixed;\n  width: 100px;\n  text-align: center;\n  border-radius: 20px;\n  top: -5px;\n  color: #444;\n  border: 2px solid silver;\n  border-top: none;\n  border-left: none;\n  border-right: none;\n  background-color: white;\n}\n.app.authoring .logo-menu {\n  z-index: 4;\n}\n.app.authoring .logo-menu .menu {\n  right: 115px;\n  width: 105px;\n  background: white;\n}\n.app.authoring .speed-controls {\n  top: 0px;\n  position: fixed;\n  text-align: left;\n}\n.app.authoring .speed-controls .speed-button {\n  color: #333;\n}\n.app.authoring .material-icons {\n  color: #333 !important;\n}\n.app .material-icons {\n  color: #ddd !important;\n}\n.app .model-link-button a {\n  color: teal;\n}\n.app button {\n  position: absolute;\n  padding: 8px;\n  border-radius: 24px;\n  outline: none;\n}\n.app button:hover {\n  background-color: #eee;\n}\n.app button i {\n  font-size: 30px;\n}\n.app .speed-controls {\n  top: 10px;\n  height: 50px;\n  text-align: center;\n  width: 100%;\n  position: absolute;\n}\n.app .speed-controls .button-layout {\n  display: inline-block;\n  margin: 0px 20px;\n}\n.app .progress {\n  position: absolute !important;\n  width: 40px;\n  height: 40px;\n  margin: 4px -44px;\n}\n.lab-ui {\n  position: relative;\n  width: 100%;\n}\n.lab-ui .new-atom-bin {\n  position: absolute;\n  top: -340px;\n  left: 18px;\n  border: 1px solid #555;\n  color: #777;\n  padding: 10px;\n  pointer-events: none;\n  z-index: 2;\n}\n.lab-ui .new-atom-bin p {\n  width: 100%;\n  text-align: center;\n  padding-bottom: 10px;\n}\n.lab-ui .new-atom-bin .new-atom {\n  display: block;\n  border: 1px solid #555;\n  height: 28px;\n  width: 28px;\n  border-radius: 50%;\n  background: rgba(255, 255, 255, 0.7);\n  transition: background 1.5s;\n}\n.lab-ui .new-atom-bin .new-atom div {\n  display: block;\n  background: black;\n  border-radius: 50%;\n  height: 22px;\n  width: 22px;\n  margin: 3px;\n  background: radial-gradient(circle at 8px 8px, #FFF7CF 0%, #FFD7A8 16%, #B4906C 60%, #FFD7A8 85%);\n  opacity: 1;\n  transition: opacity 1.5s;\n}\n.lab-ui .new-atom-bin .new-atom.new-atom-0 div {\n  background: radial-gradient(circle at 8px 8px, #F9F9F9 0%, #F3F3F3 16%, #B4B4B4 60%, #F3F3F3 85%);\n}\n.lab-ui .new-atom-bin .new-atom.new-atom-1 div {\n  background: radial-gradient(circle at 8px 8px, #9AE04F 0%, #82BD43 16%, #52782A 60%, #82BD43 85%);\n}\n.lab-ui .new-atom-bin .hiding {\n  display: block;\n  border: 1px solid #555;\n  height: 28px;\n  width: 28px;\n  border-radius: 50%;\n  background: #ffffff;\n  transition: background 0s;\n}\n.lab-ui .new-atom-bin .hiding div {\n  opacity: 0;\n  transition: opacity 0s;\n}\n.lab-ui h4 {\n  padding-top: 3px;\n  padding-bottom: 3px;\n}\n.lab-ui .authoring-slider {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -ms-flex-direction: column;\n  flex-direction: column;\n}\n.lab-ui .authoring-slider.mini {\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n  -ms-flex-direction: row;\n  flex-direction: row;\n  -webkit-box-pack: justify;\n  -ms-flex-pack: justify;\n  justify-content: space-between;\n  width: 300px;\n  margin-bottom: -8px;\n}\n.lab-ui .delete-icon {\n  position: absolute;\n  top: -73px;\n  left: 489px;\n  pointer-events: none;\n}\ntbody tr:nth-child(odd) {\n  background-color: #cccccc;\n}\ntbody tr:nth-child(even) {\n  background-color: #efefef;\n}\ntable {\n  background-color: white;\n  border: 1px solid #777;\n}\ntd {\n  text-align: center;\n}\n", ""]);
+	exports.push([module.id, ".authoring-form {\n  position: absolute;\n  left: calc(50% + 300px);\n  top: 0px;\n  color: #444;\n  width: 450px;\n  max-height: 650px;\n  border: 2px solid silver;\n  border-radius: 8px;\n  overflow-y: scroll;\n  padding: 10px;\n  -ms-touch-action: none;\n  touch-action: none;\n}\n.authoring-form h3 {\n  padding: 4px 0 4px 0;\n  margin: 10px 0 5px 0;\n  width: 100%;\n  background-color: #f8f8f8;\n}\n.authoring-form h3 input {\n  height: 15px;\n  width: 15px;\n}\n.authoring-form h3 span {\n  padding-left: 5px;\n}\n.app.authoring {\n  background: white;\n  overflow: hidden;\n}\n.app.authoring .app-container {\n  position: absolute;\n  display: block;\n  top: 50px;\n  left: 20px;\n  max-height: 650px;\n}\n.app.authoring .value-block {\n  margin-left: 15px;\n}\n.app.authoring .authoring-header {\n  position: fixed;\n  width: 100px;\n  text-align: center;\n  border-radius: 20px;\n  top: -5px;\n  color: #444;\n  border: 2px solid silver;\n  border-top: none;\n  border-left: none;\n  border-right: none;\n  background-color: white;\n}\n.app.authoring .logo-menu {\n  z-index: 4;\n}\n.app.authoring .logo-menu .menu {\n  right: 115px;\n  width: 105px;\n  background: white;\n}\n.app.authoring .speed-controls {\n  top: 0px;\n  position: fixed;\n  text-align: left;\n}\n.app.authoring .speed-controls .speed-button {\n  color: #333;\n}\n.app.authoring .material-icons {\n  color: #333 !important;\n}\n.app .material-icons {\n  color: #ddd !important;\n}\n.app .model-link-button a {\n  color: teal;\n}\n.app button {\n  position: absolute;\n  padding: 8px;\n  border-radius: 24px;\n  outline: none;\n}\n.app button:hover {\n  background-color: #eee;\n}\n.app button i {\n  font-size: 30px;\n}\n.app .speed-controls {\n  top: 10px;\n  height: 50px;\n  text-align: center;\n  width: 100%;\n  position: absolute;\n}\n.app .speed-controls .button-layout {\n  display: inline-block;\n  margin: 0px 20px;\n}\n.app .progress {\n  position: absolute !important;\n  width: 40px;\n  height: 40px;\n  margin: 4px -44px;\n}\n.lab-ui {\n  position: relative;\n  width: 100%;\n}\n.lab-ui .new-atom-bin {\n  position: absolute;\n  top: -340px;\n  left: 18px;\n  border: 1px solid #555;\n  color: #777;\n  padding: 10px;\n  pointer-events: none;\n  z-index: 2;\n}\n.lab-ui .new-atom-bin p {\n  width: 100%;\n  text-align: center;\n  padding-bottom: 10px;\n}\n.lab-ui .new-atom-bin .new-atom {\n  display: block;\n  border: 1px solid #555;\n  height: 28px;\n  width: 28px;\n  border-radius: 50%;\n  background: rgba(255, 255, 255, 0.7);\n  transition: background 1.5s;\n}\n.lab-ui .new-atom-bin .new-atom div {\n  display: block;\n  background: black;\n  border-radius: 50%;\n  height: 22px;\n  width: 22px;\n  margin: 3px;\n  background: radial-gradient(circle at 8px 8px, #FFF7CF 0%, #FFD7A8 16%, #B4906C 60%, #FFD7A8 85%);\n  opacity: 1;\n  transition: opacity 1.5s;\n}\n.lab-ui .new-atom-bin .new-atom.new-atom-0 div {\n  background: radial-gradient(circle at 8px 8px, #F9F9F9 0%, #F3F3F3 16%, #B4B4B4 60%, #F3F3F3 85%);\n}\n.lab-ui .new-atom-bin .new-atom.new-atom-1 div {\n  background: radial-gradient(circle at 8px 8px, #9AE04F 0%, #82BD43 16%, #52782A 60%, #82BD43 85%);\n}\n.lab-ui .new-atom-bin .hiding {\n  display: block;\n  border: 1px solid #555;\n  height: 28px;\n  width: 28px;\n  border-radius: 50%;\n  background: #ffffff;\n  transition: background 0s;\n}\n.lab-ui .new-atom-bin .hiding div {\n  opacity: 0;\n  transition: opacity 0s;\n}\n.lab-ui h4 {\n  padding-top: 3px;\n  padding-bottom: 3px;\n}\n.lab-ui .authoring-slider {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -ms-flex-direction: column;\n  flex-direction: column;\n}\n.lab-ui .authoring-slider.mini {\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n  -ms-flex-direction: row;\n  flex-direction: row;\n  -webkit-box-pack: justify;\n  -ms-flex-pack: justify;\n  justify-content: space-between;\n  width: 300px;\n  margin-bottom: -8px;\n}\n.lab-ui .delete-icon {\n  position: absolute;\n  top: -73px;\n  left: 489px;\n  pointer-events: none;\n}\ntbody tr:nth-child(odd) {\n  background-color: #cccccc;\n}\ntbody tr:nth-child(even) {\n  background-color: #efefef;\n}\ntable {\n  background-color: white;\n  border: 1px solid #777;\n}\ntd {\n  text-align: center;\n}\n.beaker {\n  height: 24px;\n  width: 24px;\n  background: url(" + __webpack_require__(762) + ");\n}\n.beaker.closed {\n  background: url(" + __webpack_require__(763) + ");\n}\n.beakerlight {\n  height: 24px;\n  width: 24px;\n  background: url(" + __webpack_require__(764) + ");\n}\n.beakerlight.closed {\n  background: url(" + __webpack_require__(765) + ");\n}\n", ""]);
 
 	// exports
 
 
 /***/ }),
-/* 754 */
+/* 762 */
+/***/ (function(module, exports) {
+
+	module.exports = "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+DQo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPg0KPHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWw6c3BhY2U9InByZXNlcnZlIiBzdHlsZT0iZmlsbC1ydWxlOmV2ZW5vZGQ7Y2xpcC1ydWxlOmV2ZW5vZGQ7c3Ryb2tlLWxpbmVjYXA6cm91bmQ7c3Ryb2tlLWxpbmVqb2luOnJvdW5kO3N0cm9rZS1taXRlcmxpbWl0OjEuNTsiPg0KICAgIDxwYXRoIGQ9Ik0zNCw5MUMzNCw5MSA0OC45MjcsNjQuMzk1IDU5LDYzQzY5LjA3Myw2MS42MDUgNzEuMzEyLDY3LjY0NCA3Myw3MUM3NC42ODgsNzQuMzU2IDcyLjgzNSw0NjguNTUxIDczLDQ2OUM3NC4xNTUsNDcyLjE0IDc4LjU0Miw0NzkuOTkzIDg3LDQ4MEMxMDcuNDI3LDQ4MC4wMTcgNDAyLDQ4MCA0MDIsNDgwQzQwMiw0ODAgNDE0LjcxNyw0NzguNzgzIDQxNSw0NjdDNDE1LjI4Myw0NTUuMjE3IDQxNSw3MSA0MTUsNzFDNDE1LDcxIDQxNS41MDcsNjEuODUxIDQyMCw2MiIgc3R5bGU9ImZpbGw6bm9uZTtzdHJva2U6cmdiKDUxLDUxLDUxKTtzdHJva2Utd2lkdGg6NjVweDsiLz4NCiAgICA8ZyB0cmFuc2Zvcm09Im1hdHJpeCgxLDAsMCwxLC0zMiw5KSI+DQogICAgICAgIDxjaXJjbGUgY3g9IjI0NCIgY3k9IjIwMyIgcj0iMzIiIHN0eWxlPSJmaWxsOnJnYigxNTksMTU1LDE1NSk7Ii8+DQogICAgPC9nPg0KICAgIDxnIHRyYW5zZm9ybT0ibWF0cml4KDEsMCwwLDEsLTkyLDY5KSI+DQogICAgICAgIDxjaXJjbGUgY3g9IjI0NCIgY3k9IjIwMyIgcj0iMzIiIHN0eWxlPSJmaWxsOnJnYigxNTksMTU1LDE1NSk7Ii8+DQogICAgPC9nPg0KICAgIDxnIHRyYW5zZm9ybT0ibWF0cml4KDEsMCwwLDEsODgsMTQ1KSI+DQogICAgICAgIDxjaXJjbGUgY3g9IjI0NCIgY3k9IjIwMyIgcj0iMzIiIHN0eWxlPSJmaWxsOnJnYigxNTksMTU1LDE1NSk7Ii8+DQogICAgPC9nPg0KICAgIDxnIHRyYW5zZm9ybT0ibWF0cml4KDEsMCwwLDEsMTYsMjA5KSI+DQogICAgICAgIDxjaXJjbGUgY3g9IjI0NCIgY3k9IjIwMyIgcj0iMzIiIHN0eWxlPSJmaWxsOnJnYigxNTksMTU1LDE1NSk7Ii8+DQogICAgPC9nPg0KICAgIDxnIHRyYW5zZm9ybT0ibWF0cml4KDEsMCwwLDEsLTQ0LDE0NSkiPg0KICAgICAgICA8Y2lyY2xlIGN4PSIyNDQiIGN5PSIyMDMiIHI9IjMyIiBzdHlsZT0iZmlsbDpyZ2IoMTU5LDE1NSwxNTUpOyIvPg0KICAgIDwvZz4NCiAgICA8ZyB0cmFuc2Zvcm09Im1hdHJpeCgxLDAsMCwxLDI0LDg5KSI+DQogICAgICAgIDxjaXJjbGUgY3g9IjI0NCIgY3k9IjIwMyIgcj0iMzIiIHN0eWxlPSJmaWxsOnJnYigxNTksMTU1LDE1NSk7Ii8+DQogICAgPC9nPg0KICAgIDxnIHRyYW5zZm9ybT0ibWF0cml4KDEsMCwwLDEsODgsMjUpIj4NCiAgICAgICAgPGNpcmNsZSBjeD0iMjQ0IiBjeT0iMjAzIiByPSIzMiIgc3R5bGU9ImZpbGw6cmdiKDE1OSwxNTUsMTU1KTsiLz4NCiAgICA8L2c+DQogICAgPGcgdHJhbnNmb3JtPSJtYXRyaXgoMSwwLDAsMSwtOTYsMjA1KSI+DQogICAgICAgIDxjaXJjbGUgY3g9IjI0NCIgY3k9IjIwMyIgcj0iMzIiIHN0eWxlPSJmaWxsOnJnYigxNTksMTU1LDE1NSk7Ii8+DQogICAgPC9nPg0KPC9zdmc+DQo="
+
+/***/ }),
+/* 763 */
+/***/ (function(module, exports) {
+
+	module.exports = "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+DQo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPg0KPHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWw6c3BhY2U9InByZXNlcnZlIiBzdHlsZT0iZmlsbC1ydWxlOmV2ZW5vZGQ7Y2xpcC1ydWxlOmV2ZW5vZGQ7c3Ryb2tlLWxpbmVjYXA6cm91bmQ7c3Ryb2tlLWxpbmVqb2luOnJvdW5kO3N0cm9rZS1taXRlcmxpbWl0OjEuNTsiPg0KICAgIDxwYXRoIGQ9Ik0zNCw5MUMzNCw5MSA0OC45MjcsNjQuMzk1IDU5LDYzQzY5LjA3Myw2MS42MDUgNzEuMzEyLDY3LjY0NCA3Myw3MUM3NC42ODgsNzQuMzU2IDcyLjgzNSw0NjguNTUxIDczLDQ2OUM3NC4xNTUsNDcyLjE0IDc4LjU0Miw0NzkuOTkzIDg3LDQ4MEMxMDcuNDI3LDQ4MC4wMTcgNDAyLDQ4MCA0MDIsNDgwQzQwMiw0ODAgNDE0LjcxNyw0NzguNzgzIDQxNSw0NjdDNDE1LjI4Myw0NTUuMjE3IDQxNSw3MSA0MTUsNzFDNDE1LDcxIDQxNS41MDcsNjEuODUxIDQyMCw2MiIgc3R5bGU9ImZpbGw6bm9uZTtzdHJva2U6cmdiKDUxLDUxLDUxKTtzdHJva2Utd2lkdGg6NjVweDsiLz4NCiAgICA8ZyB0cmFuc2Zvcm09Im1hdHJpeCgxLDAsMCwxLC0zMiw5KSI+DQogICAgICAgIDxjaXJjbGUgY3g9IjI0NCIgY3k9IjIwMyIgcj0iMzIiIHN0eWxlPSJmaWxsOnJnYigxNTksMTU1LDE1NSk7Ii8+DQogICAgPC9nPg0KICAgIDxnIHRyYW5zZm9ybT0ibWF0cml4KDEsMCwwLDEsLTkyLDY5KSI+DQogICAgICAgIDxjaXJjbGUgY3g9IjI0NCIgY3k9IjIwMyIgcj0iMzIiIHN0eWxlPSJmaWxsOnJnYigxNTksMTU1LDE1NSk7Ii8+DQogICAgPC9nPg0KICAgIDxnIHRyYW5zZm9ybT0ibWF0cml4KDEsMCwwLDEsODgsMTQ1KSI+DQogICAgICAgIDxjaXJjbGUgY3g9IjI0NCIgY3k9IjIwMyIgcj0iMzIiIHN0eWxlPSJmaWxsOnJnYigxNTksMTU1LDE1NSk7Ii8+DQogICAgPC9nPg0KICAgIDxnIHRyYW5zZm9ybT0ibWF0cml4KDEsMCwwLDEsMTYsMjA5KSI+DQogICAgICAgIDxjaXJjbGUgY3g9IjI0NCIgY3k9IjIwMyIgcj0iMzIiIHN0eWxlPSJmaWxsOnJnYigxNTksMTU1LDE1NSk7Ii8+DQogICAgPC9nPg0KICAgIDxnIHRyYW5zZm9ybT0ibWF0cml4KDEsMCwwLDEsLTQ0LDE0NSkiPg0KICAgICAgICA8Y2lyY2xlIGN4PSIyNDQiIGN5PSIyMDMiIHI9IjMyIiBzdHlsZT0iZmlsbDpyZ2IoMTU5LDE1NSwxNTUpOyIvPg0KICAgIDwvZz4NCiAgICA8ZyB0cmFuc2Zvcm09Im1hdHJpeCgxLDAsMCwxLDI0LDg5KSI+DQogICAgICAgIDxjaXJjbGUgY3g9IjI0NCIgY3k9IjIwMyIgcj0iMzIiIHN0eWxlPSJmaWxsOnJnYigxNTksMTU1LDE1NSk7Ii8+DQogICAgPC9nPg0KICAgIDxnIHRyYW5zZm9ybT0ibWF0cml4KDEsMCwwLDEsODgsMjUpIj4NCiAgICAgICAgPGNpcmNsZSBjeD0iMjQ0IiBjeT0iMjAzIiByPSIzMiIgc3R5bGU9ImZpbGw6cmdiKDE1OSwxNTUsMTU1KTsiLz4NCiAgICA8L2c+DQogICAgPGcgdHJhbnNmb3JtPSJtYXRyaXgoMSwwLDAsMSwtOTYsMjA1KSI+DQogICAgICAgIDxjaXJjbGUgY3g9IjI0NCIgY3k9IjIwMyIgcj0iMzIiIHN0eWxlPSJmaWxsOnJnYigxNTksMTU1LDE1NSk7Ii8+DQogICAgPC9nPg0KICAgIDxyZWN0IHg9IjEwMCIgeT0iOTUiIHdpZHRoPSIyODkiIGhlaWdodD0iMzMiIHN0eWxlPSJmaWxsOnJnYig1MSw1MSw1MSk7c3Ryb2tlOnJnYig1MSw1MSw1MSk7c3Ryb2tlLXdpZHRoOjVweDsiLz4NCjwvc3ZnPg0K"
+
+/***/ }),
+/* 764 */
+/***/ (function(module, exports) {
+
+	module.exports = "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+DQo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPg0KPHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWw6c3BhY2U9InByZXNlcnZlIiBzdHlsZT0iZmlsbC1ydWxlOmV2ZW5vZGQ7Y2xpcC1ydWxlOmV2ZW5vZGQ7c3Ryb2tlLWxpbmVjYXA6cm91bmQ7c3Ryb2tlLWxpbmVqb2luOnJvdW5kO3N0cm9rZS1taXRlcmxpbWl0OjEuNTsiPg0KICAgIDxwYXRoIGQ9Ik0zNCw5MUMzNCw5MSA0OC45MjcsNjQuMzk1IDU5LDYzQzY5LjA3Myw2MS42MDUgNzEuMzEyLDY3LjY0NCA3Myw3MUM3NC42ODgsNzQuMzU2IDcyLjgzNSw0NjguNTUxIDczLDQ2OUM3NC4xNTUsNDcyLjE0IDc4LjU0Miw0NzkuOTkzIDg3LDQ4MEMxMDcuNDI3LDQ4MC4wMTcgNDAyLDQ4MCA0MDIsNDgwQzQwMiw0ODAgNDE0LjcxNyw0NzguNzgzIDQxNSw0NjdDNDE1LjI4Myw0NTUuMjE3IDQxNSw3MSA0MTUsNzFDNDE1LDcxIDQxNS41MDcsNjEuODUxIDQyMCw2MiIgc3R5bGU9ImZpbGw6bm9uZTtzdHJva2U6cmdiKDIwNCwyMDQsMjA0KTtzdHJva2Utd2lkdGg6NjVweDsiLz4NCiAgICA8ZyB0cmFuc2Zvcm09Im1hdHJpeCgxLDAsMCwxLC0zMiw5KSI+DQogICAgICAgIDxjaXJjbGUgY3g9IjI0NCIgY3k9IjIwMyIgcj0iMzIiIHN0eWxlPSJmaWxsOnJnYigxNTksMTU1LDE1NSk7Ii8+DQogICAgPC9nPg0KICAgIDxnIHRyYW5zZm9ybT0ibWF0cml4KDEsMCwwLDEsLTkyLDY5KSI+DQogICAgICAgIDxjaXJjbGUgY3g9IjI0NCIgY3k9IjIwMyIgcj0iMzIiIHN0eWxlPSJmaWxsOnJnYigxNTksMTU1LDE1NSk7Ii8+DQogICAgPC9nPg0KICAgIDxnIHRyYW5zZm9ybT0ibWF0cml4KDEsMCwwLDEsODgsMTQ1KSI+DQogICAgICAgIDxjaXJjbGUgY3g9IjI0NCIgY3k9IjIwMyIgcj0iMzIiIHN0eWxlPSJmaWxsOnJnYigxNTksMTU1LDE1NSk7Ii8+DQogICAgPC9nPg0KICAgIDxnIHRyYW5zZm9ybT0ibWF0cml4KDEsMCwwLDEsMTYsMjA5KSI+DQogICAgICAgIDxjaXJjbGUgY3g9IjI0NCIgY3k9IjIwMyIgcj0iMzIiIHN0eWxlPSJmaWxsOnJnYigxNTksMTU1LDE1NSk7Ii8+DQogICAgPC9nPg0KICAgIDxnIHRyYW5zZm9ybT0ibWF0cml4KDEsMCwwLDEsLTQ0LDE0NSkiPg0KICAgICAgICA8Y2lyY2xlIGN4PSIyNDQiIGN5PSIyMDMiIHI9IjMyIiBzdHlsZT0iZmlsbDpyZ2IoMTU5LDE1NSwxNTUpOyIvPg0KICAgIDwvZz4NCiAgICA8ZyB0cmFuc2Zvcm09Im1hdHJpeCgxLDAsMCwxLDI0LDg5KSI+DQogICAgICAgIDxjaXJjbGUgY3g9IjI0NCIgY3k9IjIwMyIgcj0iMzIiIHN0eWxlPSJmaWxsOnJnYigxNTksMTU1LDE1NSk7Ii8+DQogICAgPC9nPg0KICAgIDxnIHRyYW5zZm9ybT0ibWF0cml4KDEsMCwwLDEsODgsMjUpIj4NCiAgICAgICAgPGNpcmNsZSBjeD0iMjQ0IiBjeT0iMjAzIiByPSIzMiIgc3R5bGU9ImZpbGw6cmdiKDE1OSwxNTUsMTU1KTsiLz4NCiAgICA8L2c+DQogICAgPGcgdHJhbnNmb3JtPSJtYXRyaXgoMSwwLDAsMSwtOTYsMjA1KSI+DQogICAgICAgIDxjaXJjbGUgY3g9IjI0NCIgY3k9IjIwMyIgcj0iMzIiIHN0eWxlPSJmaWxsOnJnYigxNTksMTU1LDE1NSk7Ii8+DQogICAgPC9nPg0KPC9zdmc+DQo="
+
+/***/ }),
+/* 765 */
+/***/ (function(module, exports) {
+
+	module.exports = "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+DQo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPg0KPHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWw6c3BhY2U9InByZXNlcnZlIiBzdHlsZT0iZmlsbC1ydWxlOmV2ZW5vZGQ7Y2xpcC1ydWxlOmV2ZW5vZGQ7c3Ryb2tlLWxpbmVjYXA6cm91bmQ7c3Ryb2tlLWxpbmVqb2luOnJvdW5kO3N0cm9rZS1taXRlcmxpbWl0OjEuNTsiPg0KICAgIDxwYXRoIGQ9Ik0zNCw5MUMzNCw5MSA0OC45MjcsNjQuMzk1IDU5LDYzQzY5LjA3Myw2MS42MDUgNzEuMzEyLDY3LjY0NCA3Myw3MUM3NC42ODgsNzQuMzU2IDcyLjgzNSw0NjguNTUxIDczLDQ2OUM3NC4xNTUsNDcyLjE0IDc4LjU0Miw0NzkuOTkzIDg3LDQ4MEMxMDcuNDI3LDQ4MC4wMTcgNDAyLDQ4MCA0MDIsNDgwQzQwMiw0ODAgNDE0LjcxNyw0NzguNzgzIDQxNSw0NjdDNDE1LjI4Myw0NTUuMjE3IDQxNSw3MSA0MTUsNzFDNDE1LDcxIDQxNS41MDcsNjEuODUxIDQyMCw2MiIgc3R5bGU9ImZpbGw6bm9uZTtzdHJva2U6cmdiKDIwNCwyMDQsMjA0KTtzdHJva2Utd2lkdGg6NjVweDsiLz4NCiAgICA8ZyB0cmFuc2Zvcm09Im1hdHJpeCgxLDAsMCwxLC0zMiw5KSI+DQogICAgICAgIDxjaXJjbGUgY3g9IjI0NCIgY3k9IjIwMyIgcj0iMzIiIHN0eWxlPSJmaWxsOnJnYigxNTksMTU1LDE1NSk7Ii8+DQogICAgPC9nPg0KICAgIDxnIHRyYW5zZm9ybT0ibWF0cml4KDEsMCwwLDEsLTkyLDY5KSI+DQogICAgICAgIDxjaXJjbGUgY3g9IjI0NCIgY3k9IjIwMyIgcj0iMzIiIHN0eWxlPSJmaWxsOnJnYigxNTksMTU1LDE1NSk7Ii8+DQogICAgPC9nPg0KICAgIDxnIHRyYW5zZm9ybT0ibWF0cml4KDEsMCwwLDEsODgsMTQ1KSI+DQogICAgICAgIDxjaXJjbGUgY3g9IjI0NCIgY3k9IjIwMyIgcj0iMzIiIHN0eWxlPSJmaWxsOnJnYigxNTksMTU1LDE1NSk7Ii8+DQogICAgPC9nPg0KICAgIDxnIHRyYW5zZm9ybT0ibWF0cml4KDEsMCwwLDEsMTYsMjA5KSI+DQogICAgICAgIDxjaXJjbGUgY3g9IjI0NCIgY3k9IjIwMyIgcj0iMzIiIHN0eWxlPSJmaWxsOnJnYigxNTksMTU1LDE1NSk7Ii8+DQogICAgPC9nPg0KICAgIDxnIHRyYW5zZm9ybT0ibWF0cml4KDEsMCwwLDEsLTQ0LDE0NSkiPg0KICAgICAgICA8Y2lyY2xlIGN4PSIyNDQiIGN5PSIyMDMiIHI9IjMyIiBzdHlsZT0iZmlsbDpyZ2IoMTU5LDE1NSwxNTUpOyIvPg0KICAgIDwvZz4NCiAgICA8ZyB0cmFuc2Zvcm09Im1hdHJpeCgxLDAsMCwxLDI0LDg5KSI+DQogICAgICAgIDxjaXJjbGUgY3g9IjI0NCIgY3k9IjIwMyIgcj0iMzIiIHN0eWxlPSJmaWxsOnJnYigxNTksMTU1LDE1NSk7Ii8+DQogICAgPC9nPg0KICAgIDxnIHRyYW5zZm9ybT0ibWF0cml4KDEsMCwwLDEsODgsMjUpIj4NCiAgICAgICAgPGNpcmNsZSBjeD0iMjQ0IiBjeT0iMjAzIiByPSIzMiIgc3R5bGU9ImZpbGw6cmdiKDE1OSwxNTUsMTU1KTsiLz4NCiAgICA8L2c+DQogICAgPGcgdHJhbnNmb3JtPSJtYXRyaXgoMSwwLDAsMSwtOTYsMjA1KSI+DQogICAgICAgIDxjaXJjbGUgY3g9IjI0NCIgY3k9IjIwMyIgcj0iMzIiIHN0eWxlPSJmaWxsOnJnYigxNTksMTU1LDE1NSk7Ii8+DQogICAgPC9nPg0KICAgIDxyZWN0IHg9IjEwMCIgeT0iOTUiIHdpZHRoPSIyODkiIGhlaWdodD0iMzMiIHN0eWxlPSJmaWxsOnJnYigyMDQsMjA0LDIwNCk7Ii8+DQo8L3N2Zz4NCg=="
+
+/***/ }),
+/* 766 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(755);
+	module.exports = __webpack_require__(767);
 
 
 
 /***/ }),
-/* 755 */
+/* 767 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	(function webpackUniversalModuleDefinition(root, factory) {
 		if(true)
-			module.exports = factory(__webpack_require__(756));
+			module.exports = factory(__webpack_require__(768));
 		else if(typeof define === 'function' && define.amd)
 			define(["firebase"], factory);
 		else {
@@ -41052,7 +41133,7 @@
 	;
 
 /***/ }),
-/* 756 */
+/* 768 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/*! @license Firebase v3.9.0
@@ -41064,22 +41145,22 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	var firebase = __webpack_require__(757);
-	__webpack_require__(760);
+	var firebase = __webpack_require__(769);
+	__webpack_require__(772);
 	var Storage, XMLHttpRequest;
 
-	__webpack_require__(761);
-	__webpack_require__(762);
+	__webpack_require__(773);
+	__webpack_require__(774);
 	var AsyncStorage;
 
-	__webpack_require__(763);
+	__webpack_require__(775);
 	exports.default = firebase;
 	module.exports = exports['default'];
 	//# sourceMappingURL=firebase.js.map
 
 
 /***/ }),
-/* 757 */
+/* 769 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(setImmediate, clearImmediate) {/*! @license Firebase v3.9.0
@@ -41089,10 +41170,10 @@
 	var firebase=function(e){function t(r){if(n[r])return n[r].exports;var i=n[r]={i:r,l:!1,exports:{}};return e[r].call(i.exports,i,i.exports,t),i.l=!0,i.exports}var n={};return t.m=e,t.c=n,t.i=function(e){return e},t.d=function(e,n,r){t.o(e,n)||Object.defineProperty(e,n,{configurable:!1,enumerable:!0,get:r})},t.n=function(e){var n=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(n,"a",n),n},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="",t(t.s=11)}([function(e,t,n){"use strict";(function(e){Object.defineProperty(t,"__esModule",{value:!0});var r=void 0;if(void 0!==e)r=e;else if("undefined"!=typeof self)r=self;else try{r=Function("return this")()}catch(e){throw new Error("polyfill failed because global object is unavailable in this environment")}var i=r.Promise||n(8);t.local={Promise:i,GoogPromise:i}}).call(t,n(1))},function(e,t){var n;n=function(){return this}();try{n=n||Function("return this")()||(0,eval)("this")}catch(e){"object"==typeof window&&(n=window)}e.exports=n},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=n(5),i=(0,r.createFirebaseNamespace)();t.default=i,e.exports=t.default},function(e,t,n){"use strict";function r(e){return i(void 0,e)}function i(e,t){if(!(t instanceof Object))return t;switch(t.constructor){case Date:return new Date(t.getTime());case Object:void 0===e&&(e={});break;case Array:e=[];break;default:return t}for(var n in t)t.hasOwnProperty(n)&&(e[n]=i(e[n],t[n]));return e}function o(e,t,n){e[t]=n}Object.defineProperty(t,"__esModule",{value:!0}),t.deepCopy=r,t.deepExtend=i,t.patchProperty=o},function(e,t,n){"use strict";function r(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function i(e){var t=a;return a=e,t}Object.defineProperty(t,"__esModule",{value:!0});var o=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}();t.patchCapture=i;var a=Error.captureStackTrace,c=function e(t,n){if(r(this,e),this.code=t,this.message=n,a)a(this,s.prototype.create);else{var i=Error.apply(this,arguments);this.name="FirebaseError",Object.defineProperty(this,"stack",{get:function(){return i.stack}})}};c.prototype=Object.create(Error.prototype),c.prototype.constructor=c,c.prototype.name="FirebaseError";var s=t.ErrorFactory=function(){function e(t,n,i){r(this,e),this.service=t,this.serviceName=n,this.errors=i,this.pattern=/\{\$([^}]+)}/g}return o(e,[{key:"create",value:function(e,t){void 0===t&&(t={});var n=this.errors[e],r=this.service+"/"+e,i=void 0;i=void 0===n?"Error":n.replace(this.pattern,function(e,n){var r=t[n];return void 0!==r?r.toString():"<"+n+"?>"}),i=this.serviceName+": "+i+" ("+r+").";var o=new c(r,i);for(var a in t)t.hasOwnProperty(a)&&"_"!==a.slice(-1)&&(o[a]=t[a]);return o}}]),e}()},function(e,t,n){"use strict";function r(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function i(){function e(e){e=e||d;var t=r[e];return void 0===t&&o("no-app",{name:e}),t}function t(e,t){Object.keys(a).forEach(function(r){var i=n(e,r);null!==i&&h[i]&&h[i](t,e)})}function n(e,t){if("serverAuth"===t)return null;var n=t,r=e.options;return"auth"===t&&(r.serviceAccount||r.credential)&&(n="serverAuth","serverAuth"in a||o("sa-not-supported")),n}var r={},a={},h={},v={__esModule:!0,initializeApp:function(e,n){void 0===n?n=d:"string"==typeof n&&""!==n||o("bad-app-name",{name:n+""}),void 0!==r[n]&&o("duplicate-app",{name:n});var i=new p(e,n,v);return r[n]=i,t(i,"create"),void 0!=i.INTERNAL&&void 0!=i.INTERNAL.getToken||(0,c.deepExtend)(i,{INTERNAL:{getUid:function(){return null},getToken:function(){return l.resolve(null)},addAuthTokenListener:function(){},removeAuthTokenListener:function(){}}}),i},app:e,apps:null,Promise:l,SDK_VERSION:"3.9.0",INTERNAL:{registerService:function(t,n,r,i,s){a[t]&&o("duplicate-service",{name:t}),a[t]=s?n:function(e,t){return n(e,t,d)},i&&(h[t]=i);var u=void 0;return u=function(n){return void 0===n&&(n=e()),"function"!=typeof n[t]&&o("invalid-app-argument",{name:t}),n[t]()},void 0!==r&&(0,c.deepExtend)(u,r),v[t]=u,u},createFirebaseNamespace:i,extendNamespace:function(e){(0,c.deepExtend)(v,e)},createSubscribe:s.createSubscribe,ErrorFactory:u.ErrorFactory,removeApp:function(e){t(r[e],"delete"),delete r[e]},factories:a,useAsService:n,Promise:f.local.GoogPromise,deepExtend:c.deepExtend}};return(0,c.patchProperty)(v,"default",v),Object.defineProperty(v,"apps",{get:function(){return Object.keys(r).map(function(e){return r[e]})}}),(0,c.patchProperty)(e,"App",p),v}function o(e,t){throw v.create(e,t)}Object.defineProperty(t,"__esModule",{value:!0});var a=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}();t.createFirebaseNamespace=i;var c=n(3),s=n(6),u=n(4),f=n(0),l=f.local.Promise,d="[DEFAULT]",p=function(){function e(t,n,i){var o=this;r(this,e),this.firebase_=i,this.isDeleted_=!1,this.services_={},this.name_=n,this.options_=(0,c.deepCopy)(t);var a="credential"in this.options_,s="serviceAccount"in this.options_;if(a||s){var u=s?"serviceAccount":"credential";"undefined"!=typeof console&&console.log("The '"+u+"' property specified in the first argument to initializeApp() is deprecated and will be removed in the next major version. You should instead use the 'firebase-admin' package. See https://firebase.google.com/docs/admin/setup for details on how to get started.")}Object.keys(i.INTERNAL.factories).forEach(function(e){var t=i.INTERNAL.useAsService(o,e);if(null!==t){var n=o.getService.bind(o,t);(0,c.patchProperty)(o,e,n)}})}return a(e,[{key:"delete",value:function(){var e=this;return new l(function(t){e.checkDestroyed_(),t()}).then(function(){e.firebase_.INTERNAL.removeApp(e.name_);var t=[];return Object.keys(e.services_).forEach(function(n){Object.keys(e.services_[n]).forEach(function(r){t.push(e.services_[n][r])})}),l.all(t.map(function(e){return e.INTERNAL.delete()}))}).then(function(){e.isDeleted_=!0,e.services_={}})}},{key:"getService",value:function(e,t){this.checkDestroyed_(),void 0===this.services_[e]&&(this.services_[e]={});var n=t||d;if(void 0===this.services_[e][n]){var r=this.firebase_.INTERNAL.factories[e](this,this.extendApp.bind(this),t);return this.services_[e][n]=r,r}return this.services_[e][n]}},{key:"extendApp",value:function(e){(0,c.deepExtend)(this,e)}},{key:"checkDestroyed_",value:function(){this.isDeleted_&&o("app-deleted",{name:this.name_})}},{key:"name",get:function(){return this.checkDestroyed_(),this.name_}},{key:"options",get:function(){return this.checkDestroyed_(),this.options_}}]),e}();p.prototype.name&&p.prototype.options||p.prototype.delete||console.log("dc");var h={"no-app":"No Firebase App '{$name}' has been created - call Firebase App.initializeApp()","bad-app-name":"Illegal App name: '{$name}","duplicate-app":"Firebase App named '{$name}' already exists","app-deleted":"Firebase App named '{$name}' already deleted","duplicate-service":"Firebase service named '{$name}' already registered","sa-not-supported":"Initializing the Firebase SDK with a service account is only allowed in a Node.js environment. On client devices, you should instead initialize the SDK with an api key and auth domain","invalid-app-argument":"firebase.{$name}() takes either no argument or a Firebase App instance."},v=new u.ErrorFactory("app","Firebase",h)},function(e,t,n){"use strict";function r(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function i(e,t){var n=new d(e,t);return n.subscribe.bind(n)}function o(e,t){return function(){for(var n=arguments.length,r=Array(n),i=0;i<n;i++)r[i]=arguments[i];l.resolve(!0).then(function(){e.apply(void 0,r)}).catch(function(e){t&&t(e)})}}function a(e,t){if("object"!==(void 0===e?"undefined":s(e))||null===e)return!1;var n=!0,r=!1,i=void 0;try{for(var o,a=t[Symbol.iterator]();!(n=(o=a.next()).done);n=!0){var c=o.value;if(c in e&&"function"==typeof e[c])return!0}}catch(e){r=!0,i=e}finally{try{!n&&a.return&&a.return()}finally{if(r)throw i}}return!1}function c(){}Object.defineProperty(t,"__esModule",{value:!0});var s="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},u=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}();t.createSubscribe=i,t.async=o;var f=n(0),l=f.local.Promise,d=function(){function e(t,n){var i=this;r(this,e),this.observers=[],this.unsubscribes=[],this.observerCount=0,this.task=l.resolve(),this.finalized=!1,this.onNoObservers=n,this.task.then(function(){t(i)}).catch(function(e){i.error(e)})}return u(e,[{key:"next",value:function(e){this.forEachObserver(function(t){t.next(e)})}},{key:"error",value:function(e){this.forEachObserver(function(t){t.error(e)}),this.close(e)}},{key:"complete",value:function(){this.forEachObserver(function(e){e.complete()}),this.close()}},{key:"subscribe",value:function(e,t,n){var r=this,i=void 0;if(void 0===e&&void 0===t&&void 0===n)throw new Error("Missing Observer.");i=a(e,["next","error","complete"])?e:{next:e,error:t,complete:n},void 0===i.next&&(i.next=c),void 0===i.error&&(i.error=c),void 0===i.complete&&(i.complete=c);var o=this.unsubscribeOne.bind(this,this.observers.length);return this.finalized&&this.task.then(function(){try{r.finalError?i.error(r.finalError):i.complete()}catch(e){}}),this.observers.push(i),o}},{key:"unsubscribeOne",value:function(e){void 0!==this.observers&&void 0!==this.observers[e]&&(delete this.observers[e],this.observerCount-=1,0===this.observerCount&&void 0!==this.onNoObservers&&this.onNoObservers(this))}},{key:"forEachObserver",value:function(e){if(!this.finalized)for(var t=0;t<this.observers.length;t++)this.sendOne(t,e)}},{key:"sendOne",value:function(e,t){var n=this;this.task.then(function(){if(void 0!==n.observers&&void 0!==n.observers[e])try{t(n.observers[e])}catch(e){"undefined"!=typeof console&&console.error&&console.error(e)}})}},{key:"close",value:function(e){var t=this;this.finalized||(this.finalized=!0,void 0!==e&&(this.finalError=e),this.task.then(function(){t.observers=void 0,t.onNoObservers=void 0}))}}]),e}()},function(e,t){function n(){throw new Error("setTimeout has not been defined")}function r(){throw new Error("clearTimeout has not been defined")}function i(e){if(f===setTimeout)return setTimeout(e,0);if((f===n||!f)&&setTimeout)return f=setTimeout,setTimeout(e,0);try{return f(e,0)}catch(t){try{return f.call(null,e,0)}catch(t){return f.call(this,e,0)}}}function o(e){if(l===clearTimeout)return clearTimeout(e);if((l===r||!l)&&clearTimeout)return l=clearTimeout,clearTimeout(e);try{return l(e)}catch(t){try{return l.call(null,e)}catch(t){return l.call(this,e)}}}function a(){v&&p&&(v=!1,p.length?h=p.concat(h):m=-1,h.length&&c())}function c(){if(!v){var e=i(a);v=!0;for(var t=h.length;t;){for(p=h,h=[];++m<t;)p&&p[m].run();m=-1,t=h.length}p=null,v=!1,o(e)}}function s(e,t){this.fun=e,this.array=t}function u(){}var f,l,d=e.exports={};!function(){try{f="function"==typeof setTimeout?setTimeout:n}catch(e){f=n}try{l="function"==typeof clearTimeout?clearTimeout:r}catch(e){l=r}}();var p,h=[],v=!1,m=-1;d.nextTick=function(e){var t=new Array(arguments.length-1);if(arguments.length>1)for(var n=1;n<arguments.length;n++)t[n-1]=arguments[n];h.push(new s(e,t)),1!==h.length||v||i(c)},s.prototype.run=function(){this.fun.apply(null,this.array)},d.title="browser",d.browser=!0,d.env={},d.argv=[],d.version="",d.versions={},d.on=u,d.addListener=u,d.once=u,d.off=u,d.removeListener=u,d.removeAllListeners=u,d.emit=u,d.binding=function(e){throw new Error("process.binding is not supported")},d.cwd=function(){return"/"},d.chdir=function(e){throw new Error("process.chdir is not supported")},d.umask=function(){return 0}},function(e,t,n){(function(t){!function(n){function r(){}function i(e,t){return function(){e.apply(t,arguments)}}function o(e){if("object"!=typeof this)throw new TypeError("Promises must be constructed via new");if("function"!=typeof e)throw new TypeError("not a function");this._state=0,this._handled=!1,this._value=void 0,this._deferreds=[],l(e,this)}function a(e,t){for(;3===e._state;)e=e._value;if(0===e._state)return void e._deferreds.push(t);e._handled=!0,o._immediateFn(function(){var n=1===e._state?t.onFulfilled:t.onRejected;if(null===n)return void(1===e._state?c:s)(t.promise,e._value);var r;try{r=n(e._value)}catch(e){return void s(t.promise,e)}c(t.promise,r)})}function c(e,t){try{if(t===e)throw new TypeError("A promise cannot be resolved with itself.");if(t&&("object"==typeof t||"function"==typeof t)){var n=t.then;if(t instanceof o)return e._state=3,e._value=t,void u(e);if("function"==typeof n)return void l(i(n,t),e)}e._state=1,e._value=t,u(e)}catch(t){s(e,t)}}function s(e,t){e._state=2,e._value=t,u(e)}function u(e){2===e._state&&0===e._deferreds.length&&o._immediateFn(function(){e._handled||o._unhandledRejectionFn(e._value)});for(var t=0,n=e._deferreds.length;t<n;t++)a(e,e._deferreds[t]);e._deferreds=null}function f(e,t,n){this.onFulfilled="function"==typeof e?e:null,this.onRejected="function"==typeof t?t:null,this.promise=n}function l(e,t){var n=!1;try{e(function(e){n||(n=!0,c(t,e))},function(e){n||(n=!0,s(t,e))})}catch(e){if(n)return;n=!0,s(t,e)}}var d=setTimeout;o.prototype.catch=function(e){return this.then(null,e)},o.prototype.then=function(e,t){var n=new this.constructor(r);return a(this,new f(e,t,n)),n},o.all=function(e){var t=Array.prototype.slice.call(e);return new o(function(e,n){function r(o,a){try{if(a&&("object"==typeof a||"function"==typeof a)){var c=a.then;if("function"==typeof c)return void c.call(a,function(e){r(o,e)},n)}t[o]=a,0==--i&&e(t)}catch(e){n(e)}}if(0===t.length)return e([]);for(var i=t.length,o=0;o<t.length;o++)r(o,t[o])})},o.resolve=function(e){return e&&"object"==typeof e&&e.constructor===o?e:new o(function(t){t(e)})},o.reject=function(e){return new o(function(t,n){n(e)})},o.race=function(e){return new o(function(t,n){for(var r=0,i=e.length;r<i;r++)e[r].then(t,n)})},o._immediateFn="function"==typeof t&&function(e){t(e)}||function(e){d(e,0)},o._unhandledRejectionFn=function(e){"undefined"!=typeof console&&console&&console.warn("Possible Unhandled Promise Rejection:",e)},o._setImmediateFn=function(e){o._immediateFn=e},o._setUnhandledRejectionFn=function(e){o._unhandledRejectionFn=e},void 0!==e&&e.exports?e.exports=o:n.Promise||(n.Promise=o)}(this)}).call(t,n(10).setImmediate)},function(e,t,n){(function(e,t){!function(e,n){"use strict";function r(e){"function"!=typeof e&&(e=new Function(""+e));for(var t=new Array(arguments.length-1),n=0;n<t.length;n++)t[n]=arguments[n+1];var r={callback:e,args:t};return u[s]=r,c(s),s++}function i(e){delete u[e]}function o(e){var t=e.callback,r=e.args;switch(r.length){case 0:t();break;case 1:t(r[0]);break;case 2:t(r[0],r[1]);break;case 3:t(r[0],r[1],r[2]);break;default:t.apply(n,r)}}function a(e){if(f)setTimeout(a,0,e);else{var t=u[e];if(t){f=!0;try{o(t)}finally{i(e),f=!1}}}}if(!e.setImmediate){var c,s=1,u={},f=!1,l=e.document,d=Object.getPrototypeOf&&Object.getPrototypeOf(e);d=d&&d.setTimeout?d:e,"[object process]"==={}.toString.call(e.process)?function(){c=function(e){t.nextTick(function(){a(e)})}}():function(){if(e.postMessage&&!e.importScripts){var t=!0,n=e.onmessage;return e.onmessage=function(){t=!1},e.postMessage("","*"),e.onmessage=n,t}}()?function(){var t="setImmediate$"+Math.random()+"$",n=function(n){n.source===e&&"string"==typeof n.data&&0===n.data.indexOf(t)&&a(+n.data.slice(t.length))};e.addEventListener?e.addEventListener("message",n,!1):e.attachEvent("onmessage",n),c=function(n){e.postMessage(t+n,"*")}}():e.MessageChannel?function(){var e=new MessageChannel;e.port1.onmessage=function(e){a(e.data)},c=function(t){e.port2.postMessage(t)}}():l&&"onreadystatechange"in l.createElement("script")?function(){var e=l.documentElement;c=function(t){var n=l.createElement("script");n.onreadystatechange=function(){a(t),n.onreadystatechange=null,e.removeChild(n),n=null},e.appendChild(n)}}():function(){c=function(e){setTimeout(a,0,e)}}(),d.setImmediate=r,d.clearImmediate=i}}("undefined"==typeof self?void 0===e?this:e:self)}).call(t,n(1),n(7))},function(e,t,n){function r(e,t){this._id=e,this._clearFn=t}var i=Function.prototype.apply;t.setTimeout=function(){return new r(i.call(setTimeout,window,arguments),clearTimeout)},t.setInterval=function(){return new r(i.call(setInterval,window,arguments),clearInterval)},t.clearTimeout=t.clearInterval=function(e){e&&e.close()},r.prototype.unref=r.prototype.ref=function(){},r.prototype.close=function(){this._clearFn.call(window,this._id)},t.enroll=function(e,t){clearTimeout(e._idleTimeoutId),e._idleTimeout=t},t.unenroll=function(e){clearTimeout(e._idleTimeoutId),e._idleTimeout=-1},t._unrefActive=t.active=function(e){clearTimeout(e._idleTimeoutId);var t=e._idleTimeout;t>=0&&(e._idleTimeoutId=setTimeout(function(){e._onTimeout&&e._onTimeout()},t))},n(9),t.setImmediate=setImmediate,t.clearImmediate=clearImmediate},function(e,t,n){e.exports=n(2)}]);module.exports=firebase;
 	//# sourceMappingURL=app.js.map
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(758).setImmediate, __webpack_require__(758).clearImmediate))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(770).setImmediate, __webpack_require__(770).clearImmediate))
 
 /***/ }),
-/* 758 */
+/* 770 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var apply = Function.prototype.apply;
@@ -41145,13 +41226,13 @@
 	};
 
 	// setimmediate attaches itself to the global object
-	__webpack_require__(759);
+	__webpack_require__(771);
 	exports.setImmediate = setImmediate;
 	exports.clearImmediate = clearImmediate;
 
 
 /***/ }),
-/* 759 */
+/* 771 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -41344,14 +41425,14 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(328)))
 
 /***/ }),
-/* 760 */
+/* 772 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/*! @license Firebase v3.9.0
 	Build: rev-cc77c9e
 	Terms: https://firebase.google.com/terms/ */
 
-	var firebase = __webpack_require__(757);
+	var firebase = __webpack_require__(769);
 	(function(){
 	(function(){var h,aa=aa||{},l=this,ba=function(){},ca=function(a){var b=typeof a;if("object"==b)if(a){if(a instanceof Array)return"array";if(a instanceof Object)return b;var c=Object.prototype.toString.call(a);if("[object Window]"==c)return"object";if("[object Array]"==c||"number"==typeof a.length&&"undefined"!=typeof a.splice&&"undefined"!=typeof a.propertyIsEnumerable&&!a.propertyIsEnumerable("splice"))return"array";if("[object Function]"==c||"undefined"!=typeof a.call&&"undefined"!=typeof a.propertyIsEnumerable&&
 	!a.propertyIsEnumerable("call"))return"function"}else return"null";else if("function"==b&&"undefined"==typeof a.call)return"object";return b},da=function(a){return null===a},ea=function(a){return"array"==ca(a)},fa=function(a){var b=ca(a);return"array"==b||"object"==b&&"number"==typeof a.length},m=function(a){return"string"==typeof a},ga=function(a){return"number"==typeof a},p=function(a){return"function"==ca(a)},ha=function(a){var b=typeof a;return"object"==b&&null!=a||"function"==b},ia=function(a,
@@ -41606,7 +41687,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 761 */
+/* 773 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/*! @license Firebase v3.9.0
@@ -41636,7 +41717,7 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 	THE SOFTWARE. */
 
-	var firebase = __webpack_require__(757);
+	var firebase = __webpack_require__(769);
 	(function(){
 	(function() {var g,aa=this;function n(a){return void 0!==a}function ba(){}function ca(a){a.Vb=function(){return a.Ye?a.Ye:a.Ye=new a}}
 	function da(a){var b=typeof a;if("object"==b)if(a){if(a instanceof Array)return"array";if(a instanceof Object)return b;var c=Object.prototype.toString.call(a);if("[object Window]"==c)return"object";if("[object Array]"==c||"number"==typeof a.length&&"undefined"!=typeof a.splice&&"undefined"!=typeof a.propertyIsEnumerable&&!a.propertyIsEnumerable("splice"))return"array";if("[object Function]"==c||"undefined"!=typeof a.call&&"undefined"!=typeof a.propertyIsEnumerable&&!a.propertyIsEnumerable("call"))return"function"}else return"null";
@@ -41876,14 +41957,14 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 762 */
+/* 774 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/*! @license Firebase v3.9.0
 	Build: rev-cc77c9e
 	Terms: https://firebase.google.com/terms/ */
 
-	var firebase = __webpack_require__(757);
+	var firebase = __webpack_require__(769);
 	(function(){
 	(function(){for(var h,aa="function"==typeof Object.defineProperties?Object.defineProperty:function(a,b,c){a!=Array.prototype&&a!=Object.prototype&&(a[b]=c.value)},l="undefined"!=typeof window&&window===this?this:"undefined"!=typeof global&&null!=global?global:this,n=["Number","MIN_SAFE_INTEGER"],ba=0;ba<n.length-1;ba++){var ca=n[ba];ca in l||(l[ca]={});l=l[ca]}var da=n[n.length-1];-9007199254740991!=l[da]&&aa(l,da,{configurable:!0,writable:!0,value:-9007199254740991});
 	var p=this,q=function(a){return void 0!==a},ea=function(a){var b=typeof a;if("object"==b)if(a){if(a instanceof Array)return"array";if(a instanceof Object)return b;var c=Object.prototype.toString.call(a);if("[object Window]"==c)return"object";if("[object Array]"==c||"number"==typeof a.length&&"undefined"!=typeof a.splice&&"undefined"!=typeof a.propertyIsEnumerable&&!a.propertyIsEnumerable("splice"))return"array";if("[object Function]"==c||"undefined"!=typeof a.call&&"undefined"!=typeof a.propertyIsEnumerable&&
@@ -41940,14 +42021,14 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 763 */
+/* 775 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/*! @license Firebase v3.9.0
 	Build: rev-cc77c9e
 	Terms: https://firebase.google.com/terms/ */
 
-	var firebase = __webpack_require__(757);
+	var firebase = __webpack_require__(769);
 	(function(){
 	(function(){var f=function(a,b){function c(){}c.prototype=b.prototype;a.u=b.prototype;a.prototype=new c;for(var d in b)if(Object.defineProperties){var e=Object.getOwnPropertyDescriptor(b,d);e&&Object.defineProperty(a,d,e)}else a[d]=b[d]},g=this,h=function(a){var b=typeof a;if("object"==b)if(a){if(a instanceof Array)return"array";if(a instanceof Object)return b;var c=Object.prototype.toString.call(a);if("[object Window]"==c)return"object";if("[object Array]"==c||"number"==typeof a.length&&"undefined"!=typeof a.splice&&
 	"undefined"!=typeof a.propertyIsEnumerable&&!a.propertyIsEnumerable("splice"))return"array";if("[object Function]"==c||"undefined"!=typeof a.call&&"undefined"!=typeof a.propertyIsEnumerable&&!a.propertyIsEnumerable("call"))return"function"}else return"null";else if("function"==b&&"undefined"==typeof a.call)return"object";return b},k=function(a,b){function c(){}c.prototype=b.prototype;a.u=b.prototype;a.prototype=new c;a.v=function(a,c,n){for(var d=Array(arguments.length-2),e=2;e<arguments.length;e++)d[e-
